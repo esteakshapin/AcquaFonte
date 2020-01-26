@@ -2,7 +2,7 @@
     <head>
         <title>HOME | Acqua Fonte</title>
         <link rel="stylesheet" href="find_water.css">
-        
+
     </head>
     <body>
         <div class="menubar">
@@ -12,7 +12,7 @@
                     <li><a id="active" href="../find_water/find_water.html">FIND WATER</a></li>
                     <li href="../add_location/add_location.html"><a>ADD LOCATION</a></li>
                 </ul>
-            
+
             </div>
             <div class="right_options">
                 <ul class="menubar_options">
@@ -20,15 +20,59 @@
                     <li><a href="../about_us/about_us.html">ABOUT US</a></li>
                     <li><a>LOG IN</a></li>
                 </ul>
-            
+
             </div>
             <div class="middle_icon">
                 <p>🅐🅠🅒🅤🅐 🅕🅞🅝🅣🅔</p>
             </div>
-        
+
         </div>
-    
-    
+        <div id="map"></div>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWYNykoEI-bVYIgavHIqLYkV5jGy87GQ&callback=initMap" async defer></script>
+
+        <script>
+        function initMap() {
+
+            gMap = new google.maps.Map(document.getElementById('map'));
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+              // Center on user's current location if geolocation prompt allowed
+              // var user_lat = position.coords.latitude;
+              // var user_lng = position.coords.longitude;
+
+              var user_lat = 40.717892;
+              var user_lng = -74.013908;
+              var initialLocation = new google.maps.LatLng(user_lat, user_lng);
+              gMap.setCenter(initialLocation);
+              gMap.setZoom(15);
+            }, function(positionError) {
+              // User denied geolocation prompt - default to Chicago
+              var user_lat = 40.717892;
+              var user_lng = -74.013908;
+              var initialLocation = new google.maps.LatLng(user_lat, user_lng);;
+              gMap.setCenter(initialLocation);
+              gMap.setZoom(13);
+            });
+
+            var stuyvesant = {lat: 40.717892, lng: -74.013908};
+            var marker = new google.maps.Marker({
+              position: stuyvesant,
+              map: gMap,
+              icon:'https://im2.ezgif.com/tmp/ezgif-2-1d84a7b7c387.png'
+            });
+
+            var cityHall = {lat: 40.712690, lng: -74.006033};
+            var marker = new google.maps.Marker({
+              position: cityHall,
+              map: gMap,
+              icon:'WaterMarker.png'
+            });
+
+
+          }
+        </script>
+
     </body>
 
 

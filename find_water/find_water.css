@@ -1,3 +1,9 @@
+html,body{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
 .menubar {
     width: 100%;
     min-width: 665px;
@@ -24,13 +30,13 @@
     display: inline-block;
   top: 50%; left: 50%;
   transform: translate(-50%,-50%);
-    
+
 }
 .middle_icon p{
     font-size: 2.1em;
     margin: 0;
     color:antiquewhite;
-    
+
 }
 .right_options {
     float: right;
@@ -61,5 +67,11 @@ li a:hover{
 }
 #active{
     background-color:antiquewhite;
-    color: #113788; 
+    color: #113788;
+}
+#map {
+  width: 100vw;
+  margin-top: 3.7em;
+  height: 92vh;
+  padding: 0;
 }
