@@ -27,13 +27,13 @@ body{
     display: inline-block;
   top: 50%; left: 53%;
   transform: translate(-53%,-50%);
-    
+
 }
 .middle_icon p{
     font-size: 2.1em;
     margin: 0;
     color:antiquewhite;
-    
+
 }
 .right_options {
     float: right;
@@ -64,7 +64,7 @@ li a:hover{
 }
 #active{
     background-color:antiquewhite;
-    color: #113788; 
+    color: #113788;
 }
 .text_body{
     margin-top: 5em;
@@ -122,9 +122,9 @@ h1 {
     width: 100%;
     height: auto;
     border-radius: 50%;
-    
+
 }
-p {
+.text_body p {
     width: 100%;
     height: 100%;
     color: black;
@@ -149,5 +149,5 @@ p1 {
     text-decoration: none;
     font-family: cursive;
     font-size: .75em;
-    
+
 }
