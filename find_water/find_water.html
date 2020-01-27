@@ -30,76 +30,363 @@
         <div id="map"></div>
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWYNykoEI-bVYIgavHIqLYkV5jGy87GQ&callback=initMap" async defer></script>
+        
+        
+
+        
+        
+        
 
         <script>
         function initMap() {
+            
+            //MAP STYLE DATA
+            var map_styles_array = [
+              {
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#ebe3cd"
+                  }
+                ]
+              },
+              {
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#523735"
+                  }
+                ]
+              },
+              {
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                  {
+                    "color": "#f5f1e6"
+                  }
+                ]
+              },
+              {
+                "featureType": "administrative",
+                "stylers": [
+                  {
+                    "visibility": "simplified"
+                  }
+                ]
+              },
+              {
+                "featureType": "administrative",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                  {
+                    "color": "#c9b2a6"
+                  }
+                ]
+              },
+              {
+                "featureType": "administrative",
+                "elementType": "labels",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "featureType": "administrative.land_parcel",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                  {
+                    "color": "#dcd2be"
+                  }
+                ]
+              },
+              {
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#ae9e90"
+                  }
+                ]
+              },
+              {
+                "featureType": "landscape",
+                "elementType": "labels",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "featureType": "landscape.natural",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#dfd2ae"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#dfd2ae"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi",
+                "elementType": "labels",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#93817c"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi.park",
+                "elementType": "geometry.fill",
+                "stylers": [
+                  {
+                    "color": "#a5b076"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#447530"
+                  }
+                ]
+              },
+              {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#f5f1e6"
+                  },
+                  {
+                    "visibility": "simplified"
+                  }
+                ]
+              },
+              {
+                "featureType": "road",
+                "elementType": "labels",
+                "stylers": [
+                  {
+                    "visibility": "simplified"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.arterial",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#fdfcf8"
+                  }
+                ]
+              },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "labels",
+                    "stylers": [
+                      {
+                        "visibility": "off"
+                      }
+                    ]
+                },
+              {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#f8c967"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                  {
+                    "color": "#e9bc62"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.highway.controlled_access",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#e98d58"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.highway.controlled_access",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                  {
+                    "color": "#db8555"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#806b63"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit",
+                "elementType": "labels",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#dfd2ae"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.line",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#8f7d77"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.line",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                  {
+                    "color": "#ebe3cd"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#dfd2ae"
+                  }
+                ]
+              },
+              {
+                "featureType": "water",
+                "elementType": "geometry.fill",
+                "stylers": [
+                  {
+                    "color": "#b9d3c2"
+                  }
+                ]
+              },
+              {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#92998d"
+                  }
+                ]
+              }
+            ];
+            
+            //symbol for marker user
+            
+            var water_marker_icon = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoKIDxnPgogIDx0aXRsZT5iYWNrZ3JvdW5kPC90aXRsZT4KICA8cmVjdCBmaWxsPSJub25lIiBpZD0iY2FudmFzX2JhY2tncm91bmQiIGhlaWdodD0iNDAyIiB3aWR0aD0iNTgyIiB5PSItMSIgeD0iLTEiLz4KIDwvZz4KIDxnPgogIDx0aXRsZT5MYXllciAxPC90aXRsZT4KICA8ZyBpZD0iRW5lcmd5MjAiLz4KICA8ZyBpZD0iRW5lcmd5MTkiLz4KICA8ZyBpZD0iRW5lcmd5MTgiLz4KICA8ZyBpZD0iRW5lcmd5MTciLz4KICA8ZyBpZD0iRW5lcmd5MTYiLz4KICA8ZyBpZD0iRW5lcmd5MTUiLz4KICA8ZyBpZD0iRW5lcmd5MTQiLz4KICA8ZyBpZD0iRW5lcmd5MTMiLz4KICA8ZyBpZD0iRW5lcmd5MTIiLz4KICA8ZyB0cmFuc2Zvcm09InJvdGF0ZSgtMTgwIDE2IDE1Ljk5ODgpIiBpZD0iRW5lcmd5MTEiPgogICA8ZyBpZD0ic3ZnXzEiPgogICAgPHBhdGggaWQ9InN2Z18yIiBmaWxsPSIjMzRCMEMwIiBkPSJtMjgsMTljMCw2LjYyMDAwMSAtNS4zNzk5OTksMTIgLTEyLDEycy0xMiwtNS4zNzk5OTkgLTEyLC0xMmMwLC02LjQyIDEwLjgzLC0xNy4yNSAxMS4zLC0xNy43MWMwLjM5LC0wLjM5IDEuMDA5OTk5LC0wLjM5IDEuNDAwMDAxLDBjMC40Njk5OTksMC40NiAxMS4yOTk5OTksMTEuMjkgMTEuMjk5OTk5LDE3LjcxeiIvPgogICA8L2c+CiAgIDxnIGlkPSJzdmdfMyI+CiAgICA8cGF0aCBpZD0ic3ZnXzQiIGZpbGw9IiNGRkZGRkYiIGQ9Im0xNCwyNmMtMy4zMDg1OTksMCAtNiwtMi42OTE0MDEgLTYsLTZjMCwtMC41NTI3IDAuNDQ3OCwtMSAxLC0xczEsMC40NDczIDEsMWMwLDIuMjA2MSAxLjc5NDQsNCA0LDRjMC41NTIyLDAgMSwwLjQ0NzMgMSwxcy0wLjQ0NzgsMSAtMSwxeiIvPgogICA8L2c+CiAgPC9nPgogIDxnIGlkPSJFbmVyZ3kxMCIvPgogIDxnIGlkPSJFbmVyZ3kwOSIvPgogIDxnIGlkPSJFbmVyZ3kwOCIvPgogIDxnIGlkPSJFbmVyZ3kwNyIvPgogIDxnIGlkPSJFbmVyZ3kwNiIvPgogIDxnIGlkPSJFbmVyZ3kwNSIvPgogIDxnIGlkPSJFbmVyZ3kwNCIvPgogIDxnIGlkPSJFbmVyZ3kwMyIvPgogIDxnIGlkPSJFbmVyZ3kwMiIvPgogIDxnIGlkPSJFbmVyZ3kwMSIvPgogPC9nPgo8L3N2Zz4=";
+            
+            var user_marker_icon = 'user_marker_icon.svg';
 
             gMap = new google.maps.Map(document.getElementById('map'));
+            
+            //Default location if location of user is not found --Defualt location set to stuyvesant
+            var user_lat;
+            var user_lng;
 
             navigator.geolocation.getCurrentPosition(function(position) {
               // Center on user's current location if geolocation prompt allowed
-              // var user_lat = position.coords.latitude;
-              // var user_lng = position.coords.longitude;
-
+               var user_lat = position.coords.latitude;
+               var user_lng = position.coords.longitude;
+                
+              var initialLocation = new google.maps.LatLng(user_lat, user_lng);
+              gMap.setCenter(initialLocation);
+              gMap.setZoom(15);
+              gMap.setOptions({styles: map_styles_array, disableDefaultUI: true}); 
+                
+                addMarker(initialLocation, gMap, user_marker_icon);
+                
+                
+            }, function(positionError) {
+              // User denied geolocation prompt - default to Stuyvesant
               var user_lat = 40.717892;
               var user_lng = -74.013908;
               var initialLocation = new google.maps.LatLng(user_lat, user_lng);
               gMap.setCenter(initialLocation);
               gMap.setZoom(15);
-            }, function(positionError) {
-              // User denied geolocation prompt - default to Chicago
-              var user_lat = 40.717892;
-              var user_lng = -74.013908;
-              var initialLocation = new google.maps.LatLng(user_lat, user_lng);;
-              gMap.setCenter(initialLocation);
-              gMap.setZoom(13);
+              gMap.setOptions({styles: map_styles_array, disableDefaultUI: true});
+                
+                addMarker(initialLocation, gMap, user_marker_icon);
             });
+            
+            
 
-            //symbol for marker user
-
-            var user_marker_path = "M72.672,25.365L50,64.635l-22.671-39.27H72.672 M89.992,15.365H10.008L50,84.635L89.992,15.365L89.992,15.365z"
-
-            var user_marker = {
-              path: "M72.672,25.365L50,64.635l-22.671-39.27H72.672 M89.992,15.365H10.008L50,84.635L89.992,15.365L89.992,15.365z",
-              fillColor: '#FFCC00',
-              fillOpacity: .8,
-              scale: .5,
-              strokeColor: 'gold',
-              strokeWeight: 1,
-            }
-            var water_marker = {
-              path:"m28,19c0,6.620001 -5.379999,12 -12,12s-12,-5.379999 -12,-12c0,-6.42 10.83,-17.25 11.3,-17.71c0.39,-0.39 1.009999,-0.39 1.400001,0c0.469999,0.46 11.299999,11.29 11.299999,17.71z",
-              fillColor:"#34B0C0",
-            }
+            
 
 
-            var dataURI = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoKIDxnPgogIDx0aXRsZT5iYWNrZ3JvdW5kPC90aXRsZT4KICA8cmVjdCBmaWxsPSJub25lIiBpZD0iY2FudmFzX2JhY2tncm91bmQiIGhlaWdodD0iNDAyIiB3aWR0aD0iNTgyIiB5PSItMSIgeD0iLTEiLz4KIDwvZz4KIDxnPgogIDx0aXRsZT5MYXllciAxPC90aXRsZT4KICA8ZyBpZD0iRW5lcmd5MjAiLz4KICA8ZyBpZD0iRW5lcmd5MTkiLz4KICA8ZyBpZD0iRW5lcmd5MTgiLz4KICA8ZyBpZD0iRW5lcmd5MTciLz4KICA8ZyBpZD0iRW5lcmd5MTYiLz4KICA8ZyBpZD0iRW5lcmd5MTUiLz4KICA8ZyBpZD0iRW5lcmd5MTQiLz4KICA8ZyBpZD0iRW5lcmd5MTMiLz4KICA8ZyBpZD0iRW5lcmd5MTIiLz4KICA8ZyB0cmFuc2Zvcm09InJvdGF0ZSgtMTgwIDE2IDE1Ljk5ODgpIiBpZD0iRW5lcmd5MTEiPgogICA8ZyBpZD0ic3ZnXzEiPgogICAgPHBhdGggaWQ9InN2Z18yIiBmaWxsPSIjMzRCMEMwIiBkPSJtMjgsMTljMCw2LjYyMDAwMSAtNS4zNzk5OTksMTIgLTEyLDEycy0xMiwtNS4zNzk5OTkgLTEyLC0xMmMwLC02LjQyIDEwLjgzLC0xNy4yNSAxMS4zLC0xNy43MWMwLjM5LC0wLjM5IDEuMDA5OTk5LC0wLjM5IDEuNDAwMDAxLDBjMC40Njk5OTksMC40NiAxMS4yOTk5OTksMTEuMjkgMTEuMjk5OTk5LDE3LjcxeiIvPgogICA8L2c+CiAgIDxnIGlkPSJzdmdfMyI+CiAgICA8cGF0aCBpZD0ic3ZnXzQiIGZpbGw9IiNGRkZGRkYiIGQ9Im0xNCwyNmMtMy4zMDg1OTksMCAtNiwtMi42OTE0MDEgLTYsLTZjMCwtMC41NTI3IDAuNDQ3OCwtMSAxLC0xczEsMC40NDczIDEsMWMwLDIuMjA2MSAxLjc5NDQsNCA0LDRjMC41NTIyLDAgMSwwLjQ0NzMgMSwxcy0wLjQ0NzgsMSAtMSwxeiIvPgogICA8L2c+CiAgPC9nPgogIDxnIGlkPSJFbmVyZ3kxMCIvPgogIDxnIGlkPSJFbmVyZ3kwOSIvPgogIDxnIGlkPSJFbmVyZ3kwOCIvPgogIDxnIGlkPSJFbmVyZ3kwNyIvPgogIDxnIGlkPSJFbmVyZ3kwNiIvPgogIDxnIGlkPSJFbmVyZ3kwNSIvPgogIDxnIGlkPSJFbmVyZ3kwNCIvPgogIDxnIGlkPSJFbmVyZ3kwMyIvPgogIDxnIGlkPSJFbmVyZ3kwMiIvPgogIDxnIGlkPSJFbmVyZ3kwMSIvPgogPC9nPgo8L3N2Zz4=" ;
-            var svg = atob(dataURI.replace(/data:image\/svg\+xml;base64,/, ''));
-            console.log(svg);
+//            var dataURI = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoKIDxnPgogIDx0aXRsZT5iYWNrZ3JvdW5kPC90aXRsZT4KICA8cmVjdCBmaWxsPSJub25lIiBpZD0iY2FudmFzX2JhY2tncm91bmQiIGhlaWdodD0iNDAyIiB3aWR0aD0iNTgyIiB5PSItMSIgeD0iLTEiLz4KIDwvZz4KIDxnPgogIDx0aXRsZT5MYXllciAxPC90aXRsZT4KICA8ZyBpZD0iRW5lcmd5MjAiLz4KICA8ZyBpZD0iRW5lcmd5MTkiLz4KICA8ZyBpZD0iRW5lcmd5MTgiLz4KICA8ZyBpZD0iRW5lcmd5MTciLz4KICA8ZyBpZD0iRW5lcmd5MTYiLz4KICA8ZyBpZD0iRW5lcmd5MTUiLz4KICA8ZyBpZD0iRW5lcmd5MTQiLz4KICA8ZyBpZD0iRW5lcmd5MTMiLz4KICA8ZyBpZD0iRW5lcmd5MTIiLz4KICA8ZyB0cmFuc2Zvcm09InJvdGF0ZSgtMTgwIDE2IDE1Ljk5ODgpIiBpZD0iRW5lcmd5MTEiPgogICA8ZyBpZD0ic3ZnXzEiPgogICAgPHBhdGggaWQ9InN2Z18yIiBmaWxsPSIjMzRCMEMwIiBkPSJtMjgsMTljMCw2LjYyMDAwMSAtNS4zNzk5OTksMTIgLTEyLDEycy0xMiwtNS4zNzk5OTkgLTEyLC0xMmMwLC02LjQyIDEwLjgzLC0xNy4yNSAxMS4zLC0xNy43MWMwLjM5LC0wLjM5IDEuMDA5OTk5LC0wLjM5IDEuNDAwMDAxLDBjMC40Njk5OTksMC40NiAxMS4yOTk5OTksMTEuMjkgMTEuMjk5OTk5LDE3LjcxeiIvPgogICA8L2c+CiAgIDxnIGlkPSJzdmdfMyI+CiAgICA8cGF0aCBpZD0ic3ZnXzQiIGZpbGw9IiNGRkZGRkYiIGQ9Im0xNCwyNmMtMy4zMDg1OTksMCAtNiwtMi42OTE0MDEgLTYsLTZjMCwtMC41NTI3IDAuNDQ3OCwtMSAxLC0xczEsMC40NDczIDEsMWMwLDIuMjA2MSAxLjc5NDQsNCA0LDRjMC41NTIyLDAgMSwwLjQ0NzMgMSwxcy0wLjQ0NzgsMSAtMSwxeiIvPgogICA8L2c+CiAgPC9nPgogIDxnIGlkPSJFbmVyZ3kxMCIvPgogIDxnIGlkPSJFbmVyZ3kwOSIvPgogIDxnIGlkPSJFbmVyZ3kwOCIvPgogIDxnIGlkPSJFbmVyZ3kwNyIvPgogIDxnIGlkPSJFbmVyZ3kwNiIvPgogIDxnIGlkPSJFbmVyZ3kwNSIvPgogIDxnIGlkPSJFbmVyZ3kwNCIvPgogIDxnIGlkPSJFbmVyZ3kwMyIvPgogIDxnIGlkPSJFbmVyZ3kwMiIvPgogIDxnIGlkPSJFbmVyZ3kwMSIvPgogPC9nPgo8L3N2Zz4=" ;
+//            var svg = atob(dataURI.replace(/data:image\/svg\+xml;base64,/, ''));
+//            console.log(svg);
 
-
-            var stuyvesant = {lat: 40.717892, lng: -74.013908};
-            var marker = new google.maps.Marker({
-              position: stuyvesant,
-              map: gMap,
-              icon: user_marker
-            });
+            
+            
+            //
 
             var cityHall = {lat: 40.712690, lng: -74.006033};
-            var marker = new google.maps.Marker({
-              position: cityHall,
-              map: gMap,
-              icon: water_marker
-            });
-
-            var circle  = new google.maps.Circle({
-                  map:map,
-                  center:map.getCenter(),
-                  radius:300000*1.609344
-                });
+            addMarker(cityHall,gMap,water_marker_icon);
 
 
           }
+            
+            //add Marker function
+            function addMarker(location, map, icon) {
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    icon: icon
+                });
+            }
+            
         </script>
 
     </body>
