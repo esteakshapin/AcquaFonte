@@ -5,28 +5,11 @@
 
     </head>
     <body>
-        <div class="menubar">
-              <div class="left_options">
-                <ul class="menubar_options">
-                    <li><a href="../index/index.html" >HOME</a></li>
-                    <li><a id="active" href="../find_water/find_water.html">FIND WATER</a></li>
-                    <li href="../add_location/add_location.html"><a>ADD LOCATION</a></li>
-                </ul>
+        {% with home_id='not_active', find_water_id='active', add_location_id='not_active', contact_id='not_active',about_us_id='not_active',log_in_id='not_active' %}
 
-            </div>
-            <div class="right_options">
-                <ul class="menubar_options">
-                    <li><a href="../contact/contact.html">CONTACT US</a></li>
-                    <li><a href="../about_us/about_us.html">ABOUT US</a></li>
-                    <li><a>LOG IN</a></li>
-                </ul>
-
-            </div>
-            <div class="middle_icon">
-                <p>🅐🅠🅒🅤🅐 🅕🅞🅝🅣🅔</p>
-            </div>
-
-        </div>
+          {% include 'nav_bar.html' %}
+        
+        {% endwith %}
         <div id="map"></div>
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWYNykoEI-bVYIgavHIqLYkV5jGy87GQ&callback=initMap" async defer></script>
