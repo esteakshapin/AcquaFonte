@@ -1,6 +1,14 @@
+from pymongo import MongoClient
 from flask import Flask, render_template
+import ssl
 
 app = Flask(__name__)
+app.secret_key = '6yTWFOE7j05WpVr8ic'
+
+client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb.net:27017,cluster0-shard-00-01-lnqyp.mongodb.net:27017,cluster0-shard-00-02-lnqyp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority')
+
+db = client['AqcuaFonte']
+users = db['users']
 
 # Home Page
 @app.route('/', methods=['GET'])
@@ -28,9 +36,11 @@ def about_us_page():
   return render_template('about_us.html')
 
 # Log_in Page
-@app.route('/log_in', methods=['GET'])
+@app.route('/log_in', methods=['GET','POST'])
 def log_in_page():
-  return 
+  return render_template('log_in.html')
+
+  
 
 
 if __name__ == '__main__':
