@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import ssl
 
 app = Flask(__name__)
@@ -38,7 +38,16 @@ def about_us_page():
 # Log_in Page
 @app.route('/log_in', methods=['GET','POST'])
 def log_in_page():
-  return render_template('log_in.html')
+  if request.method == 'GET':
+    return render_template('log_in.html')
+  elif request.method == 'POST':
+    username = request.form['username']
+    password = request.form['password']
+    print(username, password)
+    if users.count_documents({'username':username, 'password':password}) > 0 :
+      print (users.find({usernmae,password}))
+
+
 
   
 

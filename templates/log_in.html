@@ -2,13 +2,13 @@
   <head>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="{{url_for('static', filename='main.js')}}"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
   </head>
   <body>
     <h3>Log In</h3>
-    <input id="username" type="text" placeholder="username" />
-    <input id="password" type="text" placeholder="password" />
-    <button id="submit" type="button">Submit</button>
+    <input id="username" type="text" placeholder="username" name='username'/>
+    <input id="password" type="text" placeholder="password" name='password'/>
+    <button id="submit" type="button" onclick="submit()">Submit</button>
   </body>
 
 </html>
