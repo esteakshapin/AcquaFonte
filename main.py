@@ -43,9 +43,7 @@ def log_in_page():
   elif request.method == 'POST':
     username = request.form['username']
     password = request.form['password']
-    print(username, password)
-    if users.count_documents({'username':username, 'password':password}) > 0 :
-      print (users.find({usernmae,password}))
+    return 'sucess'
 
 
 
