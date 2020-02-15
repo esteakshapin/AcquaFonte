@@ -69,14 +69,17 @@ def register():
     username = request.form['username']
     password = request.form['password']
     confirm_pass = request.form['confirm_pass']
+    print(username, password, confirm_pass)
     if (confirm_pass == password):
         if (users.count_documents({'username':username, 'password': password}) > 0):
-            alert('user already exists please log in')
+            print('user already exists please log in')
             return 'failure'
         else:
-            return
+            users.insert_one({'username':username, 'password':password})
+            print(users.find({'username':username, 'password':password}))
+            return 'success'
     else:
-        alert('passwords do not match up! Try Again')
+        print('passwords do not match up! Try Again')
         return 'failure'
 
 
