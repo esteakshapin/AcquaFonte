@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "acquafonte-2"
+name = "acquafonte"
 version = "0.1.0"
 description = ""
 authors = ["Esteak Shapin <esteakshapin@gmail.com>"]

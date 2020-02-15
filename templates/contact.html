@@ -1,17 +1,24 @@
 <html>
     <head>
         <title>HOME | Acqua Fonte</title>
-        <link rel="stylesheet" href="contact.css">
-        
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css')}}">
+
     </head>
     <body>
+      <div class="container">
+
         {% with home_id='not_active', find_water_id='not_active', add_location_id='not_active', contact_id='active',about_us_id='not_active',log_in_id='not_active' %}
 
           {% include 'nav_bar.html' %}
-        
+
         {% endwith %}
-    
-    
+
+        <div class="underDiv">
+          hello my name is john
+        </div>
+
+      </div>
+
     </body>
 
 

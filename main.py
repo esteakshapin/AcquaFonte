@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from flask import Flask, render_template, request
 import ssl
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = '6yTWFOE7j05WpVr8ic'
@@ -9,6 +10,19 @@ client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb
 
 db = client['AqcuaFonte']
 users = db['users']
+
+#adding header to disable caching -- REMOVE WHEN DEPLOYING SITE
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 # Home Page
 @app.route('/', methods=['GET'])

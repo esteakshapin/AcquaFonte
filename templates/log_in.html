@@ -5,6 +5,11 @@
     <script src="{{ url_for('static', filename='main.js') }}"></script>
   </head>
   <body>
+    {% with home_id='not_active', find_water_id='not_active', add_location_id='not_active', contact_id='not_active',about_us_id='not_active',log_in_id='active' %}
+
+      {% include 'nav_bar.html' %}
+
+    {% endwith %}
     <h3>Log In</h3>
     <input id="username" type="text" placeholder="username" name='username'/>
     <input id="password" type="text" placeholder="password" name='password'/>

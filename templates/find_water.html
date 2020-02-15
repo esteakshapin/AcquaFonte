@@ -5,24 +5,26 @@
 
     </head>
     <body>
+      <div class="container">
+
         {% with home_id='not_active', find_water_id='active', add_location_id='not_active', contact_id='not_active',about_us_id='not_active',log_in_id='not_active' %}
 
           {% include 'nav_bar.html' %}
-        
+
         {% endwith %}
-        <div id="map"></div>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWYNykoEI-bVYIgavHIqLYkV5jGy87GQ&callback=initMap" async defer></script>
-        
-        
+        <div class="underDiv">
+          <div id="map"></div>
+        </div>
 
-        
-        
-        
+      </div>
+
+
+
 
         <script>
         function initMap() {
-            
+
             //MAP STYLE DATA
             var map_styles_array = [
               {
@@ -304,15 +306,15 @@
                 ]
               }
             ];
-            
+
             //symbol for marker user
-            
+
             var water_marker_icon = "/static/find_water/water_marker_icon.svg";
-            
+
             var user_marker_icon = '/static/find_water/user_marker_icon.svg';
 
             gMap = new google.maps.Map(document.getElementById('map'));
-            
+
             //Default location if location of user is not found --Defualt location set to stuyvesant
             var user_lat;
             var user_lng;
@@ -321,15 +323,15 @@
               // Center on user's current location if geolocation prompt allowed
                var user_lat = position.coords.latitude;
                var user_lng = position.coords.longitude;
-                
+
               var initialLocation = new google.maps.LatLng(user_lat, user_lng);
               gMap.setCenter(initialLocation);
               gMap.setZoom(15);
-              gMap.setOptions({styles: map_styles_array, disableDefaultUI: true}); 
-                
+              gMap.setOptions({styles: map_styles_array, disableDefaultUI: true});
+
                 addMarker(initialLocation, gMap, user_marker_icon);
-                
-                
+
+
             }, function(positionError) {
               // User denied geolocation prompt - default to Stuyvesant
               var user_lat = 40.717892;
@@ -338,18 +340,18 @@
               gMap.setCenter(initialLocation);
               gMap.setZoom(15);
               gMap.setOptions({styles: map_styles_array, disableDefaultUI: true});
-                
+
                 addMarker(initialLocation, gMap, user_marker_icon);
             });
-            
+
             var locations_array = [
                 new google.maps.LatLng(40.855801,   -73.926628),
                 new google.maps.LatLng(40.78681,	-73.94522),
                 new google.maps.LatLng(40.71963,	-73.97751),
                 new google.maps.LatLng(40.80449,	-73.95149),
-                new google.maps.LatLng(40.8004, 	-73.9635)                
+                new google.maps.LatLng(40.8004, 	-73.9635)
             ]
-            
+
             for (var i = 0; i < locations_array.length; i++){
                 addMarker(locations_array[i], gMap,water_marker_icon);
             }
@@ -358,12 +360,12 @@
 
             var cityHall = {lat: 40.712690, lng: -74.006033};
             addMarker(cityHall,gMap,water_marker_icon);
-            
-        
+
+
 
 
           }
-            
+
             //add Marker function
             function addMarker(location, map, icon) {
                 marker = new google.maps.Marker({
@@ -372,8 +374,11 @@
                     icon: icon
                 });
             }
-            
+
         </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWYNykoEI-bVYIgavHIqLYkV5jGy87GQ&callback=initMap" async defer></script>
+
 
     </body>
 
