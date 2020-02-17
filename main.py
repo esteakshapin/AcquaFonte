@@ -1,7 +1,8 @@
 from pymongo import MongoClient
 from flask import Flask, render_template, request
 import ssl
-from datetime import timedelta
+# import csv
+import math
 
 app = Flask(__name__)
 app.secret_key = '6yTWFOE7j05WpVr8ic'
@@ -10,6 +11,39 @@ client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb
 
 db = client['AqcuaFonte']
 users = db['users']
+markers = db['markers']
+
+
+#finding markers in range
+def get_fountains_in_range(lat, lon, distance_range):
+  earth_radius = 3958.75
+  lat2 = lat
+  lon2 = lon
+  list_return = []
+
+  list_of_markers = markers.find({})
+
+  for docs in list_of_markers:
+    lat1 = docs['lat']
+    lon1 = docs['lon']
+
+    dlat = math.radians(lat2-lat1)
+    dlon = math.radians(lon2 - lon1)
+
+    sinDlat = math.sin(dlat/ 2)
+    sinDlon = math.sin(dlon / 2)
+
+    a = math.pow(sinDlat, 2) + math.pow(sinDlon, 2) * math.cos(math.radians(lat1)) * math.cos(math.radians(lat2))
+
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+
+    dist = earth_radius * c
+
+    if (dist < distance_range):
+      docs['dist'] = dist
+      list_return.append(docs)
+
+  return list_return
 
 #adding header to disable caching -- REMOVE WHEN DEPLOYING SITE
 @app.after_request
@@ -82,12 +116,21 @@ def register():
         print('passwords do not match up! Try Again')
         return 'failure'
 
+# markers1 = markers.find({'lon':{'$gt': -73.9}})
+# for docs in markers1:
+#   print(docs)
 
 
+    
+
+
+h = get_fountains_in_range(40.717892,-74.013908,1)
+for i in h:
+  print(i['name'], i['dist'])
 
 
 
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=8080, debug=True)
+  app.run(host='0.0.0.0', port=8080, debug=False)
