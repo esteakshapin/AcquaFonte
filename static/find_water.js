@@ -303,8 +303,8 @@ function initMap() {
 
   zoomL = 15;
 
-  var radius = Math.pow(2, (-(zoomL) + 14.679));
-  var cirRadius = radius / 0.00062137;
+  var radius = zoom_to_miles(zoomL);
+  var cirRadius = zoom_to_radius(zoomL);
 
   navigator.geolocation.getCurrentPosition(function(position) {
     // Center on user's current location if geolocation prompt allowed
@@ -390,9 +390,20 @@ function addCircle(lat, lon, map, r){
   circle.setMap(map);
 }
 
+// CONVERSION FROM ZOOM LEVEL TO MILES FOR SEARCH RADIUS
+function zoom_to_miles(zoom_level){
+  return Math.pow(2, (-(zoomL) + 14.679));
+}
+
+function zoom_to_radius(zoom_level){
+  return (zoom_to_miles(zoom_level) / 0.00062137);
+}
+
+
+// GETIING THE FUCNTION WITHIN THE GIVEN RANGE
 function get_Markers(lat, lon, dist_range, map){
   $.get('/get_markers', {'lat':lat, 'lon':lon, 'dist_range': dist_range}, function(data){
-
+    console.log(data);
     data.forEach(function (item, index) {
       marker_LatLng = new google.maps.LatLng(item['lat'],item['lon']);
       addMarker(marker_LatLng, map, water_marker_icon);
@@ -434,11 +445,18 @@ function addListener(map) {
       document.getElementById('redo-search').style.visibility = 'visible';
       idle = true;
     }
-      
-    });
+  });
 
   document.getElementById('redo-search').addEventListener('click', function(){
     console.log('button-clicked');
+    console.log(map.getCenter().lat());
+    map_center = map.getCenter();
+    zoomL = map.getZoom();
+    radius = zoom_to_miles(zoomL);
+    
+    get_Markers(map_center.lat(), map_center.lng(), radius);
+    addCircle(map_center.lat(), map_center.lng(), map, zoom_to_radius(zoomL));
+    
   });
 
 }
