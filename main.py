@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,jsonify
 import ssl
 # import csv
 import math
@@ -68,6 +68,22 @@ def home_page():
 def find_water_page():
   return render_template('find_water.html')
 
+# get markers 
+@app.route('/get_markers', methods=['GET'])
+def get_markers():
+  lat = float(request.args['lat'])
+  lon = float(request.args['lon'])
+  dist_range = float(request.args['dist_range'])
+
+  h = get_fountains_in_range(lat,lon,dist_range)
+
+  for i in h:
+    i.pop('_id')
+
+  return jsonify(h)
+  
+
+
 # Add_Location Page
 @app.route('/add_location', methods=['GET'])
 def add_location_page():
@@ -120,13 +136,6 @@ def register():
 # for docs in markers1:
 #   print(docs)
 
-
-    
-
-
-h = get_fountains_in_range(40.717892,-74.013908,1)
-for i in h:
-  print(i['name'], i['dist'])
 
 
 
