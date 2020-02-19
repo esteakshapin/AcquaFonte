@@ -4,6 +4,10 @@ var water_marker_icon = "/static/find_water/water_marker_icon.svg";
 
 var user_marker_icon = '/static/find_water/user_marker_icon.svg';
 
+var markersArray = [];
+
+var circle;
+
 
 //MAP STYLE DATA
 var map_styles_array = [
@@ -343,7 +347,6 @@ function initMap() {
   });
 
   addListener(gMap);
-  document.getElementById('redo-search').style.visibility = 'hidden';
 
 
   // TEST MARKER VARIABLES
@@ -374,10 +377,22 @@ function addMarker(location, map, icon) {
         map: map,
         icon: icon
     });
+    if (marker.icon != user_marker_icon){
+      markersArray.push(marker);
+    }
 }
 
+//delete marker function
+function clearMarkers(){
+    for (var i = 0; i < markersArray.length; i++){
+      markersArray[i].setMap(null);
+    }
+    markersArray.length = 0;
+}
+
+//Drawing circle with the search radius
 function addCircle(lat, lon, map, r){
-    var circle = new google.maps.Circle({
+    circle = new google.maps.Circle({
     center:new google.maps.LatLng(lat, lon),
     radius: r,
     strokeColor:'#113788',
@@ -388,6 +403,11 @@ function addCircle(lat, lon, map, r){
   });
 
   circle.setMap(map);
+}
+
+//delete search circle from the map
+function deleteCircle(){
+  circle.setMap(null);
 }
 
 // CONVERSION FROM ZOOM LEVEL TO MILES FOR SEARCH RADIUS
@@ -403,13 +423,20 @@ function zoom_to_radius(zoom_level){
 // GETIING THE FUCNTION WITHIN THE GIVEN RANGE
 function get_Markers(lat, lon, dist_range, map){
   $.get('/get_markers', {'lat':lat, 'lon':lon, 'dist_range': dist_range}, function(data){
-    console.log(data);
-    data.forEach(function (item, index) {
-      marker_LatLng = new google.maps.LatLng(item['lat'],item['lon']);
-      addMarker(marker_LatLng, map, water_marker_icon);
-    });
-  })
+    if (data.length > 0){
+      data.forEach(function (item, index) {
+        marker_LatLng = new google.maps.LatLng(item['lat'],item['lon']);
+        addMarker(marker_LatLng, map, water_marker_icon);
+      });
+
+    }else{
+      alert('No fountains found. Please increase your search area or search a different region.');
+    }
+    
+  });
 }
+
+
 
 function addListener(map) {
   var idle;
@@ -453,9 +480,14 @@ function addListener(map) {
     map_center = map.getCenter();
     zoomL = map.getZoom();
     radius = zoom_to_miles(zoomL);
+    this.style.visibility = 'hidden';
+
+    clearMarkers();
+    deleteCircle();
     
-    get_Markers(map_center.lat(), map_center.lng(), radius);
+    get_Markers(map_center.lat(), map_center.lng(), radius, map);
     addCircle(map_center.lat(), map_center.lng(), map, zoom_to_radius(zoomL));
+    
     
   });
 
