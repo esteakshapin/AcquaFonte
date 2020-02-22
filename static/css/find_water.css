@@ -26,11 +26,12 @@ html,body{
   padding:1em;
   visibility:hidden;
 }
-.fountain_detail{
+#fountain_detail{
   position:absolute;
   z-index:2;
-  bottom:10%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  top:10em;
+  left:5em;
   padding:1em;
+  background-color: white;
+  visibility: hidden;
 }

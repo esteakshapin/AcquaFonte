@@ -384,9 +384,17 @@ function addClickEvent(){
   if (markersArray.length > 0){
     markersArray.forEach(function(item, index){
       item.addListener('click', function(){
-        alert(item.name+ ' '+item.position+ '' + item.comments);
+        var infoBox = document.getElementById('fountain_detail');
+        var childs = infoBox.children;
+        childs[0].innerHTML = item['name'];
+        childs[1].innerHTML = item['status'];
+        childs[2].innerHTML = item['type'];
+        childs[3].innerHTML = item['comments'];
+        infoBox.style.visibility = 'visible';
+
+        console.log(childs);
       });
-      
+
     });
   }
 }
