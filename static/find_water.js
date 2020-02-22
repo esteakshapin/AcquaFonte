@@ -364,7 +364,7 @@ function addWaterMarker(location, map, icon, name, status, type, dist, comments,
         type:type,
         dist:dist,
         comments:comments,
-        ratings:rating
+        ratings:ratings
     });
 
   markersArray.push(marker);
