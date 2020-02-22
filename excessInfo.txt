@@ -18,3 +18,28 @@
 #       i+= 1
 #     else:
 #       i+=1
+
+
+
+  //zoom 15 - radius == .8
+  //zoom 14 -radius == 1.6
+  //(newZoomLevel - 15)^2
+
+  // TEST MARKER VARIABLES
+
+  // var locations_array = [
+  //     new google.maps.LatLng(40.855801,   -73.926628),
+  //     new google.maps.LatLng(40.78681,	-73.94522),
+  //     new google.maps.LatLng(40.71963,	-73.97751),
+  //     new google.maps.LatLng(40.80449,	-73.95149),
+  //     new google.maps.LatLng(40.8004, 	-73.9635)
+  // ]
+
+  // for (var i = 0; i < locations_array.length; i++){
+  //     addMarker(locations_array[i], gMap,water_marker_icon);
+  // }
+
+  // //adding cityhall as water location as a test
+  // var cityHall = {lat: 40.717892, lng: -74.013908};
+
+  // addMarker(cityHall,gMap,water_marker_icon);

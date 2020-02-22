@@ -300,11 +300,6 @@ function initMap() {
   var user_lat;
   var user_lng;
 
-
-  //zoom 15 - radius == .8
-  //zoom 14 -radius == 1.6
-  //(newZoomLevel - 15)^2
-
   zoomL = 15;
 
   var radius = zoom_to_miles(zoomL);
@@ -348,26 +343,6 @@ function initMap() {
 
   addListener(gMap);
 
-
-  // TEST MARKER VARIABLES
-
-  // var locations_array = [
-  //     new google.maps.LatLng(40.855801,   -73.926628),
-  //     new google.maps.LatLng(40.78681,	-73.94522),
-  //     new google.maps.LatLng(40.71963,	-73.97751),
-  //     new google.maps.LatLng(40.80449,	-73.95149),
-  //     new google.maps.LatLng(40.8004, 	-73.9635)
-  // ]
-
-  // for (var i = 0; i < locations_array.length; i++){
-  //     addMarker(locations_array[i], gMap,water_marker_icon);
-  // }
-
-  // //adding cityhall as water location as a test
-  // var cityHall = {lat: 40.717892, lng: -74.013908};
-
-  // addMarker(cityHall,gMap,water_marker_icon);
-
 }
 
 //add Marker function
@@ -391,7 +366,7 @@ function addWaterMarker(location, map, icon, name, status, type, dist, comments,
         comments:comments,
         ratings:rating
     });
-  
+
   markersArray.push(marker);
   google.maps.event.addListener(marker, 'click', function(){
     alert(marker.name);
@@ -444,13 +419,21 @@ function get_Markers(lat, lon, dist_range, map){
       console.log(data[0]);
       data.forEach(function (item, index) {
         marker_LatLng = new google.maps.LatLng(item['lat'],item['lon']);
-        addMarker(marker_LatLng, map, water_marker_icon);
+        var name = item['name'];
+        var status = item['status'];
+        var type = item['type'];
+        var dist  = item['dist'];
+        var comments = item['comments'];
+        var ratings = item['ratings']
+
+
+        addWaterMarker(marker_LatLng, map, water_marker_icon, name, status, type, dist, comments, ratings);
       });
 
     }else{
       alert('No fountains found. Please increase your search area or search a different region.');
     }
-    
+
   });
 }
 
@@ -502,11 +485,11 @@ function addListener(map) {
 
     clearMarkers();
     deleteCircle();
-    
+
     get_Markers(map_center.lat(), map_center.lng(), radius, map);
     addCircle(map_center.lat(), map_center.lng(), map, zoom_to_radius(zoomL));
-    
-    
+
+
   });
 
 }
