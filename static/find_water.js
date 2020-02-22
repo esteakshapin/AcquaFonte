@@ -368,9 +368,6 @@ function addWaterMarker(location, map, icon, name, status, type, dist, comments,
     });
 
   markersArray.push(marker);
-  google.maps.event.addListener(marker, 'click', function(){
-    alert(marker.name);
-  });
 
 }
 
@@ -428,8 +425,14 @@ function get_Markers(lat, lon, dist_range, map){
 
 
         addWaterMarker(marker_LatLng, map, water_marker_icon, name, status, type, dist, comments, ratings);
-      });
 
+      });
+      markersArray[0].addListener('click', function(){
+        alert(markersArray[0].dist);
+      })
+      markersArray[1].addListener('click', function(){
+        alert(markersArray[1].dist);
+      })
     }else{
       alert('No fountains found. Please increase your search area or search a different region.');
     }
