@@ -377,9 +377,26 @@ function addMarker(location, map, icon) {
         map: map,
         icon: icon
     });
-    if (marker.icon != user_marker_icon){
-      markersArray.push(marker);
-    }
+}
+
+function addWaterMarker(location, map, icon, name, status, type, dist, comments, ratings){
+  marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        icon: icon,
+        name:name,
+        status:status,
+        type:type,
+        dist:dist,
+        comments:comments,
+        ratings:rating
+    });
+  
+  markersArray.push(marker);
+  google.maps.event.addListener(marker, 'click', function(){
+    alert(marker.name);
+  });
+
 }
 
 //delete marker function
@@ -424,6 +441,7 @@ function zoom_to_radius(zoom_level){
 function get_Markers(lat, lon, dist_range, map){
   $.get('/get_markers', {'lat':lat, 'lon':lon, 'dist_range': dist_range}, function(data){
     if (data.length > 0){
+      console.log(data[0]);
       data.forEach(function (item, index) {
         marker_LatLng = new google.maps.LatLng(item['lat'],item['lon']);
         addMarker(marker_LatLng, map, water_marker_icon);
