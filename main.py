@@ -132,9 +132,6 @@ def register():
         print('passwords do not match up! Try Again')
         return 'failure'
 
-# markers1 = markers.find({'lon':{'$gt': -73.9}})
-# for docs in markers1:
-#   print(docs)
 
 
 

@@ -379,6 +379,18 @@ function clearMarkers(){
     markersArray.length = 0;
 }
 
+//allowing all the markers to be clicked and subsequently display something
+function addClickEvent(){
+  if (markersArray.length > 0){
+    markersArray.forEach(function(item, index){
+      item.addListener('click', function(){
+        alert(item.name+ ' '+item.position+ '' + item.comments);
+      });
+      
+    });
+  }
+}
+
 //Drawing circle with the search radius
 function addCircle(lat, lon, map, r){
     circle = new google.maps.Circle({
@@ -427,12 +439,10 @@ function get_Markers(lat, lon, dist_range, map){
         addWaterMarker(marker_LatLng, map, water_marker_icon, name, status, type, dist, comments, ratings);
 
       });
-      markersArray[0].addListener('click', function(){
-        alert(markersArray[0].dist);
-      })
-      markersArray[1].addListener('click', function(){
-        alert(markersArray[1].dist);
-      })
+
+      //adding click function to all the water markers
+      addClickEvent();
+
     }else{
       alert('No fountains found. Please increase your search area or search a different region.');
     }
