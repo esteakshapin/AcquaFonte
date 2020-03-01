@@ -6,19 +6,19 @@ html,body{
   width: 100vw;
   height: 100vh;
   display: table;
-  background-image: url('static/Messages Image(3732088414).png');
 }
 .underDiv {
   display: table-row;
   height: 100%;
   width: 100%;
-  background-color: red;
+  background-image: url('/static/home_page_background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 1;
 }
-p{
-  color:antiquewhite;
-  padding: 0;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: blue;
 
+.underDiv p{
+  color: antiquewhite;
+  text-align: center;
+  opacity: 2;
 }
