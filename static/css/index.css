@@ -11,14 +11,19 @@ html,body{
   display: table-row;
   height: 100%;
   width: 100%;
-  background-image: url('/static/home_page_background.png');
+  background-image: url('/static/home_page_background_transparent.png');
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 1;
 }
 
-.underDiv p{
+.underDiv h1{
   color: antiquewhite;
   text-align: center;
-  opacity: 2;
+}
+.second_page{
+  height: 100vh;
+}
+button{
+  
 }
