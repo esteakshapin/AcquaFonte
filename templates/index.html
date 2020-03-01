@@ -2,22 +2,25 @@
     <head>
         <title>HOME | Acqua Fonte</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
-        
+
     </head>
     <body>
-      {% with home_id='active', find_water_id='not_active', add_location_id='not_active', contact_id='not_active',about_us_id='not_active',log_in_id='not_active' %}
+      <div class='container'>
+        {% with home_id='active', find_water_id='not_active', add_location_id='not_active', contact_id='not_active',about_us_id='not_active',log_in_id='not_active' %}
 
-        {% include 'nav_bar.html' %}
-        
-      {% endwith %}
-      
-        <div>
-            🅐🅠🅒🅤🅐 🅕🅞🅝🅣🅔
-        
-        
+          {% include 'nav_bar.html' %}
+
+        {% endwith %}
+
+          <div class='underDiv'>
+              <p>🅐🅠🅒🅤🅐 🅕🅞🅝🅣🅔</p>
+
+
+          </div>
         </div>
-    
-    
+        <p> jaef </p>
+
+
     </body>
 
 
