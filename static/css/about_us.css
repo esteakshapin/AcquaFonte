@@ -85,3 +85,7 @@ p1 {
     font-size: .75em;
 
 }
+.partners{
+  border-style: groove;
+  border-width: .2em 0em 0em 0em;
+}

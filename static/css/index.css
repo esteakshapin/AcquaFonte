@@ -12,8 +12,8 @@ html,body{
   height: 100%;
   width: 100%;
   background-image: linear-gradient(
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.5)
+      rgba(250, 235, 215, .7),
+      rgba(250, 235, 215, .7)
     ), url('/static/img/home_page_background_with_markers_transparent.PNG');
   background-repeat: no-repeat;
   background-size: cover;
@@ -57,3 +57,5 @@ button{
   align-items: center;
   justify-content: center;
 }
+
+

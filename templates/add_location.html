@@ -1,10 +1,37 @@
 <html>
     <head>
         <title>HOME | Acqua Fonte</title>
-        <link rel="stylesheet" href="add_location.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/add_location.css')}}">
 
     </head>
     <body>
+      <div class="container">
+
+        {% with home_id='not_active', find_water_id='not_active', add_location_id='active', contact_id='not_active',about_us_id='not_active',log_in_id='not_active' %}
+
+          {% include 'nav_bar.html' %}
+
+        {% endwith %}
+
+        <div class="underDiv">
+          <div class="bgimg">
+            <div class="middle">
+              <h1>COMING SOON</h1>
+              <hr>
+              <p>35 days</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </body>
+
+
+</html>
+
+<!-- <div class='continer'>
         {% with home_id='not_active', find_water_id='not_active', add_location_id='active', contact_id='not_active',about_us_id='not_active',log_in_id='not_active' %}
 
           {% include 'nav_bar.html' %}
@@ -27,10 +54,17 @@
             <option value="type4">Type 4</option>
           </select>
         </form>
+        <div class="underDiv">
+          <div class="bgimg">
+            <div class="middle">
+              <h1>COMING SOON</h1>
+              <hr>
+              <p>35 days</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      -->
 
 
-
-    </body>
-
-
-</html>
