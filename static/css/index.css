@@ -11,14 +11,14 @@ html,body{
   display: table-row;
   height: 100%;
   width: 100%;
-  background-image: url('/static/home_page_background_with_markers.png');
+  background-image: url('/static/img/home_page_background_with_markers_transparent.PNG');
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 1;
 }
 
 .underDiv h1{
-  color: #00adb5;
+  color: #007c82;
   font-size: 4em;
   text-align: center;
 }
