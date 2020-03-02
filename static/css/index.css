@@ -11,30 +11,46 @@ html,body{
   display: table-row;
   height: 100%;
   width: 100%;
-  background-image: url("{{url_for('static', filename='home_page_background_transparent.png'}}");
+  background-image: url('/static/home_page_background_with_markers.png');
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 1;
 }
 
 .underDiv h1{
-  color: antiquewhite;
+  color: #00adb5;
+  font-size: 4em;
   text-align: center;
 }
 .second_page{
   height: 100vh;
 }
 button{
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 16px 32px;
+  padding: 1em 2em;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 8px 4px;
+  font-size: 1.2em;
   transition-duration: 0.4s;
   cursor: pointer;
 
+}
+
+.button1 {
+  background-color:cornsilk;
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.button1:hover {
+  background-color:#00adb5;
+  color: white;
+}
+
+#titleBox{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
