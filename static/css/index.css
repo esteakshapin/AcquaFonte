@@ -11,22 +11,78 @@ html,body{
   display: table-row;
   height: 100%;
   width: 100%;
-  background-image: linear-gradient(
-      rgba(250, 235, 215, .7),
-      rgba(250, 235, 215, .7)
-    ), url('/static/img/home_page_background_with_markers_transparent.PNG');
-  background-repeat: no-repeat;
-  background-size: cover;
   opacity: 1;
 }
 
-.underDiv h1{
+.TitlePageContainer{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#titleBox{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.imgContainer{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.img-original{
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: green;
+}
+.img-original img{
+  width:100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.img-new{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  overflow: hidden;
+  /* Force Hardware Acceleration in WebKit */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: width .4s;
+}
+
+#new-img-id{
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+
+
+h1{
   color: #00adb5;
   font-size: 4em;
   text-align: center;
+  transition-duration: 0.8s;
 }
 .second_page{
   height: 100vh;
+  position: relative;
 }
 button{
   padding: 1em 2em;
@@ -40,7 +96,7 @@ button{
 
 .button1 {
   background-color:cornsilk;
-  color: black; 
+  color: black;
   border: 2px solid #008CBA;
 }
 
@@ -49,13 +105,60 @@ button{
   color: white;
 }
 
-#titleBox{
+
+
+/* .imageContainer{
+  height: 100%;
+  position: relative;
+}
+.image-original{
   width: 100%;
   height: 100%;
+}
+.image-original img{
+  height: 100%;
+}
+.image-new{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  overflow: hidden; */
+
+  /* Force Hardware Acceleration in WebKit */
+
+  /* transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: width .4s;
+}
+.image-new:hover{
+  width: 100%;
+}
+.image-new img{
+  height: 100%;
+}
+
+.button2 {
+  background-color:cornsilk;
+  color: black;
+  border: 2px solid #008CBA;
+}
+
+.button2:hover {
+  background-color:#00adb5;
+  color: white;
+}
+
+#titleBox2{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-
+  z-index: 2;
+} */

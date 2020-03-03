@@ -3,7 +3,9 @@
     <head>
         <title>HOME | Acqua Fonte</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
-
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
     </head>
     <body>
       <div class='container'>
@@ -14,16 +16,39 @@
         {% endwith %}
 
           <div class='underDiv'>
-
-
-            <div id='titleBox'>
-              <h1>🅐🅠🅒🅤🅐 🅕🅞🅝🅣🅔 </h1>
-              <a href='find_water'><button class='button1' href='find_water'>Find Water!</button></a>
+            <div class='TitlePageContainer'>
+              <div id='titleBox'>
+                <h1>🅐🅠🅒🅤🅐 🅕🅞🅝🅣🅔 </h1>
+                <a href='find_water'><button class='button1' href='find_water'>Find Water!</button></a>
+              </div>
+              <div class="imgContainer">
+                <div class='img-original'>
+                    <img id='original-img-id' src="/static/img/image.png">
+                </div>
+                <div class='img-new'>
+                  <img id='new-img-id' src='/static/img/home_page_background_with_markers_transparent.PNG'>
+              </div>
             </div>
           </div>
 
         </div>
-        <div class='second_page'><img src="{{url_for('static', filename='img/home_page_background_with_markers.PNG')}}" </div>
+
+        <!-- <div class='second_page'>
+
+          <div id='titleBox2'>
+            <h1>🅐🅠🅒🅤🅐 🅕🅞🅝🅣🅔 </h1>
+            <a href='find_water'><button class='button2' href='find_water'>Find Water!</button></a>
+          </div>
+
+          <div class='imageContainer'>
+            <div class='image-original'>
+              <img src="/static/img/image.png">
+            </div>
+            <div class="image-new">
+              <img src='/static/img/home_page_background_with_markers_transparent.PNG'>
+            </div>
+          </div>
+        </div> -->
 
 
     </body>
