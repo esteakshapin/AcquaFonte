@@ -20,13 +20,15 @@ html,body{
   opacity: 1;
 }
 
-.underDiv h1{
+h1{
   color: #00adb5;
   font-size: 4em;
   text-align: center;
+  transition-duration: 0.8s;
 }
 .second_page{
   height: 100vh;
+  position: relative;
 }
 button{
   padding: 1em 2em;
@@ -74,7 +76,7 @@ button{
   top: 0;
   left: 0;
   height: 100%;
-  width: 20%;
+  width: 0%;
   overflow: hidden;
   /* Force Hardware Acceleration in WebKit */
   transform: translateZ(0);
@@ -86,4 +88,28 @@ button{
 }
 .image-new img{
   height: 100%;
+}
+
+.button2 {
+  background-color:cornsilk;
+  color: black;
+  border: 2px solid #008CBA;
+}
+
+.button2:hover {
+  background-color:#00adb5;
+  color: white;
+}
+
+#titleBox2{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
 }
