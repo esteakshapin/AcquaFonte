@@ -321,7 +321,7 @@ function initMap() {
       get_Markers(user_lat, user_lng, radius, gMap);
 
       //adding search circle
-      addCircle(user_lat,user_lng,gMap,cirRadius);
+      // addCircle(user_lat,user_lng,gMap,cirRadius);
 
   }, function(positionError) {
     // User denied geolocation prompt - default to Stuyvesant
@@ -329,7 +329,7 @@ function initMap() {
     var user_lng = -74.013908;
     var initialLocation = new google.maps.LatLng(user_lat, user_lng);
     gMap.setCenter(initialLocation);
-    gMap.setZoom(15);
+    gMap.setZoom(zoomL);
     gMap.setOptions({styles: map_styles_array, disableDefaultUI: true});
 
       addMarker(initialLocation, gMap, user_marker_icon);
@@ -338,7 +338,7 @@ function initMap() {
       get_Markers(user_lat, user_lng, radius, gMap);
 
       //adding search circle
-      addCircle(user_lat,user_lng,gMap,cirRadius);
+      // addCircle(user_lat,user_lng,gMap,cirRadius);
   });
 
   addListener(gMap);
