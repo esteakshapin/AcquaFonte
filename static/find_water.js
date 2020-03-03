@@ -89,6 +89,15 @@ var map_styles_array = [
     ]
   },
   {
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#000000"
+      }
+    ]
+  },
+  {
     "featureType": "landscape.natural",
     "elementType": "geometry",
     "stylers": [
@@ -505,10 +514,10 @@ function addListener(map) {
     this.style.visibility = 'hidden';
 
     clearMarkers();
-    deleteCircle();
+    // deleteCircle();
 
     get_Markers(map_center.lat(), map_center.lng(), radius, map);
-    addCircle(map_center.lat(), map_center.lng(), map, zoom_to_radius(zoomL));
+    // addCircle(map_center.lat(), map_center.lng(), map, zoom_to_radius(zoomL));
 
 
   });
