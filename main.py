@@ -139,11 +139,11 @@ def register():
             return 'failure'
         else:
             users.insert_one({'username':username, 'password':password, 'first_name':first_name,'last_name':last_name})
-
-            sesion['first_name'] = first_name
-            sesion['last_name'] = last_name
+            session['first_name'] = first_name
+            session['last_name'] = last_name
             session['username'] = username
             session['logged_in'] = True
+            print('added new user')
             return 'success'
     else:
         print('passwords do not match up! Try Again')
