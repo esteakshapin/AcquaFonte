@@ -2,7 +2,7 @@
   <head>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="{{ url_for('static', filename='log_in.js') }}"></script>
   </head>
   <body>
     {% with home_id='not_active', find_water_id='not_active', add_location_id='not_active', contact_id='not_active',about_us_id='not_active',log_in_id='active' %}
@@ -10,22 +10,27 @@
       {% include 'nav_bar.html' %}
 
     {% endwith %}
-    <h3>Log In</h3>
-    <input id="username" type="text" placeholder="username" name='username'/>
-    <input id="password" type="text" placeholder="password" name='password'/>
-    <button id="submit" type="button" name="submit">Submit</button>
-    <br>
-    <br>
-    <br>
-    <h3>Register</h3>
-    <input id="register_first_name" type="text" placeholder="first name" name='username'/><br>
-    <input id="register_last_name" type="text" placeholder="last name" name='username'/><br>
-    <input id="register_username" type="text" placeholder="username" name='username'/><br>
-    <input id="register_password" type="text" placeholder="password" name='password'/><br>
-    <input id="confirm_pass" type="text" placeholder="confirm password" name='password'/><br>
+    {% if not logged_in %}
+
+      <h3>Log In</h3>
+      <input id="username" type="text" placeholder="username" name='username'/>
+      <input id="password" type="text" placeholder="password" name='password'/>
+      <button id="submit" type="button" name="submit">Submit</button>
+      <br>
+      <br>
+      <br>
+      <h3>Register</h3>
+      <input id="register_first_name" type="text" placeholder="first name" name='username'/><br>
+      <input id="register_last_name" type="text" placeholder="last name" name='username'/><br>
+      <input id="register_username" type="text" placeholder="username" name='username'/><br>
+      <input id="register_password" type="text" placeholder="password" name='password'/><br>
+      <input id="confirm_pass" type="text" placeholder="confirm password" name='password'/><br>
 
 
-    <button id="register_submit" type="button" name="submit">Submit</button>
+      <button id="register_submit" type="button" name="submit">Submit</button>
+    {% else %}
+      <h3> Welcome {{first_name}} {{last_name}}</h3>
+    {% endif %}
 
 
   </body>

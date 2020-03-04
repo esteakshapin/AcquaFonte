@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from flask import Flask, render_template, request,jsonify
+from flask import Flask, render_template, request,jsonify,session
 import ssl
 # import csv
 import math
@@ -105,12 +105,21 @@ def about_us_page():
 @app.route('/log_in', methods=['GET','POST'])
 def log_in_page():
   if request.method == 'GET':
-    return render_template('log_in.html')
+    if (session.get('logged_in') == None):
+      session['logged_in'] = False
+    return render_template('log_in.html', logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'))
+
   elif request.method == 'POST':
     username = request.form['username']
     password = request.form['password']
     if (users.count_documents({'username':username, 'password': password}) > 0):
-        print('found user')
+        user = users.find({'username':username, 'password':password})
+        user = user[0]
+        session['first_name'] = user["first_name"]
+        session['last_name'] = user["last_name"]
+        session['username'] = username
+        session['logged_in'] = True
+        print('logged in')
         return 'success'
     else:
         print("user not found",username,password)
@@ -118,17 +127,23 @@ def log_in_page():
 
 @app.route('/register', methods=['POST'])
 def register():
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
     username = request.form['username']
     password = request.form['password']
     confirm_pass = request.form['confirm_pass']
     print(username, password, confirm_pass)
     if (confirm_pass == password):
-        if (users.count_documents({'username':username, 'password': password}) > 0):
-            print('user already exists please log in')
+        if (users.count_documents({'username':username}) > 0):
+            print('Username Taken')
             return 'failure'
         else:
-            users.insert_one({'username':username, 'password':password})
-            print(users.find({'username':username, 'password':password}))
+            users.insert_one({'username':username, 'password':password, 'first_name':first_name,'last_name':last_name})
+
+            sesion['first_name'] = first_name
+            sesion['last_name'] = last_name
+            session['username'] = username
+            session['logged_in'] = True
             return 'success'
     else:
         print('passwords do not match up! Try Again')

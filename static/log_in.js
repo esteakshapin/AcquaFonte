@@ -10,10 +10,14 @@ $(document).ready(function () {
       });
   });
   $('#register_submit').click(function (){
+    const first_name = $('#register_first_name').val();
+    const last_name = $('#register_last_name').val();
     const username = $('#register_username').val();
     const password = $('#register_password').val();
     const confirm_pass = $('#confirm_pass').val();
     $.post('/register', {
+      first_name:first_name,
+      last_name:last_name,
       username:username,
       password:password,
       confirm_pass:confirm_pass
