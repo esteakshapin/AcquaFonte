@@ -16,17 +16,20 @@
       <div class="login-page">
         <div class="form">
           <form class="register-form">
-            <input type="text" placeholder="name"/>
-            <input type="password" placeholder="password"/>
-            <input type="text" placeholder="email address"/>
-            <button>create</button>
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
+            <input id='register_first_name' type="text" placeholder="first name"/>
+            <input id='register_last_name' type="text" placeholder="last name"/>
+            <input id='register_username' type="text" placeholder="username"/>
+            <input id='register_password' type="password" placeholder="password"/>
+            <input id='confirm_pass' type="password" placeholder="confirm password"/>
+
+            <button id="register_submit" type="button" name="register_submit">create</button>
+            <p class="message">Already registered? <a id="login_form" href="#">Sign In</a></p>
           </form>
           <form class="login-form">
             <input id='username' type="text" placeholder="username"/>
             <input id='password' type="password" placeholder="password"/>
             <button id='submit' type="button" name="submit">login</button>
-            <p class="message">Not registered? <a href="#">Create an account</a></p>
+            <p class="message">Not registered? <a id='register_form' href="#">Create an account</a></p>
           </form>
         </div>
       </div>

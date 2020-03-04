@@ -30,4 +30,12 @@ $(document).ready(function () {
         document.location.reload();
       });
   });
+  $('#register_form').click(function(){
+    $(".register-form").css('display', 'inherit');
+    $(".login-form").css('display', 'none');
+  });
+  $('#login_form').click(function(){
+    $(".register-form").css('display', 'none');
+    $(".login-form").css('display', 'inherit');
+  });
 });
