@@ -9,6 +9,11 @@ $(document).ready(function () {
         document.location.reload();
       });
   });
+  $('#log_out').click(function (){
+    $.post('/log_out',{}).done(function(){
+      document.location.reload();
+    });
+  });
   $('#register_submit').click(function (){
     const first_name = $('#register_first_name').val();
     const last_name = $('#register_last_name').val();

@@ -125,6 +125,16 @@ def log_in_page():
         print("user not found",username,password)
         return 'failure'
 
+#log_out mechanism
+@app.route('/log_out', methods=['POST'])
+def log_out():
+  session.pop('username')
+  session.pop('first_name')
+  session.pop('last_name')
+  session.pop('logged_in')
+  return 'success'
+
+# register mechanism
 @app.route('/register', methods=['POST'])
 def register():
     first_name = request.form['first_name']

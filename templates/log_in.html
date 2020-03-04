@@ -14,7 +14,7 @@
 
       <h3>Log In</h3>
       <input id="username" type="text" placeholder="username" name='username'/>
-      <input id="password" type="text" placeholder="password" name='password'/>
+      <input id="password" type="password" placeholder="password" name='password'/>
       <button id="submit" type="button" name="submit">Submit</button>
       <br>
       <br>
@@ -23,13 +23,14 @@
       <input id="register_first_name" type="text" placeholder="first name" name='username'/><br>
       <input id="register_last_name" type="text" placeholder="last name" name='username'/><br>
       <input id="register_username" type="text" placeholder="username" name='username'/><br>
-      <input id="register_password" type="text" placeholder="password" name='password'/><br>
-      <input id="confirm_pass" type="text" placeholder="confirm password" name='password'/><br>
+      <input id="register_password" type="password" placeholder="password" name='password'/><br>
+      <input id="confirm_pass" type="password" placeholder="confirm password" name='password'/><br>
 
 
       <button id="register_submit" type="button" name="submit">Submit</button>
     {% else %}
       <h3> Welcome {{first_name}} {{last_name}}</h3>
+      <button id='log_out' type='button'>Log Out</button>
     {% endif %}
 
 
