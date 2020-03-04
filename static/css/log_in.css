@@ -34,7 +34,8 @@
   width: 100%;
   border: 0;
   padding: 15px;
-  color: #FFFFFF;#text in button color
+  /* text in button color */
+  color: #FFFFFF;
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
@@ -52,9 +53,15 @@
   color: #6cd3f5;
   text-decoration: none;
 }
+
+/* displaying register vs .login-form */
 .form .register-form {
-  display: none;
+  display:none;
 }
+.form .login-form{
+  display: inherit;
+}
+
 .container {
   position: relative;
   z-index: 1;
@@ -89,7 +96,7 @@
   color: #6cd3f5;
 }
 body {
-  background: #6cd3f5;
+  background: #00adb5;
 }
 .login-page{
   font-family: "Roboto", sans-serif;
