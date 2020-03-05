@@ -11,4 +11,9 @@ $(function() {
 $(document).ready(function () {
   var a = $( '#original-img-id' ).css('width');
   $('#new-img-id').css('width', a);
-})
+  $(window).on('resize', function(){
+      var a = $( '#original-img-id' ).css('width');
+      $('#new-img-id').css('width', a);
+  });
+});
+

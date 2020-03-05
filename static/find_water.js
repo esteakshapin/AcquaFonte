@@ -341,6 +341,8 @@ function initMap() {
     gMap.setZoom(zoomL);
     gMap.setOptions({styles: map_styles_array, disableDefaultUI: true});
 
+    alert("Couldn't find your location. Please make sure your location services are enabled and try again.");
+
       addMarker(initialLocation, gMap, user_marker_icon);
 
       //Getting markers drawing circle

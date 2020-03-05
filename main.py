@@ -3,6 +3,7 @@ from flask import Flask, render_template, request,jsonify,session
 import ssl
 # import csv
 import math
+from datetime import datetime
 
 from threading import Thread
 
@@ -14,6 +15,7 @@ client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb
 db = client['AqcuaFonte']
 users = db['users']
 markers = db['markers']
+visits = db['visits']
 
 
 #finding markers in range
@@ -48,21 +50,30 @@ def get_fountains_in_range(lat, lon, distance_range):
   return list_return
 
 #adding header to disable caching -- REMOVE WHEN DEPLOYING SITE
-# @app.after_request
-# def add_header(r):
-#     """
-#     Add headers to both force latest IE rendering engine or Chrome Frame,
-#     and also to cache the rendered page for 10 minutes.
-#     """
-#     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-#     r.headers["Pragma"] = "no-cache"
-#     r.headers["Expires"] = "0"
-#     r.headers['Cache-Control'] = 'public, max-age=0'
-#     return r
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 # Home Page
 @app.route('/', methods=['GET'])
 def home_page():
+  ip_address = request.headers.get('X-Forwarded-For', request.remote_addr)
+  referer_page = request.referrer
+  user_agent = request.user_agent.string
+  time = datetime.now()
+  
+  if (user_agent != 'Mozilla/5.0+(compatible; UptimeRobot/2.0; http://www.uptimerobot.com/)'):
+    print({'ip': ip_address, 'time':time})
+    visits.insert_one({'ip': ip_address, 'time':time, 'referer_page':referer_page, 'user_agent':user_agent})
+
   return render_template('index.html')
 
 # Find_Water Page
