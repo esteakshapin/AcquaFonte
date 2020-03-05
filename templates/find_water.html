@@ -26,6 +26,10 @@
         <p id='status'>status</p>
         <p id='type'>type</p>
         <p id='comments'>comments</p>
+        {% if logged_in %}
+          <button> add comment</button>
+          <button> add rating</button>
+        {% endif %}
         <button onclick="document.getElementById('fountain_detail').style.visibility = 'hidden';">Close</button>
       </div>
 

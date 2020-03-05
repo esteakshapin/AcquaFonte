@@ -69,7 +69,7 @@ def home_page():
   referer_page = request.referrer
   user_agent = request.user_agent.string
   time = datetime.now()
-  
+
   if (user_agent != 'Mozilla/5.0+(compatible; UptimeRobot/2.0; http://www.uptimerobot.com/)'):
     print({'ip': ip_address, 'time':time})
     visits.insert_one({'ip': ip_address, 'time':time, 'referer_page':referer_page, 'user_agent':user_agent})
@@ -79,9 +79,11 @@ def home_page():
 # Find_Water Page
 @app.route('/find_water', methods=['GET'])
 def find_water_page():
-  return render_template('find_water.html')
+  if (session.get('logged_in') == None):
+    session['logged_in'] = False
+  return render_template('find_water.html', logged_in=session.get('logged_in'))
 
-# get markers 
+# get markers
 @app.route('/get_markers', methods=['GET'])
 def get_markers():
   lat = float(request.args['lat'])
@@ -94,7 +96,7 @@ def get_markers():
     i.pop('_id')
 
   return jsonify(h)
-  
+
 
 
 # Add_Location Page
@@ -174,7 +176,7 @@ def run():
   if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=False)
 
-def keep_alive():  
+def keep_alive():
     t = Thread(target=run)
     t.start()
 
