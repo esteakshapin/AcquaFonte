@@ -16,27 +16,30 @@
         {% endwith %}
 
         <div class="underDiv">
-          <div id="map"></div>
+          <div class='map_and_infoBox'>
+            <div id="map"></div>
+            <div id='fountain_detail'>
+              <div id='infoBox_imgHolder'>
+                <span id='x' onclick="document.getElementById('fountain_detail').style.visibility = 'hidden';" style="cursor:default">X</span>
+                <img src='https://www.w3schools.com/css/img_5terre.jpg'>
+              </div>
+              <b><p id='name' class="bold">name</p></b>
+              <div class="rating">
+      <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+      </div>
+              <p id='status' class='non-bold'>status</p>
+              <p id='type' class='non-bold'>type</p>
+              <p id='comments' class="bold">comments</p>
+              <div id="comment-section">
+                <p>test comment</p>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
 
-      <div id='fountain_detail'>
-        <div id='infoBox_imgHolder'>
-          <span id='x' onclick="document.getElementById('fountain_detail').style.visibility = 'hidden';" style="cursor:default">X</span>
-          <img src='https://www.w3schools.com/css/img_5terre.jpg'>
-        </div>
-        <b><p id='name' class="bold">name</p></b>
-        <div class="rating">
-<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-</div>
-        <p id='status' class='non-bold'>status</p>
-        <p id='type' class='non-bold'>type</p>
-        <p id='comments' class="bold">comments</p>
-        <div id="comment-section">
-          <p>test comment</p>
-        </div>
-      </div>
+
 
       <button id='redo-search' name='redo-search'>Search This Area!</button>
 
