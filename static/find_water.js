@@ -395,22 +395,24 @@ function addClickEvent(){
   if (markersArray.length > 0){
     markersArray.forEach(function(item, index){
       item.addListener('click', function(){
+        var infoBox = document.getElementById('fountain_detail');
         var infoBox_name = document.getElementById('name');
         var infoBox_rating = document.getElementById('rating');
         var infoBox_status = document.getElementById('status');
         var infoBox_type = document.getElementById('type');
         var infoBox_commentSection = document.getElementById('comment-section');
 
-
+        infoBox.style.visibility = "visible";
         infoBox_name.innerHTML = item['name'];
         infoBox_status.innerHTML = "status &nbsp;&nbsp;&nbsp;&nbsp; <b style='color:green'>" + item['status'] + '</b>';
         infoBox_type.innerHTML = "type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>" + item['type'] + "</b>";
 
+        var a = ''
         for (i in item['comments']){
-          infoBox_commentSection.innerHTML = "<p>"+item['comments'][i]+"</p>";
+          a += "<p>"+item['comments'][i]+"</p>";
 
         }
-
+        infoBox_commentSection.innerHTML = a;
       });
 
     });

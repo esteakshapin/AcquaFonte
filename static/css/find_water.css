@@ -44,6 +44,7 @@ html,body{
   visibility: hidden;
   overflow: auto;
   max-height: 90%;
+  max-width:300px;
 }
 #infoBox_imgHolder{
   max-width:300px;
