@@ -26,12 +26,91 @@ html,body{
   padding:1em;
   visibility:hidden;
 }
+
+/* Info box regarding markers */
 #fountain_detail{
+  background-color:rgba(255, 204, 0, 0.548);
   position:absolute;
   z-index:2;
-  top:10em;
+  top: 50%;
+  transform: translateY(-50%);
   left:5em;
   padding:1em;
-  background-color: white;
-  visibility: hidden;
+  visibility: visible;
+  overflow: auto;
+  max-height: 70%;
+}
+#infoBox_imgHolder{
+  max-width:300px;
+  position: relative;
+}
+#infoBox_imgHolder img{
+  width:100%;
+}
+#x{
+  font-size:1.5em;
+  font-family: cursive;
+  position: absolute;
+  left: 10;
+  color:#FFCC00;
+}
+#x:hover{
+  font-size:2em;
+}
+
+.non-bold{
+  font-family: Roboto;
+  font-style: italic;
+  font-weight: 200;
+  font-size: 1em;
+  line-height: 1em;
+}
+.bold {
+  font-weight: bold;
+  font-size: 1.2em;
+ 
+}
+
+#comments{
+  border-style: none none outset none;
+}
+
+#comment-section p{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: regular;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 1em;
+  border-left: 6px solid;
+  border-color: #00adb5;
+  
+}
+
+#name{
+  text-align:center;
+  font-family: Roboto;
+  font-style: italic;
+  line-height: 1em;
+  font-size: 1.5em;
+}
+
+.rating > span:hover:before {
+   content: "\2605";
+   position: absolute;
+}
+.rating{
+  text-align:center;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  font-size:2em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+   color:#113788;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
 }

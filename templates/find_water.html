@@ -22,16 +22,20 @@
       </div>
 
       <div id='fountain_detail'>
-        <p id='name'>name</p>
-        <p id='status'>status</p>
-        <p id='type'>type</p>
-        <p id='comments'>comments</p>
-        <span>name:</span>
-        {% if logged_in %}
-          <button> add comment</button>
-          <button> add rating</button>
-        {% endif %}
-        <button onclick="document.getElementById('fountain_detail').style.visibility = 'hidden';">Close</button>
+        <div id='infoBox_imgHolder'>
+          <span id='x' onclick="document.getElementById('fountain_detail').style.visibility = 'hidden';" style="cursor:default">X</span>
+          <img src='https://www.w3schools.com/css/img_5terre.jpg'>
+        </div>
+        <b><p id='name' class="bold">name</p></b>
+        <div class="rating">
+<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+</div>
+        <p id='status' class='non-bold'>status</p>
+        <p id='type' class='non-bold'>type</p>
+        <p id='comments' class="bold">comments</p>
+        <div id="comment-section">
+          <p>test comment</p>
+        </div>
       </div>
 
       <button id='redo-search' name='redo-search'>Search This Area!</button>
