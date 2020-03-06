@@ -41,7 +41,7 @@ html,body{
   transform: translateY(-50%);
   left:5em;
   padding:1em;
-  visibility: visible;
+  visibility: hidden;
   overflow: auto;
   max-height: 90%;
 }
