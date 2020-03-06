@@ -57,7 +57,10 @@ html,body{
   font-size:1.5em;
   font-family: sans-serif;
   position: absolute;
+  margin: 0;
+  padding: 0;
   left: 10;
+  top:10;
   color:#FFCC00;
 }
 #x:hover{
