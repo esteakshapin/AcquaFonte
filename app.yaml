@@ -1,10 +1,35 @@
+runtime: python37
+api_version: 1
+threadsafe: yes
 
-runtime: python
-env: flex
-entrypoint: gunicorn -b :$PORT main:app
+handlers:
+- url: /.*
+  script: main.app
 
-runtime_config:
-  python_version: 3
+libraries:
+- name: Click
+  version: "7.0"
+
+- name: Flask
+  version: "1.1.1"
+
+- name: gunicorn
+  version: "20.0.4"
+
+- name: itsdangerous
+  version: "1.1.0"
+
+- name: Jinja2
+  version: "2.11.1"
+
+- name: MarkupSafe
+  version: "1.1.1"
+
+- name: pymongo
+  version: "3.10.1"
+
+- name: Werkzeug
+  version: "1.0.0"
 
 # This sample incurs costs to run on the App Engine flexible environment. 
 # The settings below are to reduce costs during testing and are not appropriate
