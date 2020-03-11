@@ -1,5 +1,4 @@
-import fixpath
-
+#import fixpath
 from pymongo import MongoClient
 from flask import Flask, render_template, request, jsonify, session
 import ssl
@@ -176,7 +175,7 @@ def register():
 
 # def run():
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    app.run(host='0.0.0.0', port=8000, debug=False)
 
 #def keep_alive():
 #    t = Thread(target=run)
