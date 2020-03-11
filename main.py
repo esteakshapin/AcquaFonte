@@ -1,10 +1,12 @@
+import fixpath
+
 from pymongo import MongoClient
-from flask import Flask, render_template, request,jsonify,session
+from flask import Flask, render_template, request, jsonify, session
 import ssl
 # import csv
 import math
 from datetime import datetime
-#
+
 # from threading import Thread
 
 app = Flask(__name__)
