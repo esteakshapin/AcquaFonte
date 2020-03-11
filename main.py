@@ -4,8 +4,8 @@ import ssl
 # import csv
 import math
 from datetime import datetime
-
-from threading import Thread
+#
+# from threading import Thread
 
 app = Flask(__name__)
 app.secret_key = '6yTWFOE7j05WpVr8ic'
@@ -172,8 +172,8 @@ def register():
         print('passwords do not match up! Try Again')
         return 'failure'
 
-def run():
-  if __name__ == '__main__':
+# def run():
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=False)
 
 #def keep_alive():
