@@ -62,7 +62,7 @@
   display: inherit;
 }
 
-.container {
+/* .container {
   position: relative;
   z-index: 1;
   max-width: 300px;
@@ -94,7 +94,7 @@
 }
 .container .info span .fa {
   color: #6cd3f5;
-}
+} */
 body {
   background: #00adb5;
 }
