@@ -6,6 +6,7 @@ import ssl
 import math
 from datetime import datetime
 
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 # from threading import Thread
 
 app = Flask(__name__)
@@ -99,10 +100,24 @@ def get_markers():
   return jsonify(h)
 
 
+def allowed_extension(extension):
+    return extension.lower() in ALLOWED_EXTENSIONS
+
 
 # Add_Location Page
-@app.route('/add_location', methods=['GET'])
+@app.route('/add_location', methods=['GET', 'POST'])
 def add_location_page():
+  if request.method == 'POST':
+    #start add location code
+    if 'img' in request.files and request.files['img'].filename != '': #ask if a img was sent // img is not none type
+      print('second level made')
+      myFile = request.files['img'] #get image
+      fileextension = myFile.filename.rsplit('.', 1)[1]
+      if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
+        # save to pymagno
+        pass
+    print('postrequestmade')
+
   return render_template('add_location.html')
 
 # Contact Page
