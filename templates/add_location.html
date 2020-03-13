@@ -14,21 +14,32 @@
         {% endwith %}
 
         <div class="underDiv">
-          <div class="login-page">
-            <div class="form">
-              <form class="register-form">
-                <input id='register_first_name' type="text" placeholder="first name"/>
-                <input id='register_last_name' type="text" placeholder="last name"/>
-                <input id='register_username' type="text" placeholder="username"/>
-                <input id='register_password' type="password" placeholder="password"/>
-                <input id='confirm_pass' type="password" placeholder="confirm password"/>
+          <div class="form-container">
+            <div class="login-page">
+              <div class='status'>
+                <label>
+                  <input type="radio" name="status" value="working" /> working
+                </label>
+                <label>
+                  <input type="radio" name="status" value="not Working" /> not working
+                </label>
+              </div>
+              <div class="form">
+                <div id='map'></div>
 
-                <button id="register_submit" type="button" name="register_submit">create</button>
-                <p class="message">Already registered? <a id="login_form" href="#">Sign In</a></p>
-              </form>
+                <div class="rating">
+                  <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                </div>
+                <form class="fountain-form">
+                  <input id='fountain_name' type="text" placeholder="Name"/>
+                  <input id='fountain_comment' type="text" placeholder="comments"/>
+
+                  <button id="fountain_submit" type="button" name="fountain_submit">create</button>
+                </form>
+              </div>
             </div>
           </div>
-      </div>
+        </div>
 
       </div>
 

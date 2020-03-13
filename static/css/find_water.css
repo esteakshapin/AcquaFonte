@@ -15,7 +15,7 @@ html,body{
 .map_and_infoBox{
   width: 100%;
   height: 100%;
-  position: relative;;
+  position: relative;
 }
 #map {
   width: 100%;

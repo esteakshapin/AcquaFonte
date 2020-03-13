@@ -10,20 +10,45 @@
 }
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.form-container{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
 .login-page {
-  width: 360px;
-  padding: 15% 0 0;
+  width: 500px;
+  position:absolute;
+  top: 50%;
+  left:50%;
+  transform: translateY(-50%) translateX(-50%);
+  max-height: 90%;
   margin: auto;
+  overflow: auto;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  font-family: "Roboto", sans-serif;
+}
+#map{
+  width: 100%;
+  height: 200px;
+  background-color: gray;
+  margin: 0 0 15px;
+}
+.status{
+  background-color: #f2f2f2;
+  text-align: center;
+  padding: 15px;
+}
+.status label{
+  padding: 1em;
 }
 .form {
   position: relative;
   z-index: 1;
   background: #FFFFFF;
-  max-width: 360px;
-  margin: 0 auto 100px;
+  max-width: 100%;
   padding: 45px;
   text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 .form input {
   font-family: "Roboto", sans-serif;
@@ -69,39 +94,25 @@
   display:inherit;
 }
 
-/* .container {
-  position: relative;
-  z-index: 1;
-  max-width: 300px;
-  margin: 0 auto;
+.rating > span:hover:before {
+   content: "\2605";
+   position: absolute;
 }
-.container:before, .container:after {
-  content: "";
-  display: block;
-  clear: both;
-}
-.container .info {
-  margin: 50px auto;
-  text-align: center;
-}
-.container .info h1 {
+.rating{
+  text-align:center;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  font-size:2em;
   margin: 0 0 15px;
-  padding: 0;
-  font-size: 36px;
-  font-weight: 300;
-  color: #6cd3f5;
 }
-.container .info span {
-  color: #6cd3f5;
-  font-size: 12px;
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+   color:#113788;
 }
-.container .info span a {
-  color: #6cd3f5;
-  text-decoration: none;
-}
-.container .info span .fa {
-  color: #6cd3f5; */
-}
-.login-page{
-  font-family: "Roboto", sans-serif;
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
 }
