@@ -42,15 +42,21 @@
 }
 .status{
   background-color: #f2f2f2;
+  height: 100%;
   text-align: center;
   padding: 15px 0;
-  width: 45%;
+  width: 47.5%;
   overflow: hidden;
   float: left;
-  margin: 0 2.5% 0 2.5%;
 }
 .status label{
   padding: auto;
+}
+.status:first-child{
+  margin-right: 2.5%;
+}
+.status:last-child{
+  margin-left: 2.5%;
 }
 .form {
   position: relative;
@@ -74,6 +80,17 @@
   padding: 15px;
   box-sizing: border-box;
   font-size: 14px;
+}
+.fountain_img {
+  max-height: 45px;
+}
+#fountain_img_label{
+  width: 50%;
+  float: left;
+}
+#fountain_img_input{
+  width: 50%;
+  float: left;
 }
 .form button {
   font-family: "Roboto", sans-serif;
@@ -120,5 +137,5 @@
   display: inline-block;
   position: relative;
   width: 1.1em;
-  margin-right: 15px;
+  padding-right: 15px;
 }

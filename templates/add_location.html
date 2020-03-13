@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="status_type">
-                  <div class='status'>
+                  <div class='status' id="status_radio">
                     <label>
                       <input type="radio" name="status" value="working" /> working
                     </label>
@@ -32,7 +32,7 @@
                       <input type="radio" name="status" value="not Working" /> not working
                     </label>
                   </div>
-                  <div class="status">
+                  <div class="status" id="type">
                     <label for="cars">fountain Type:</label>
 
                       <select id="fountain_type">
@@ -45,9 +45,10 @@
                 </div>
 
                 <form class="fountain-form">
-                  <input id='fountain_name' type="text" placeholder="Name"/>
+                  <input id='fountain_name' type="text" placeholder="Fountain Name"/>
                   <input id='fountain_comment' type="text" placeholder="comments"/>
-                  <input id='fountain_name' type="text" placeholder="Upload Folder"/>
+                  <input class="fountain_img" id="fountain_img_label" placeholder="Choose a profile picture:" readonly />
+                  <input class='fountain_img' id="fountain_img_input" type="file" accept="image/*" placeholder="Upload Image" />
 
                   <button id="fountain_submit" type="button" name="fountain_submit">create</button>
                 </form>
