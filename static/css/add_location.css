@@ -34,23 +34,36 @@
   background-color: gray;
   margin: 0 0 15px;
 }
+.status_type{
+  width: 100%;
+  margin: 0 0 15px 0;
+  overflow: hidden;
+}
 .status{
   background-color: #f2f2f2;
   text-align: center;
-  padding: 15px;
+  padding: 15px 0;
+  width: 45%;
+  overflow: hidden;
+  float: left;
+  margin: 0 2.5% 0 2.5%;
 }
 .status label{
-  padding: 1em;
+  padding: auto;
 }
 .form {
   position: relative;
   z-index: 1;
   background: #FFFFFF;
   max-width: 100%;
-  padding: 45px;
+  padding: 30px;
   text-align: center;
+  font-size: 14px;
 }
-.form input {
+.fountain-form{
+  margin: 0;
+}
+.fountain-form input {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
@@ -79,15 +92,6 @@
 .form button:hover,.form button:active,.form button:focus {
   background: #51afcf;
 }
-.form .message {
-  margin: 15px 0 0;
-  color: grey;
-  font-size: 12px;
-}
-.form .message a {
-  color: #6cd3f5;
-  text-decoration: none;
-}
 
 /* displaying register vs .login-form */
 .form .register-form {
@@ -115,4 +119,5 @@
   display: inline-block;
   position: relative;
   width: 1.1em;
+  margin-right: 15px;
 }

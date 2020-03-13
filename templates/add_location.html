@@ -16,23 +16,38 @@
         <div class="underDiv">
           <div class="form-container">
             <div class="login-page">
-              <div class='status'>
-                <label>
-                  <input type="radio" name="status" value="working" /> working
-                </label>
-                <label>
-                  <input type="radio" name="status" value="not Working" /> not working
-                </label>
-              </div>
               <div class="form">
                 <div id='map'></div>
 
                 <div class="rating">
                   <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
                 </div>
+
+                <div class="status_type">
+                  <div class='status'>
+                    <label>
+                      <input type="radio" name="status" value="working" /> working
+                    </label>
+                    <label>
+                      <input type="radio" name="status" value="not Working" /> not working
+                    </label>
+                  </div>
+                  <div class="status">
+                    <label for="cars">Choose the fountain Type:</label>
+
+                      <select id="fountain_type">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="opel">Opel</option>
+                        <option value="audi">Audi</option>
+                      </select>
+                  </div>
+                </div>
+
                 <form class="fountain-form">
                   <input id='fountain_name' type="text" placeholder="Name"/>
                   <input id='fountain_comment' type="text" placeholder="comments"/>
+                  <input id='fountain_name' type="text" placeholder="Upload Folder"/>
 
                   <button id="fountain_submit" type="button" name="fountain_submit">create</button>
                 </form>
