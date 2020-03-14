@@ -77,6 +77,15 @@
     ]
   },
   {
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#000000"
+      }
+    ]
+  },
+  {
     "featureType": "landscape.natural",
     "elementType": "geometry",
     "stylers": [
@@ -160,6 +169,15 @@
       }
     ]
   },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+    },
   {
     "featureType": "road.highway",
     "elementType": "geometry",

@@ -4,7 +4,7 @@ var map_styles_array = (function () {
     $.ajax({
         'async': false,
         'global': false,
-        'url': "/static/js/map_style.json",
+        'url': "/static/find_water/map_setting.json",
         'dataType': "json",
         'success': function (data) {
             map_styles_array = data;
