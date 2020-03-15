@@ -113,8 +113,9 @@ def add_location_page():
             myFile = request.files['fountain_img_input'] #get image
             fileextension = myFile.filename.rsplit('.', 1)[1]
             if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
-                # save to pymagno
-                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment], "pictures": [myFile]})
+                # SAVE MY FILE TO TEST FOLDER
+                print(myFile)
+                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
                 return "success"
             return "Error. Please check to make sure the file you updated is an image"
     return render_template('add_location.html')
