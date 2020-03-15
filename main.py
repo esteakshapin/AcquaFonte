@@ -17,7 +17,7 @@ client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb
 db = client['AqcuaFonte']
 users = db['users']
 markers = db['markers']
-visits = db['visits']
+unconfirmed_markers = db['unconfirmed_markers']
 
 
 #finding markers in range
@@ -67,15 +67,6 @@ def add_header(r):
 # Home Page
 @app.route('/', methods=['GET'])
 def home_page():
-  ip_address = request.headers.get('X-Forwarded-For', request.remote_addr)
-  referer_page = request.referrer
-  user_agent = request.user_agent.string
-  time = datetime.now()
-
-  if (user_agent != 'Mozilla/5.0+(compatible; UptimeRobot/2.0; http://www.uptimerobot.com/)'):
-    print({'ip': ip_address, 'time':time})
-    visits.insert_one({'ip': ip_address, 'time':time, 'referer_page':referer_page, 'user_agent':user_agent})
-
   return render_template('index.html')
 
 # Find_Water Page
@@ -107,18 +98,26 @@ def allowed_extension(extension):
 # Add_Location Page
 @app.route('/add_location', methods=['GET', 'POST'])
 def add_location_page():
-  if request.method == 'POST':
-    #start add location code
-    if 'img' in request.files and request.files['img'].filename != '': #ask if a img was sent // img is not none type
-      print('second level made')
-      myFile = request.files['img'] #get image
-      fileextension = myFile.filename.rsplit('.', 1)[1]
-      if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
-        # save to pymagno
-        pass
-    print('postrequestmade')
+    if request.method == 'POST':
+        #start add location code
+        fountain_name = request.form['fountain_name']
+        fountain_comment = request.form['fountain_comment']
+        status = request.form['status']
+        type = request.form['type']
+        rating = request.form['rating']
+        lat = float(request.form['lat'])
+        lng = float(request.form['lng'])
 
-  return render_template('add_location.html')
+        if 'fountain_img_input' in request.files and request.files['fountain_img_input'].filename != '': #ask if a img was sent // img is not none type
+            print('second level made')
+            myFile = request.files['fountain_img_input'] #get image
+            fileextension = myFile.filename.rsplit('.', 1)[1]
+            if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
+                # save to pymagno
+                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment], "pictures": [myFile]})
+                return "success"
+            return "Error. Please check to make sure the file you updated is an image"
+    return render_template('add_location.html')
 
 # Contact Page
 @app.route('/contact', methods=['GET'])
