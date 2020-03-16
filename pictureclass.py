@@ -1,4 +1,5 @@
-class myFileList(listofimgs):
+
+class myFileList():
     def __init__(self, listofimgs):
         self.myheldimgs = listofimgs
 

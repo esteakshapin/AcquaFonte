@@ -6,7 +6,8 @@ import ssl
 import math
 from datetime import datetime
 from google.cloud import storage
-
+import pickle
+from pictureclass import myFileList
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 # from threading import Thread
@@ -19,48 +20,6 @@ client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb
 storage_client = storage.Client()#gcloud storage, #making sure that bucket exists
 #bucket per our defined regions
 bucket_name = "fountain-images"
-#
-# #FOR TESTING
-# app.config['UPLOAD_FOLDER'] = './TEST'
-# import os
-# # try:
-# #     bucket = storage_client.bucket("nyc")#if bucket exist
-# #     assert isinstance(bucket, Bucket)
-# #     #get blob with
-# #      blob = bucket.blob(str(markerid) + '/' + len(fountain))
-# #      blob.upload_from_file(myFile.read())
-# # except:
-# #      bucket = storage.Bucket("nyc")
-# #     bucket.location = "US-EAST4" #maybe lowercase #for specific regions in the future
-# #     bucket.storage_class = "STANDARD"
-# #     bucket = storage_client.create_bucket(bucket)#make temp bucket
-# #     assert isinstance(bucket, Bucket)
-# #     blob = bucket.blob(str(markerid) + '/' + str(0))
-# #testing: 1 bucket-------------------------------------
-# try: #test upload
-#     bucket = storage_client.bucket(bucket_name)#if bucket exist
-#     # assert isinstance(bucket, Bucket)
-#     #get blob with
-#     # blob = bucket.blob(str('test'))
-#     # for i in os.scandir(app.config['UPLOAD_FOLDER']): #get file type from UPLOAD_FOLDER
-#     #     print(type(i))
-#     #     test = open(i.path , "r+b" )
-#     #     print(type(test))
-#     #     blob = bucket.blob("5e4a0bec9d65dcb1e0eaed52")
-#     #     blob.upload_from_file(test)
-#     #     print(i.name)
-#     # with open()
-#     # print()
-# except:
-#     bucket = storage_client.create_bucket(bucket_name) #make new bucket
-#
-#     print("Bucket {} created".format(bucket.name))
-#
-    # buckets = storage_client.list_buckets() #expensive, testing
-#
-#     for bucket in buckets:
-#         print(bucket.name)
-
 
 db = client['AqcuaFonte']
 users = db['users']
@@ -161,50 +120,64 @@ def add_location_page():
             myFile = request.files['fountain_img_input'] #get image
             fileextension = myFile.filename.rsplit('.', 1)[1]
             if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
-                # SAVE MY FILE TO TEST FOLDER
                 print("#important")
                 # print(type(myFile.read()))
                 unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
+
+                #saving to google storage
                 thismarker = unconfirmed_markers.find({'lat': lat, 'lon': lng})
                 thismarker = thismarker[0]
-                markerid = thismarker["_id"]
+                markerid = thismarker["_id"].valueOf()
 
                 #bucket per our defined regions
-                blob = bucket.blob(markerid)
-                blob.upload_from_file(myFile.read())
-                print(bucket)
 
-                # try:
-                #     bucket = storage_client.bucket("nyc")#if bucket exist
-                #     assert isinstance(bucket, Bucket)
-                #     #get blob with
-                #     blob = bucket.blob(str(markerid) + '/' + len(fountain))
-                #     blob.upload_from_file(myFile.read())
-                # except:
-                #     bucket = storage.Bucket("nyc")
-                #     bucket.location = "US-EAST4" #maybe lowercase
-                #     bucket.storage_class = "STANDARD"
-                #     bucket = storage_client.create_bucket(bucket)#make temp bucket
-                #     assert isinstance(bucket, Bucket)
-                #     blob = bucket.blob(str(markerid) + '/' + str(0))
+                try:
+                    bucket = storage_client.bucket("nyc")#if bucket exist
+                    #pull blob, -> append, release
+                    try: #if blob for fountain exists 
+                        blob = bucket.get_blob(str(markerid))
+                        #if it exists unpickle
+                        myClass = pickle.loads(blob)
+                        #package should be a wrapper class with function to append
+                        myClass.addimg(myFile.read) #add our file to object                
+                    except:
+                        # if blob doesnt exist, make class, push code   
+                        myClass = myFileList([myFile.read])
+                        pass
 
+                    #now that classes are made / appended too, prepare + push that object to 
+                    package = pickle.dumps(myClass)
+                    blob = bucket.blob(str(markerid))
+                    blob.upload_from_string(package)
+                    # blob = bucket.blob(str(markerid) + '/' + len(fountain))
+                    # blob.upload_from_file(myFile.read())
 
+                except: #bucket and it associated blob doesnt exist
+                    bucket = storage.Bucket("nyc")
+                    bucket.location = "US-EAST4" #maybe lowercase
+                    bucket.storage_class = "STANDARD"
+                    bucket = storage_client.create_bucket(bucket)#make bucket
+                    myClass = myFileList([myFile.read])
+                    #convert to pickling byte object
+                    package = pickle.dumps(myClass)
+                    blob = bucket.blob(str(markerid))
+                    blob.upload_from_string(package)
 
 
                 return "success"
             return "Error. Please check to make sure the file you updated is an image"
     return render_template('add_location.html')
 
-@app.route('/test', methods=['GET'])
-def test():
-    try:
-        bucket = storage_client.bucket("test")#if bucket exist
-        assert isinstance(bucket, Bucket)
-        #get blob with
-        blob = bucket.blob('testing')
-        blob.download_to_filename('filetest.png')
-    except:
-        print('bucketnotfound')
+# @app.route('/test', methods=['GET'])
+# def test():
+#     try:
+#         bucket = storage_client.bucket("test")#if bucket exist
+#         assert isinstance(bucket, Bucket)
+#         #get blob with
+#         blob = bucket.blob('testing')
+#         blob.download_to_filename('filetest.png')
+#     except:
+#         print('bucketnotfound')
 
 # Contact Page
 @app.route('/contact', methods=['GET'])
