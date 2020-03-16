@@ -154,10 +154,10 @@ def add_location_page():
                     # blob.upload_from_file(myFile.read())
 
                 except: #bucket and it associated blob doesnt exist
-                    bucket = storage.Bucket("nyc")
+                    bucket = "nyc"
+                    bucket = storage_client.create_bucket(bucket)#make bucket
                     bucket.location = "US-EAST4" #maybe lowercase
                     bucket.storage_class = "STANDARD"
-                    bucket = storage_client.create_bucket(bucket)#make bucket
                     myClass = myFileList([myFile.read])
                     #convert to pickling byte object
                     package = pickle.dumps(myClass)
