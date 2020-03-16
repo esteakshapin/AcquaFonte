@@ -5,6 +5,8 @@ import ssl
 # import csv
 import math
 from datetime import datetime
+from google.cloud import storage
+
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 # from threading import Thread
@@ -13,6 +15,8 @@ app = Flask(__name__)
 app.secret_key = '6yTWFOE7j05WpVr8ic'
 
 client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb.net:27017,cluster0-shard-00-01-lnqyp.mongodb.net:27017,cluster0-shard-00-02-lnqyp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', ssl_cert_reqs=ssl.CERT_NONE)
+
+storage_client = storage.Client()#gcloud storage
 
 db = client['AqcuaFonte']
 users = db['users']
@@ -114,11 +118,49 @@ def add_location_page():
             fileextension = myFile.filename.rsplit('.', 1)[1]
             if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
                 # SAVE MY FILE TO TEST FOLDER
-                print(myFile)
+                print("#important")
+                print(type(myFile.read()))
                 unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
+                thismarker = unconfirmed_markers.find({'lat': lat, 'lon': lng})
+                thismarker = thismarker[0]
+                markerid = thismarker[_id]
+                #bucket per our defined regions
+
+                bucket = storage_client.create_bucket('test')#make test bucket
+                blob = bucket.blob('testing')
+                blob.upload_from_file(myFile.read())
+
+                # try:
+                #     bucket = storage_client.bucket("nyc")#if bucket exist
+                #     assert isinstance(bucket, Bucket)
+                #     #get blob with
+                #     blob = bucket.blob(str(markerid) + '/' + len(fountain))
+                #     blob.upload_from_file(myFile.read())
+                # except:
+                #     bucket = storage.Bucket("nyc")
+                #     bucket.location = "US-EAST4" #maybe lowercase
+                #     bucket.storage_class = "STANDARD"
+                #     bucket = storage_client.create_bucket(bucket)#make temp bucket
+                #     assert isinstance(bucket, Bucket)
+                #     blob = bucket.blob(str(markerid) + '/' + str(0))
+
+
+
+
                 return "success"
             return "Error. Please check to make sure the file you updated is an image"
     return render_template('add_location.html')
+
+@app.route('/test', methods=['GET'])
+def test():
+    try:
+        bucket = storage_client.bucket("test")#if bucket exist
+        assert isinstance(bucket, Bucket)
+        #get blob with
+        blob = bucket.blob('testing')
+        blob.download_to_filename('filetest.png')
+    except:
+        print('bucketnotfound')
 
 # Contact Page
 @app.route('/contact', methods=['GET'])
