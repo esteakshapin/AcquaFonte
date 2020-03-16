@@ -19,42 +19,47 @@ client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb
 storage_client = storage.Client()#gcloud storage, #making sure that bucket exists
 #bucket per our defined regions
 bucket_name = "fountain-images"
-
-#FOR TESTING
-app.config['UPLOAD_FOLDER'] = './TEST'
-from os import scandir
-# try:
-#     bucket = storage_client.bucket("nyc")#if bucket exist
-#     assert isinstance(bucket, Bucket)
+#
+# #FOR TESTING
+# app.config['UPLOAD_FOLDER'] = './TEST'
+# import os
+# # try:
+# #     bucket = storage_client.bucket("nyc")#if bucket exist
+# #     assert isinstance(bucket, Bucket)
+# #     #get blob with
+# #      blob = bucket.blob(str(markerid) + '/' + len(fountain))
+# #      blob.upload_from_file(myFile.read())
+# # except:
+# #      bucket = storage.Bucket("nyc")
+# #     bucket.location = "US-EAST4" #maybe lowercase #for specific regions in the future
+# #     bucket.storage_class = "STANDARD"
+# #     bucket = storage_client.create_bucket(bucket)#make temp bucket
+# #     assert isinstance(bucket, Bucket)
+# #     blob = bucket.blob(str(markerid) + '/' + str(0))
+# #testing: 1 bucket-------------------------------------
+# try: #test upload
+#     bucket = storage_client.bucket(bucket_name)#if bucket exist
+#     # assert isinstance(bucket, Bucket)
 #     #get blob with
-#      blob = bucket.blob(str(markerid) + '/' + len(fountain))
-#      blob.upload_from_file(myFile.read())
+#     # blob = bucket.blob(str('test'))
+#     # for i in os.scandir(app.config['UPLOAD_FOLDER']): #get file type from UPLOAD_FOLDER
+#     #     print(type(i))
+#     #     test = open(i.path , "r+b" )
+#     #     print(type(test))
+#     #     blob = bucket.blob("5e4a0bec9d65dcb1e0eaed52")
+#     #     blob.upload_from_file(test)
+#     #     print(i.name)
+#     # with open()
+#     # print()
 # except:
-#      bucket = storage.Bucket("nyc")
-#     bucket.location = "US-EAST4" #maybe lowercase #for specific regions in the future
-#     bucket.storage_class = "STANDARD"
-#     bucket = storage_client.create_bucket(bucket)#make temp bucket
-#     assert isinstance(bucket, Bucket)
-#     blob = bucket.blob(str(markerid) + '/' + str(0))
-#testing: 1 bucket-------------------------------------
-try: #test upload
-    bucket = storage_client.bucket(bucket_name)#if bucket exist
-    # assert isinstance(bucket, Bucket)
-    #get blob with
-    blob = bucket.blob(str('test'))
-    for i in scandir(app.config['UPLOAD_FOLDER']): #get file type from UPLOAD_FOLDER
-        blob.upload_from_filename(app.config['UPLOAD_FOLDER']+ "/"+i.name)
-        print(i.name)
-    print()
-except:
-    bucket = storage_client.create_bucket(bucket_name)
-
-    print("Bucket {} created".format(bucket.name))
-
-    buckets = storage_client.list_buckets() #expensive, testing
-
-    for bucket in buckets:
-        print(bucket.name)
+#     bucket = storage_client.create_bucket(bucket_name) #make new bucket
+#
+#     print("Bucket {} created".format(bucket.name))
+#
+    # buckets = storage_client.list_buckets() #expensive, testing
+#
+#     for bucket in buckets:
+#         print(bucket.name)
 
 
 db = client['AqcuaFonte']
