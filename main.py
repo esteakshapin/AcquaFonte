@@ -16,18 +16,45 @@ app.secret_key = '6yTWFOE7j05WpVr8ic'
 
 client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb.net:27017,cluster0-shard-00-01-lnqyp.mongodb.net:27017,cluster0-shard-00-02-lnqyp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', ssl_cert_reqs=ssl.CERT_NONE)
 
-storage_client = storage.Client()#gcloud storage
+storage_client = storage.Client()#gcloud storage, #making sure that bucket exists
 #bucket per our defined regions
 bucket_name = "fountain-images"
 
-bucket = storage_client.create_bucket(bucket_name)
+#FOR TESTING
+app.config['UPLOAD_FOLDER'] = './TEST'
+from os import scandir
+# try:
+#     bucket = storage_client.bucket("nyc")#if bucket exist
+#     assert isinstance(bucket, Bucket)
+#     #get blob with
+#      blob = bucket.blob(str(markerid) + '/' + len(fountain))
+#      blob.upload_from_file(myFile.read())
+# except:
+#      bucket = storage.Bucket("nyc")
+#     bucket.location = "US-EAST4" #maybe lowercase #for specific regions in the future
+#     bucket.storage_class = "STANDARD"
+#     bucket = storage_client.create_bucket(bucket)#make temp bucket
+#     assert isinstance(bucket, Bucket)
+#     blob = bucket.blob(str(markerid) + '/' + str(0))
+#testing: 1 bucket-------------------------------------
+try: #test upload
+    bucket = storage_client.bucket(bucket_name)#if bucket exist
+    # assert isinstance(bucket, Bucket)
+    #get blob with
+    blob = bucket.blob(str('test'))
+    for i in scandir(app.config['UPLOAD_FOLDER']): #get file type from UPLOAD_FOLDER
+        blob.upload_from_filename(app.config['UPLOAD_FOLDER']+ "/"+i.name)
+        print(i.name)
+    print()
+except:
+    bucket = storage_client.create_bucket(bucket_name)
 
-print("Bucket {} created".format(bucket.name))
+    print("Bucket {} created".format(bucket.name))
 
-buckets = storage_client.list_buckets()
+    buckets = storage_client.list_buckets() #expensive, testing
 
-for bucket in buckets:
-    print(bucket.name)
+    for bucket in buckets:
+        print(bucket.name)
 
 
 db = client['AqcuaFonte']
