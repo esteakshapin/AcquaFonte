@@ -8,6 +8,8 @@ from datetime import datetime
 from google.cloud import storage
 import pickle
 from pictureclass import myFileList
+import random
+import string
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 # from threading import Thread
@@ -20,6 +22,8 @@ client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb
 storage_client = storage.Client()#gcloud storage, #making sure that bucket exists
 #bucket per our defined regions
 bucket_name = "fountain-images"
+bucket = storage_client.get_bucket(bucket_name)
+print(bucket.name)
 
 db = client['AqcuaFonte']
 users = db['users']
@@ -101,6 +105,12 @@ def get_markers():
 def allowed_extension(extension):
     return extension.lower() in ALLOWED_EXTENSIONS
 
+def randomString(stringLength=10):
+    """Generate a random string of fixed length """
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(stringLength))
+
+
 
 # Add_Location Page
 @app.route('/add_location', methods=['GET', 'POST'])
@@ -121,48 +131,57 @@ def add_location_page():
             fileextension = myFile.filename.rsplit('.', 1)[1]
             if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
                 print("#important")
-                # print(type(myFile.read()))
-                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
 
-                #saving to google storage
-                thismarker = unconfirmed_markers.find({"name": fountain_name, "lat":lat, "lon":lng, "type": type})
-                thismarker = thismarker[0]
-                markerid = str(thismarker["_id"])
-                print(markerid)
+                #adding image to cloud storage
+                destination_name = randomString(20)#creating random string for destination file
+
+                #adding image to blob
+                blob = bucket.blob(destination_name)
+
+                #uploading blob to bucket
+                blob.upload_from_file(myFile)
+
+                #storing public url to access later
+                url = blob.public_url
+
+                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment], "pics": [url]})
+
+                print("success")
+
 
                 #bucket per our defined regions
 
-                try:
-                    bucket = storage_client.bucket("nyc")#if bucket exist
-                    #pull blob, -> append, release
-                    try: #if blob for fountain exists
-                        blob = bucket.get_blob(str(markerid))
-                        #if it exists unpickle
-                        myClass = pickle.loads(blob)
-                        #package should be a wrapper class with function to append
-                        myClass.addimg(myFile.read) #add our file to object
-                    except:
-                        # if blob doesnt exist, make class, push code
-                        myClass = myFileList([myFile.read])
-                        pass
-
-                    #now that classes are made / appended too, prepare + push that object to
-                    package = pickle.dumps(myClass)
-                    blob = bucket.blob(str(markerid))
-                    blob.upload_from_string(package)
-                    # blob = bucket.blob(str(markerid) + '/' + len(fountain))
-                    # blob.upload_from_file(myFile.read())
-
-                except: #bucket and it associated blob doesnt exist
-                    bucket = "nyc"
-                    bucket = storage_client.create_bucket(bucket)#make bucket
-                    bucket.location = "US-EAST4" #maybe lowercase
-                    bucket.storage_class = "STANDARD"
-                    myClass = myFileList([myFile.read])
-                    #convert to pickling byte object
-                    package = pickle.dumps(myClass)
-                    blob = bucket.blob(str(markerid))
-                    blob.upload_from_string(package)
+                # try:
+                #     bucket = storage_client.bucket("nyc")#if bucket exist
+                #     #pull blob, -> append, release
+                #     try: #if blob for fountain exists
+                #         blob = bucket.get_blob(str(markerid))
+                #         #if it exists unpickle
+                #         myClass = pickle.loads(blob)
+                #         #package should be a wrapper class with function to append
+                #         myClass.addimg(myFile.read) #add our file to object
+                #     except:
+                #         # if blob doesnt exist, make class, push code
+                #         myClass = myFileList([myFile.read])
+                #         pass
+                #
+                #     #now that classes are made / appended too, prepare + push that object to
+                #     package = pickle.dumps(myClass)
+                #     blob = bucket.blob(str(markerid))
+                #     blob.upload_from_string(package)
+                #     # blob = bucket.blob(str(markerid) + '/' + len(fountain))
+                #     # blob.upload_from_file(myFile.read())
+                #
+                # except: #bucket and it associated blob doesnt exist
+                #     bucket = "nyc"
+                #     bucket = storage_client.create_bucket(bucket)#make bucket
+                #     bucket.location = "US-EAST4" #maybe lowercase
+                #     bucket.storage_class = "STANDARD"
+                #     myClass = myFileList([myFile.read])
+                #     #convert to pickling byte object
+                #     package = pickle.dumps(myClass)
+                #     blob = bucket.blob(str(markerid))
+                #     blob.upload_from_string(package)
 
 
                 return "success"
