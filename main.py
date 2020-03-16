@@ -125,27 +125,28 @@ def add_location_page():
                 unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
 
                 #saving to google storage
-                thismarker = unconfirmed_markers.find({'lat': lat, 'lon': lng})
+                thismarker = unconfirmed_markers.find({"name": fountain_name, "lat":lat, "lon":lng, "type": type})
                 thismarker = thismarker[0]
-                markerid = thismarker["_id"].valueOf()
+                markerid = str(thismarker["_id"])
+                print(markerid)
 
                 #bucket per our defined regions
 
                 try:
                     bucket = storage_client.bucket("nyc")#if bucket exist
                     #pull blob, -> append, release
-                    try: #if blob for fountain exists 
+                    try: #if blob for fountain exists
                         blob = bucket.get_blob(str(markerid))
                         #if it exists unpickle
                         myClass = pickle.loads(blob)
                         #package should be a wrapper class with function to append
-                        myClass.addimg(myFile.read) #add our file to object                
+                        myClass.addimg(myFile.read) #add our file to object
                     except:
-                        # if blob doesnt exist, make class, push code   
+                        # if blob doesnt exist, make class, push code
                         myClass = myFileList([myFile.read])
                         pass
 
-                    #now that classes are made / appended too, prepare + push that object to 
+                    #now that classes are made / appended too, prepare + push that object to
                     package = pickle.dumps(myClass)
                     blob = bucket.blob(str(markerid))
                     blob.upload_from_string(package)
