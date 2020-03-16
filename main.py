@@ -134,9 +134,11 @@ def add_location_page():
 
                 try:
                     bucket = storage_client.bucket("nyc")#if bucket exist
+                    print("bucketexists")
                     #pull blob, -> append, release
                     try: #if blob for fountain exists
                         blob = bucket.get_blob(str(markerid))
+
                         #if it exists unpickle
                         myClass = pickle.loads(blob)
                         #package should be a wrapper class with function to append
@@ -144,7 +146,6 @@ def add_location_page():
                     except:
                         # if blob doesnt exist, make class, push code
                         myClass = myFileList([myFile.read])
-                        pass
 
                     #now that classes are made / appended too, prepare + push that object to
                     package = pickle.dumps(myClass)
@@ -154,6 +155,7 @@ def add_location_page():
                     # blob.upload_from_file(myFile.read())
 
                 except: #bucket and it associated blob doesnt exist
+                    print("bucketdoesnt exist")
                     bucket = "nyc"
                     bucket = storage_client.create_bucket(bucket)#make bucket
                     bucket.location = "US-EAST4" #maybe lowercase
