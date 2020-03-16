@@ -17,6 +17,18 @@ app.secret_key = '6yTWFOE7j05WpVr8ic'
 client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb.net:27017,cluster0-shard-00-01-lnqyp.mongodb.net:27017,cluster0-shard-00-02-lnqyp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', ssl_cert_reqs=ssl.CERT_NONE)
 
 storage_client = storage.Client()#gcloud storage
+#bucket per our defined regions
+bucket_name = "fountain-images"
+
+bucket = storage_client.create_bucket(bucket_name)
+
+print("Bucket {} created".format(bucket.name))
+
+buckets = storage_client.list_buckets()
+
+for bucket in buckets:
+    print(bucket.name)
+
 
 db = client['AqcuaFonte']
 users = db['users']
@@ -119,16 +131,16 @@ def add_location_page():
             if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
                 # SAVE MY FILE TO TEST FOLDER
                 print("#important")
-                print(type(myFile.read()))
+                # print(type(myFile.read()))
                 unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
                 thismarker = unconfirmed_markers.find({'lat': lat, 'lon': lng})
                 thismarker = thismarker[0]
-                markerid = thismarker[_id]
-                #bucket per our defined regions
+                markerid = thismarker["_id"]
 
-                bucket = storage_client.create_bucket('test')#make test bucket
-                blob = bucket.blob('testing')
+                #bucket per our defined regions
+                blob = bucket.blob(markerid)
                 blob.upload_from_file(myFile.read())
+                print(bucket)
 
                 # try:
                 #     bucket = storage_client.bucket("nyc")#if bucket exist

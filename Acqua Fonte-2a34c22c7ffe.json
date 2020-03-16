@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "acqua-fonte-270800",
+  "private_key_id": "2a34c22c7ffe2060fe13ed4f2dfad43c61d35f9c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDDHtxALaTKYSm4\nbzRuKyjEnwxCCTZUR0kXVsOOTD1IwNONmW1D9WZIGBhe2mkA6q4gbzgjdpTApC/r\nzNxcsK3Z/o05WzEjWjffdcpxegtyMNFNKJsGxauLG0veVjDbhbLLixuVFIgIHX/+\nY5bPB6Dvi3H7mOsyCEjJSmbIp0dlv7b8gmJ7XZoCRHCQbkRKQOqkkfxWgNsFhVBl\nGqJjMcgXOmW+ZQuefPBb11jLlCQfje3l2n4XDJIC24z2fKumRKQEM/LNimnj+3A+\npEePiPWD+E9FT3eBddBGRlJwiyHjzXnEa+YRYDA081Prodf39hSZLW9dcE9s0UwO\nJ5WaYtYxAgMBAAECggEABNq7MxOPooNZVN/bZ5RGTuIAHZJ6Gg2t+Vksw1kNO0ak\n3MSA7exoj4md7Zo0e5PbIi5yMJuuJr7O/Ghb4Sh6Is7M96zXo6AGfNZC46DcMQqa\n4ncMqFX5pxvWPuFZFNUWNi8vT/2zRrRpL0yN/3eanusSumY7D8MaAHwL45kZ0yOv\nMu7XV44hZpjVs9mJDmzHvkGk6vHWGMa2vAaDLH7+UUfYO79y5kG+4sgHCtqZwdPR\nuiis0uyydpnXWoLO8AdlyrhPDoC3zygKvJ79TA3uMekQdUdIv1yHDxkukyUDMtDN\nmqOOzC8eIYwF1Uy8W5mSyuuwUxWGoBiwkSvW6o7X0wKBgQD/ZnKntFbgyoHwnTFH\nw7fRjFTGo7OnRzJJ8DfTDKvMGehWnfnuMA4H2+2Mv0te2uw/GT1/fXrY9mE1j9Pr\npzyOryZ7TRSqMibK2a0IVhWk9ZJmRz8QWTjYm/81fGnenBATm1TUadadKnr/1cmW\nWRS5xBgBN7+PxAR3/QvOruwCmwKBgQDDlCvKanmUwadKYbvc5RRWPkCi9h4h++ac\nNCkKDqqYo7j5miYWVXJC7nW30AyyrI7pceDnHJabkCi0c24JlF8DzreeeBhwCIWc\nGvre+OKD2BJ7ROoq7A+u83vXHNwMHoZ1jmmqJhkvtUUBhwk3wUaQDwWw6TAMaqeD\ndy2BTaGhIwKBgQDvKUZQmOWKFthbMzgEldg6WAjDAmSnTlpfNp1v+rudot0Yz1JN\no55f6ainVjMEHkmAROh7zEsPhJg/CfJPCAoDKy0D5YhmYBRHfFM2LTaThIqVUD5T\n1tkOrfXsZhbVqJq9YYWsa3fXMQKBM/dT3RM1adV4vnWZ8NqmacV2xAKp5QKBgGQv\nK3tlrWARDwPgKp6NziwbeXrAvlDEO646Xedj+el0vJVHbEk2ffBhPHXrIgYItLBK\ngF2C3HdVkjRViMFpen51zsNjW4lQJDkB7Q54yXemIFl6xMU15RbGbOKVSvb+T/w5\n9lCNcYtpvK56oLMp016KA21LFizWGXcTfoDk5m2nAoGBANaOwShFd2r4GRZH0B/R\nMQQGQEJ8WcmFs5ssK/7U2dum5rnVJLjHiCTGgoLeBL5TD101rP6LtG/Lak1p9hb0\nnmc+j4y4AnZg3Y4nen+1VfDpfVWmCJjWlVHBHxWO9txuMH6y404dLBmeLivvhvrS\nrbA3DCk1EKZV4LJlbxMyu0Da\n-----END PRIVATE KEY-----\n",
+  "client_email": "photolibrary@acqua-fonte-270800.iam.gserviceaccount.com",
+  "client_id": "111946418393922985819",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/photolibrary%40acqua-fonte-270800.iam.gserviceaccount.com"
+}

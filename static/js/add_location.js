@@ -68,6 +68,8 @@ function addMarker(location, map, icon) {
 function addListener(map) {
   map.addListener('center_changed', function(){
     fountain_marker.setPosition(map.getCenter());
+    fountain_lng = marker.getPosition().lng();
+    fountian_lat = marker.getPosition().lat();
   });
 }
 
