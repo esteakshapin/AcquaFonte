@@ -9,6 +9,9 @@ from google.cloud import storage
 import pickle
 from pictureclass import myFileList
 
+import random
+import string
+
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 # from threading import Thread
 
@@ -17,14 +20,13 @@ app.secret_key = '6yTWFOE7j05WpVr8ic'
 
 client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb.net:27017,cluster0-shard-00-01-lnqyp.mongodb.net:27017,cluster0-shard-00-02-lnqyp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', ssl_cert_reqs=ssl.CERT_NONE)
 
-storage_client = storage.Client()#gcloud storage, #making sure that bucket exists
-#bucket per our defined regions
-bucket_name = "fountain-images"
-
 db = client['AqcuaFonte']
 users = db['users']
 markers = db['markers']
 unconfirmed_markers = db['unconfirmed_markers']
+
+#google storage variable
+bucket_name = "fountain-images"
 
 
 #finding markers in range
@@ -122,65 +124,33 @@ def add_location_page():
             if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
                 print("#important")
                 # print(type(myFile.read()))
-                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
-
-                #saving to google storage
-                thismarker = unconfirmed_markers.find({"name": fountain_name, "lat":lat, "lon":lng, "type": type})
-                thismarker = thismarker[0]
-                markerid = str(thismarker["_id"])
-                print(markerid)
 
                 #bucket per our defined regions
+                gcs  = storage.Client()#gcloud storage, #making sure that bucket exists
 
-                try:
-                    bucket = storage_client.bucket("nyc")#if bucket exist
-                    print("bucketexists")
-                    #pull blob, -> append, release
-                    try: #if blob for fountain exists
-                        blob = bucket.get_blob(str(markerid))
+                destination_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(20))
 
-                        #if it exists unpickle
-                        myClass = pickle.loads(blob)
-                        #package should be a wrapper class with function to append
-                        myClass.addimg(myFile.read) #add our file to object
-                    except:
-                        # if blob doesnt exist, make class, push code
-                        myClass = myFileList([myFile.read])
+                bucket = gcs.get_bucket(bucket_name)
+                blob = bucket.blob(destination_name)
 
-                    #now that classes are made / appended too, prepare + push that object to
-                    package = pickle.dumps(myClass)
-                    blob = bucket.blob(str(markerid))
-                    blob.upload_from_string(package)
-                    # blob = bucket.blob(str(markerid) + '/' + len(fountain))
-                    # blob.upload_from_file(myFile.read())
+                blob.upload_from_string(
+                    myFile.read(),
+                    content_type=myFile.content_type
+                )
 
-                except: #bucket and it associated blob doesnt exist
-                    print("bucketdoesnt exist")
-                    bucket = "nyc"
-                    bucket = storage_client.create_bucket(bucket)#make bucket
-                    bucket.location = "US-EAST4" #maybe lowercase
-                    bucket.storage_class = "STANDARD"
-                    myClass = myFileList([myFile.read])
-                    #convert to pickling byte object
-                    package = pickle.dumps(myClass)
-                    blob = bucket.blob(str(markerid))
-                    blob.upload_from_string(package)
+                blob.make_public()#allowing for the url to return an image
 
+                # The public URL can be used to directly access the uploaded file via HTTP.
+                url = blob.public_url
+
+
+                #adding fountain to unconfirmed database
+                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment], "pics": [url]})
 
                 return "success"
             return "Error. Please check to make sure the file you updated is an image"
+        return("success")
     return render_template('add_location.html')
-
-# @app.route('/test', methods=['GET'])
-# def test():
-#     try:
-#         bucket = storage_client.bucket("test")#if bucket exist
-#         assert isinstance(bucket, Bucket)
-#         #get blob with
-#         blob = bucket.blob('testing')
-#         blob.download_to_filename('filetest.png')
-#     except:
-#         print('bucketnotfound')
 
 # Contact Page
 @app.route('/contact', methods=['GET'])
