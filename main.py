@@ -5,6 +5,12 @@ import ssl
 # import csv
 import math
 from datetime import datetime
+from google.cloud import storage
+import pickle
+from pictureclass import myFileList
+
+import random
+import string
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 # from threading import Thread
@@ -17,7 +23,10 @@ client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb
 db = client['AqcuaFonte']
 users = db['users']
 markers = db['markers']
-visits = db['visits']
+unconfirmed_markers = db['unconfirmed_markers']
+
+#google storage variable
+bucket_name = "fountain-images"
 
 
 #finding markers in range
@@ -52,30 +61,21 @@ def get_fountains_in_range(lat, lon, distance_range):
   return list_return
 
 #adding header to disable caching -- REMOVE WHEN DEPLOYING SITE
-@app.after_request
-def add_header(r):
-    """
-    Add headers to both force latest IE rendering engine or Chrome Frame,
-    and also to cache the rendered page for 10 minutes.
-    """
-    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    r.headers["Pragma"] = "no-cache"
-    r.headers["Expires"] = "0"
-    r.headers['Cache-Control'] = 'public, max-age=0'
-    return r
+# @app.after_request
+# def add_header(r):
+#     """
+#     Add headers to both force latest IE rendering engine or Chrome Frame,
+#     and also to cache the rendered page for 10 minutes.
+#     """
+#     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+#     r.headers["Pragma"] = "no-cache"
+#     r.headers["Expires"] = "0"
+#     r.headers['Cache-Control'] = 'public, max-age=0'
+#     return r
 
 # Home Page
 @app.route('/', methods=['GET'])
 def home_page():
-  ip_address = request.headers.get('X-Forwarded-For', request.remote_addr)
-  referer_page = request.referrer
-  user_agent = request.user_agent.string
-  time = datetime.now()
-
-  if (user_agent != 'Mozilla/5.0+(compatible; UptimeRobot/2.0; http://www.uptimerobot.com/)'):
-    print({'ip': ip_address, 'time':time})
-    visits.insert_one({'ip': ip_address, 'time':time, 'referer_page':referer_page, 'user_agent':user_agent})
-
   return render_template('index.html')
 
 # Find_Water Page
@@ -107,18 +107,50 @@ def allowed_extension(extension):
 # Add_Location Page
 @app.route('/add_location', methods=['GET', 'POST'])
 def add_location_page():
-  if request.method == 'POST':
-    #start add location code
-    if 'img' in request.files and request.files['img'].filename != '': #ask if a img was sent // img is not none type
-      print('second level made')
-      myFile = request.files['img'] #get image
-      fileextension = myFile.filename.rsplit('.', 1)[1]
-      if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
-        # save to pymagno
-        pass
-    print('postrequestmade')
+    if request.method == 'POST':
+        #start add location code
+        fountain_name = request.form['fountain_name']
+        fountain_comment = request.form['fountain_comment']
+        status = request.form['status']
+        type = request.form['type']
+        rating = request.form['rating']
+        lat = float(request.form['lat'])
+        lng = float(request.form['lng'])
 
-  return render_template('add_location.html')
+        if 'fountain_img_input' in request.files and request.files['fountain_img_input'].filename != '': #ask if a img was sent // img is not none type
+            print('second level made')
+            myFile = request.files['fountain_img_input'] #get image
+            fileextension = myFile.filename.rsplit('.', 1)[1]
+            if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
+                print("#important")
+                # print(type(myFile.read()))
+
+                #bucket per our defined regions
+                gcs  = storage.Client()#gcloud storage, #making sure that bucket exists
+
+                destination_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(20))
+
+                bucket = gcs.get_bucket(bucket_name)
+                blob = bucket.blob(destination_name)
+
+                blob.upload_from_string(
+                    myFile.read(),
+                    content_type=myFile.content_type
+                )
+
+                blob.make_public()#allowing for the url to return an image
+
+                # The public URL can be used to directly access the uploaded file via HTTP.
+                url = blob.public_url
+
+
+                #adding fountain to unconfirmed database
+                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment], "pics": [url]})
+
+                return "success"
+            return "Error. Please check to make sure the file you updated is an image"
+        return("success")
+    return render_template('add_location.html')
 
 # Contact Page
 @app.route('/contact', methods=['GET'])

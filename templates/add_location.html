@@ -22,7 +22,7 @@
                 <div id='map'></div>
 
                 <div class="rating">
-                  <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                  <span id="5" onclick="stars(5);" class="stars">☆</span><span id="4" onclick="stars(4);" class="stars">☆</span><span id="3" onclick="stars(3);" class="stars">☆</span><span id="2" onclick="stars(2);" class="stars">☆</span><span id="1" onclick="stars(1);" class="stars">☆</span>
                 </div>
 
                 <div class="status_type">
@@ -38,19 +38,21 @@
                     <label for="cars">fountain Type:</label>
 
                       <select id="fountain_type">
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="opel">Opel</option>
-                        <option value="audi">Audi</option>
+                        <option value="" disabled selected>select a type</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E-wheelChair">E Wheel Chair</option>
                       </select>
                   </div>
                 </div>
 
-                <form class="fountain-form">
-                  <input id='fountain_name' type="text" placeholder="Fountain Name"/>
-                  <input id='fountain_comment' type="text" placeholder="comments"/>
-                  <input class="fountain_img" id="fountain_img_label" placeholder="Choose a profile picture:" readonly />
-                  <input class='fountain_img' id="fountain_img_input" type="file" accept="image/*" placeholder="Upload Image" />
+                <form class="fountain-form" enctype="multipart/form-data">
+                  <input name="fountain_name" id='fountain_name' type="text" placeholder="Fountain Name"/>
+                  <input name="fountain_comment" id='fountain_comment' type="text" placeholder="comments"/>
+                  <input class="fountain_img" id="fountain_img_label" placeholder="Choose a picture:" readonly />
+                  <input name="fountain_img_input" class='fountain_img' id="fountain_img_input" type="file" accept="image/*" placeholder="Upload Image" />
 
                   <button id="fountain_submit" type="button" name="fountain_submit">create</button>
                 </form>
