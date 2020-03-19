@@ -178,10 +178,38 @@ def about_us_page():
 @app.route('/myAccount', methods=['GET', 'POST'])
 def myAccount_page():
 
-  if request.method == 'POST':
-     newUsername = request.form[newUsername]
-     newFirst = request.form[newFirst]
-     newLast = request.form[newLast]
+    if request.method == 'POST':
+        newUsername = request.form[newUsername]
+        newFirst = request.form[newFirst]
+        newLast = request.form[newLast]
+        notchanged = True
+        changes = []
+        if (users.count_documents({'username':username}) > 0):#ask if the change username is valid
+            print('Username Taken')
+            return 'Username Taken, Account change halted'
+
+        if newFirst and strip(newFirst) != "": #update the user's firstname
+            users.find_one_and_update({"username": session.get('username')}, {'$set': {"first_name" : newFirst}})
+            notchanged = False
+            changes.append("First-name Changed")
+            session['first_name'] = newFirst
+
+        if newLast and strip(newLast) != "": #update the user's lastname
+            users.find_one_and_update({"username": session.get('username')}, {'$set': {"last_name" : newLast}})
+            notchanged = False
+            changes.append('Last-name Changed')
+            session['last_name'] = newLast
+
+        if newUsername != "": #update the user's username
+            users.find_one_and_update({"username": session.get('username')}, {'$set': {"username" : newUsername}})
+            notchanged = False
+            changes.append('Username Changed')
+            session['username'] = newUsername
+
+        if notchanged: #if no changes were made
+            return "no changes were made, feilds empty"
+        else:
+            return changes
 
 
   if (session.get('logged_in')): #if not none type

@@ -59,18 +59,17 @@ $(document).ready(function () {
 				if (sendRequest){
 					$.ajax({
 							type : 'POST',
-							url : '/',
+							url : '/myAccount',
 							data: fd,
 							processData: false,  // tell jQuery not to process the data
 							contentType: false,   // tell jQuery not to set contentType
 							success: function(data) {
 									console.log(data)
-									if (data == "success"){
+									if (Array.isArray(data)){
+											console.log("account changed");
+											alert(data.join(" \n "));
 											document.location.reload();
-											console.log("push to backend");
-											alert("");
 									}else {
-										console.log('test');
 											alert(data);
 									}
 
