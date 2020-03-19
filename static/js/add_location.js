@@ -138,7 +138,7 @@ $(document).ready(function () {
       $.ajax({
         type : 'POST',
         url : '/add_location',
-        data: fd,
+        data: JSON.stringify(fd),
         processData: false,  // tell jQuery not to process the data
         contentType: false,   // tell jQuery not to set contentType
         success: function(data) {
@@ -148,8 +148,10 @@ $(document).ready(function () {
           }else {
             alert(data);
           }
-
         },
+        error: function(e) {
+         console.log(e);
+        }
       });
     }
 

@@ -174,16 +174,41 @@ def about_us_page():
 
   return render_template('about_us.html')
 
+
+
 # Account page
 @app.route('/myAccount', methods=['GET', 'POST'])
-def myAccount_page():
-
+def myAccount():
     if request.method == 'POST':
-        newUsername = request.form[newUsername]
-        newFirst = request.form[newFirst]
-        newLast = request.form[newLast]
+        print('post received')
+        newUsername = request.form['newUsername']
+        newFirst = request.form['newFirst']
+        newLast = request.form['newLast']
         notchanged = True
         changes = []
+        if 'profilepic' in request.files and request.files['profilepic'].filename != '': #ask if a img was sent // img is not none type
+            print('file found')
+            myFile = request.files['profilepic'] #get image
+            fileextension = myFile.filename.rsplit('.', 1)[1]
+            if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
+                # print(type(myFile.read()))
+                #bucket per our defined regions
+                gcs  = storage.Client()#gcloud storage, #making sure that bucket exists
+                destination_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(20))
+                bucket = gcs.get_bucket(bucket_name)
+                blob = bucket.blob(destination_name)
+                blob.upload_from_string(
+                    myFile.read(),
+                    content_type=myFile.content_type
+                )
+                blob.make_public()#allowing for the url to return an image
+                # The public URL can be used to directly access the uploaded file via HTTP.
+                url = blob.public_url
+                #adding fountain to unconfirmed database
+                users.find_one_and_update({"username": session.get('username')}, {'$set': {"profilepic" : url}})
+                notchanged = False
+                changes += 'Profile-pic Changed'
+
         if (users.count_documents({'username':username}) > 0):#ask if the change username is valid
             print('Username Taken')
             return 'Username Taken, Account change halted'
@@ -191,31 +216,31 @@ def myAccount_page():
         if newFirst and strip(newFirst) != "": #update the user's firstname
             users.find_one_and_update({"username": session.get('username')}, {'$set': {"first_name" : newFirst}})
             notchanged = False
-            changes.append("First-name Changed")
+            changes += "\nFirst-name Changed"
             session['first_name'] = newFirst
 
         if newLast and strip(newLast) != "": #update the user's lastname
             users.find_one_and_update({"username": session.get('username')}, {'$set': {"last_name" : newLast}})
             notchanged = False
-            changes.append('Last-name Changed')
+            changes += '\nLast-name Changed'
             session['last_name'] = newLast
 
         if newUsername != "": #update the user's username
             users.find_one_and_update({"username": session.get('username')}, {'$set': {"username" : newUsername}})
             notchanged = False
-            changes.append('Username Changed')
+            changes += '\nUsername Changed'
             session['username'] = newUsername
-
-        if notchanged: #if no changes were made
+        print('sending response')
+        if notchanged: #if no changes were made // catch all post request
             return "no changes were made, feilds empty"
         else:
             return changes
 
 
-  if (session.get('logged_in')): #if not none type
-    return render_template('myAccount.html',logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'), username=session.get('username'))
-  else:
-    return redirect(url_for('log_in_page'))
+    if (session.get('logged_in')): #if not none type
+        return render_template('myAccount.html', profilepic=session.get('profilepic'), logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'), username=session.get('username'))
+    else:
+        return redirect(url_for('log_in_page'))
 
 
 # Log_in Page
@@ -234,6 +259,7 @@ def log_in_page():
         user = user[0]
         session['first_name'] = user["first_name"]
         session['last_name'] = user["last_name"]
+        session['profilepic'] = user['profilepic']
         session['username'] = username
         session['logged_in'] = True
         print('logged in')

@@ -18,7 +18,11 @@
 
 								<div class="text_body">
 									 <div class="first-layer"><!-- profile pic + name -->
-											<div style="/*background-image: url(https://www.ibts.org/leadership1/jason-delgado__trashed/attachment/businessman-silhouette-as-avatar-or-default-profile-picture/)*/" class="layer-elm" id="user-pic"></div>
+											<div style="
+											{% if profilepic is not none %}
+												{{profilepic}}
+											{% endif %}
+											" class="layer-elm" id="user-pic"></div>
 											<h1 class="layer-elm" id="name">Welcome: {{username}}</h1>
 									 </div>
 										<div class="second-layer"><!--details about user -->
@@ -75,7 +79,7 @@
     <!-- <br> -->
     <p>Last Name: <input id='lastname' type="text" value="{{last_name}}" placeholder="{{last_name}}"/></p>
     <!-- <br> -->
-    <p>Profile Pic: <input id='profilepic' accept="image/*" type="file"/></p>
+    <p>Profile Pic: <input id='profilepic' name="profilepic" accept="image/*" type="file"/></p>
 
    <button id="submit" type="button" name="submit"> Make Changes </button>
   </form>
