@@ -5,16 +5,16 @@ $(document).ready(function () {
     $.post('/log_in', {
       username:username,
       password:password
-      }).done(function(){
-        document.location.reload();
+     }).done(function(x){
+        window.location.href = '/';
       });
   });
   $('#log_out').click(function (){
-    $.post('/log_out',{}).done(function(){
-      document.location.reload();
+    $.post('/log_out',{}).done(function(x){
+      window.location.href = '/';
     });
   });
-  $('#register_submit').click(function (){
+  $('#register_submit').click(function (x){
     const first_name = $('#register_first_name').val();
     const last_name = $('#register_last_name').val();
     const username = $('#register_username').val();
@@ -26,9 +26,10 @@ $(document).ready(function () {
       username:username,
       password:password,
       confirm_pass:confirm_pass
-      }).done(function(){
-        document.location.reload();
-      });
+      })
+      //.done(function(){
+        //document.location.reload();
+      //});
   });
   $('#register_form').click(function(){
     $(".register-form").css('display', 'inherit');

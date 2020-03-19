@@ -1,3 +1,4 @@
+
 <head>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/nav_bar.css')}}">
 </head>
@@ -14,7 +15,12 @@
         <ul class="menubar_options">
             <li><a id='{{contact_id}}' href="contact">CONTACT US</a></li>
             <li><a id='{{about_us_id}}' href="about_us">ABOUT US</a></li>
+            {% if username is defined %}
+            <li><a id='{{log_in_id}}' href="myAccount">MY ACCOUNT</a></li>
+            {% else %}
             <li><a id='{{log_in_id}}' href="log_in">LOG IN</a></li>
+            {% endif %}
+
         </ul>
 
     </div>

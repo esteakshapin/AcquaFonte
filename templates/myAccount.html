@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HOME | Acqua Fonte</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/myAccount.css')}}">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='js/myAccount.js') }}" defer></script>
+    </head>
+    <body>
+      <div class='container'>
+        {% with home_id='active', find_water_id='not_active', add_location_id='not_active', contact_id='not_active',about_us_id='not_active',log_in_id='not_active' %}
+
+          {% include 'nav_bar.html' %}
+
+        {% endwith %}
+								<div class="margin-area">
+
+								<div class="text_body">
+									 <div class="first-layer"><!-- profile pic + name -->
+											<div style="/*background-image: url(https://www.ibts.org/leadership1/jason-delgado__trashed/attachment/businessman-silhouette-as-avatar-or-default-profile-picture/)*/" class="layer-elm" id="user-pic"></div>
+											<h1 class="layer-elm" id="name">Welcome: {{username}}</h1>
+									 </div>
+										<div class="second-layer"><!--details about user -->
+												<h1 class="layer-elm" style="margin-top:0px"> Favorite Locations:</h1>
+            <br>
+           <div class="layer">
+            <div class="layer-elm, Favorite"><button type="button" name="button" class="button">First</button></div>
+             <div class="layer-elm, Favorite"><button type="button" name="button" class="button">Second</button></div>
+             <div class="layer-elm, Favorite"><button type="button" name="button" class="button">Third</button></div>
+            </div>
+            <h1 class="layer-elm"> Total Points: {{points}} </h1>
+          </div>
+
+
+          <div class=".first-layer"><!-- user info -->
+            <h1 class="layer-elm">
+             User Info:
+            </h1>
+            <div class="layer">
+             <table>
+              <tr>
+               <td>Username:</td><td>{{username}}</td>
+              </tr>
+              <tr>
+               <td>Name:</td><td>{{first_name}} {{last_name}}</td>
+              </tr>
+
+             </table>
+             </div>
+             <div class="layer">
+
+
+             Reset Passward:
+             <button type="button" class="button"name="reset">Send reset link to your email</button></p>
+
+             </div>
+            </div>
+
+            <div class="third-layer"><!-- find water -->
+  											<button id='log_out' class="button1, button" type='button'>Log Out</button>
+  										</div>
+          </div>
+
+								</div>
+					</div>
+<div class="center">
+<div id="showEdit" style="display: none;"><!--show and hide-->
+  <span id="closeForm">X</span>
+  <h1> Edit Account Info </h1>
+  <form class="accountForm">
+    <p>Username: <input id='username' type="text" value="{{username}}" placeholder="{{username}}"/></p>
+    <!-- <br> -->
+    <p>First Name: <input id='firstname' type="text" value="{{first_name}}" placeholder="{{first_name}}"/></p>
+    <!-- <br> -->
+    <p>Last Name: <input id='lastname' type="text" value="{{last_name}}" placeholder="{{last_name}}"/></p>
+    <!-- <br> -->
+    <p>Profile Pic: <input id='profilepic' accept="image/*" type="file"/></p>
+
+   <button id="submit" type="button" name="submit"> Make Changes </button>
+  </form>
+</div>
+</div>
+<button id="editAccount">
+ <i id="edit">
+  &#x270E;
+ </i>
+</button>
+<!-- current value of user -->
+<input id="cusername" class="hidden" type="text" value="{{username}}"/>
+<input id="cfirstname" class="hidden" type="text" value="{{first_name}}"/>
+<input id="clastname" class="hidden" type="text" value="{{last_name}}"/>
+			</body>

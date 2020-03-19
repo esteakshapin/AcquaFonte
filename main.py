@@ -1,6 +1,6 @@
 #import fixpath
 from pymongo import MongoClient
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import ssl
 # import csv
 import math
@@ -76,6 +76,9 @@ def get_fountains_in_range(lat, lon, distance_range):
 # Home Page
 @app.route('/', methods=['GET'])
 def home_page():
+  if (session.get('logged_in')):
+      return render_template('index.html', logged_in=session.get('logged_in'), username=session.get('username'))
+
   return render_template('index.html')
 
 # Find_Water Page
@@ -83,7 +86,7 @@ def home_page():
 def find_water_page():
   if (session.get('logged_in') == None):
     session['logged_in'] = False
-  return render_template('find_water.html', logged_in=session.get('logged_in'))
+  return render_template('find_water.html', logged_in=session.get('logged_in'), username=session.get('username'))
 
 # get markers
 @app.route('/get_markers', methods=['GET'])
@@ -150,17 +153,42 @@ def add_location_page():
                 return "success"
             return "Error. Please check to make sure the file you updated is an image"
         return("success")
+    if (session.get('logged_in')):
+        return render_template('add_location.html', username=session.get('username'))
+
     return render_template('add_location.html')
 
 # Contact Page
 @app.route('/contact', methods=['GET'])
 def contact_page():
+  if (session.get('logged_in')):
+    return render_template('contact.html', username=session.get('username'))
+
   return render_template('contact.html')
 
 # About_Us Page
 @app.route('/about_us', methods=['GET'])
 def about_us_page():
+  if (session.get('logged_in')):
+    return render_template('about_us.html', username=session.get('username'))
+
   return render_template('about_us.html')
+
+# Account page
+@app.route('/myAccount', methods=['GET', 'POST'])
+def myAccount_page():
+
+  if request.method == 'POST':
+     newUsername = request.form[newUsername]
+     newFirst = request.form[newFirst]
+     newLast = request.form[newLast]
+
+
+  if (session.get('logged_in')): #if not none type
+    return render_template('myAccount.html',logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'), username=session.get('username'))
+  else:
+    return redirect(url_for('log_in_page'))
+
 
 # Log_in Page
 @app.route('/log_in', methods=['GET','POST'])
@@ -168,7 +196,7 @@ def log_in_page():
   if request.method == 'GET':
     if (session.get('logged_in') == None):
       session['logged_in'] = False
-    return render_template('log_in.html', logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'))
+    return render_template('log_in.html', first_name=session.get('first_name'), last_name=session.get('last_name'))
 
   elif request.method == 'POST':
     username = request.form['username']

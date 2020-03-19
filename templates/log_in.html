@@ -11,7 +11,6 @@
       {% include 'nav_bar.html' %}
 
     {% endwith %}
-    {% if not logged_in %}
 
       <div class="login-page">
         <div class="form">
@@ -34,10 +33,12 @@
         </div>
       </div>
 
-    {% else %}
+    <!--     {% if not logged_in %}
+{% else %}
+
       <h3> Welcome {{first_name}} {{last_name}}</h3>
       <button id='log_out' type='button'>Log Out</button>
-    {% endif %}
+    {% endif %} -->
 
 
   </body>
