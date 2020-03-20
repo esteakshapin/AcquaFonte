@@ -238,7 +238,7 @@ def myAccount():
 
 
     if (session.get('logged_in')): #if not none type
-        return render_template('myAccount.html', profilepic=session.get('profilepic'), logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'), username=session.get('username'))
+        return render_template('myAccount.html',logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'), username=session.get('username'))
     else:
         return redirect(url_for('log_in_page'))
 
