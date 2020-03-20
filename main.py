@@ -212,10 +212,10 @@ def myAccount_page():
             return changes
 
 
-  if (session.get('logged_in')): #if not none type
-    return render_template('myAccount.html',logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'), username=session.get('username'))
-  else:
-    return redirect(url_for('log_in_page'))
+    if (session.get('logged_in')): #if not none type
+        return render_template('myAccount.html',logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'), username=session.get('username'))
+    else:
+        return redirect(url_for('log_in_page'))
 
 
 # Log_in Page
