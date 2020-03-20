@@ -27,7 +27,7 @@ unconfirmed_markers = db['unconfirmed_markers']
 
 #google storage variable
 bucket_name = "fountain-images"
-
+bucket_php_name = "user-php"
 
 #finding markers in range
 def get_fountains_in_range(lat, lon, distance_range):
@@ -180,12 +180,18 @@ def about_us_page():
 @app.route('/myAccount', methods=['GET', 'POST'])
 def myAccount():
     if request.method == 'POST':
-        print('post received')
-        newUsername = request.form['newUsername']
-        newFirst = request.form['newFirst']
-        newLast = request.form['newLast']
+        print('post hello')
+        updated_user = request.form['newUsername'] == "true"
+        updated_First = request.form['newFirst'] == "true"
+        updated_Last = request.form['newLast'] == "true"
+        newPFP = request.form['newPFP'] == "true"
+
+        newUsername = request.form['username']
+        newFirst = request.form['firstname']
+        newLast = request.form['lastname']
         notchanged = True
         changes = []
+
         if 'profilepic' in request.files and request.files['profilepic'].filename != '': #ask if a img was sent // img is not none type
             print('file found')
             myFile = request.files['profilepic'] #get image
@@ -195,7 +201,7 @@ def myAccount():
                 #bucket per our defined regions
                 gcs  = storage.Client()#gcloud storage, #making sure that bucket exists
                 destination_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(20))
-                bucket = gcs.get_bucket(bucket_name)
+                bucket = gcs.get_bucket(bucket_php_name)
                 blob = bucket.blob(destination_name)
                 blob.upload_from_string(
                     myFile.read(),
@@ -209,32 +215,33 @@ def myAccount():
                 notchanged = False
                 changes += 'Profile-pic Changed'
 
-        if (users.count_documents({'username':username}) > 0):#ask if the change username is valid
+        if updated_user and (users.count_documents({'username':newUsername}) > 0):#ask if the change username is valid
             print('Username Taken')
             return 'Username Taken, Account change halted'
 
-        if newFirst and strip(newFirst) != "": #update the user's firstname
+        if updated_First and newFirst and strip(newFirst) != "": #update the user's firstname
             users.find_one_and_update({"username": session.get('username')}, {'$set': {"first_name" : newFirst}})
             notchanged = False
             changes += "\nFirst-name Changed"
             session['first_name'] = newFirst
 
-        if newLast and strip(newLast) != "": #update the user's lastname
+        if updated_Last and newLast and strip(newLast) != "": #update the user's lastname
             users.find_one_and_update({"username": session.get('username')}, {'$set': {"last_name" : newLast}})
             notchanged = False
             changes += '\nLast-name Changed'
             session['last_name'] = newLast
 
-        if newUsername != "": #update the user's username
+        if updated_user and newUsername != "": #update the user's username
             users.find_one_and_update({"username": session.get('username')}, {'$set': {"username" : newUsername}})
             notchanged = False
             changes += '\nUsername Changed'
             session['username'] = newUsername
         print('sending response')
+
         if notchanged: #if no changes were made // catch all post request
             return "no changes were made, feilds empty"
         else:
-            return changes
+            return jsonify(changes)
 
 
     if (session.get('logged_in')): #if not none type
@@ -291,10 +298,11 @@ def register():
             print('Username Taken')
             return 'failure'
         else:
-            users.insert_one({'username':username, 'password':password, 'first_name':first_name,'last_name':last_name})
+            users.insert_one({'username':username, 'password':password, 'first_name':first_name,'last_name':last_name, "profilepic":"https://storage.cloud.google.com/fountain-images/HZKltov0PNSqG0ww5qeD"})
             session['first_name'] = first_name
             session['last_name'] = last_name
             session['username'] = username
+            session['profilepic'] = user['profilepic']
             session['logged_in'] = True
             print('added new user')
             return 'success'

@@ -26,8 +26,8 @@ $(document).ready(function () {
 	 });
   $('#submit').click(function (){
 				var sendRequest = false;
-			 const curUsername = $('#cusername').val();
-    const newUsername = $('#username').val();
+			 	const curUsername = $('#cusername').val();
+    		const newUsername = $('#username').val();
 				console.log(newUsername);
 				const curFirst = $('#cfirstname').val();
 				const newFirst = $('#firstname').val();
@@ -42,43 +42,58 @@ $(document).ready(function () {
     var fd = new FormData(form);
 
     if (newUsername != curUsername && newUsername != "" && newUsername != undefined){
-      fd.append('newUsername', newUsername);
 						console.log('form includes user');
+						fd.append('newUsername', "true");
 						sendRequest = true;
-					}
-				if (newFirst != curFirst && newFirst != "" && newFirst != undefined){
-		    fd.append('newFirst', newFirst);
-						console.log('form includes first');
-						sendRequest = true;
-					}
-				if (newLast != curLast && newLast != "" && newLast != undefined){
-		    fd.append('newLast', newLast);
-						console.log('form includes last');
-						sendRequest = true;
-					}
-				if (newprofilepic != undefined){
-					fd.append('newprofilepic', newprofilepic);
-					console.log('form includes pic');
-					sendRequest = true;
-				}
-				console.log(fd);
-				if (sendRequest){
-					$.ajax({
-							type : 'POST',
-							url : '/myAccount',
-							data: fd,
-							processData: false,  // tell jQuery not to process the data
-							contentType: 'multipart/form-data',   // tell jQuery not to set contentType
-							success: function(data) {
-									console.log(data)
-											alert(data);
+		}else {
+			fd.append('newUsername', "false");
+		}
+		if (newFirst != curFirst && newFirst != "" && newFirst != undefined){
+				console.log('form includes first');
+				sendRequest = true;
+				fd.append('newFirst', "true");
+			}else {
+				fd.append('newFirst', "false");
+			}
+		if (newLast != curLast && newLast != "" && newLast != undefined){
+				console.log('form includes last');
+				sendRequest = true;
+				fd.append('newLast', "true");
+			}else {
+				fd.append('newLast', "false");
+			}
+		if (newprofilepic != undefined){
+			console.log('form includes pic 2,0');
+			sendRequest = true;
+			fd.append('newPFP', "true");
+		}else {
+			fd.append('newPFP', "false");
+		}
 
-							},
-					});
-				}
-				else {
-					console.log("No edits were made, canceling changes");
-				}
+
+		if (sendRequest){
+			$.ajax({
+        type : 'POST',
+        url : '/myAccount',
+        data: fd,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,   // tell jQuery not to set contentType
+        success: function(data) {
+          if (data == "success"){
+            document.location.reload();
+            alert("Fountain successfully added!!");
+          }else {
+            alert(data);
+          }
+        },
+        error: function(e) {
+         console.log(e);
+        }
+      });
+		}
+		else {
+			alert("No edits were made, canceling changes");
+		}
 
 				//
 				//
