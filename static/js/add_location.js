@@ -144,7 +144,7 @@ $(document).ready(function () {
         success: function(data) {
           if (data == "success"){
             alert("Fountain successfully added!!");
-            document.location.reload(true);
+            window.location.reload(true);
           }else {
             alert(data);
           }
