@@ -20,7 +20,7 @@
 									 <div class="first-layer"><!-- profile pic + name -->
 											<div style="
 											{% if profilepic is not none %}
-												{{profilepic}}
+												background-image: url({{profilepic}});
 											{% endif %}
 											" class="layer-elm" id="user-pic"></div>
 											<h1 class="layer-elm" id="name">Welcome: {{username}}</h1>

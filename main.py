@@ -214,24 +214,25 @@ def myAccount():
                 users.find_one_and_update({"username": session.get('username')}, {'$set': {"profilepic" : url}})
                 notchanged = False
                 changes += 'Profile-pic Changed'
+                session['profilepic'] =  url
 
         if updated_user and (users.count_documents({'username':newUsername}) > 0):#ask if the change username is valid
             print('Username Taken')
             return 'Username Taken, Account change halted'
 
-        if updated_First and newFirst and strip(newFirst) != "": #update the user's firstname
+        if updated_First and newFirst and newFirst.strip() != "": #update the user's firstname
             users.find_one_and_update({"username": session.get('username')}, {'$set': {"first_name" : newFirst}})
             notchanged = False
             changes += "\nFirst-name Changed"
             session['first_name'] = newFirst
 
-        if updated_Last and newLast and strip(newLast) != "": #update the user's lastname
+        if updated_Last and newLast and newLast.strip() != "": #update the user's lastname
             users.find_one_and_update({"username": session.get('username')}, {'$set': {"last_name" : newLast}})
             notchanged = False
             changes += '\nLast-name Changed'
             session['last_name'] = newLast
 
-        if updated_user and newUsername != "": #update the user's username
+        if updated_user and newUsername.strip() != "": #update the user's username
             users.find_one_and_update({"username": session.get('username')}, {'$set': {"username" : newUsername}})
             notchanged = False
             changes += '\nUsername Changed'
@@ -245,6 +246,8 @@ def myAccount():
 
 
     if (session.get('logged_in')): #if not none type
+        if (session.get('profilepic')):
+            return render_template('myAccount.html',profilepic=session.get('profilepic'),logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'), username=session.get('username'))
         return render_template('myAccount.html',logged_in=session.get('logged_in'), first_name=session.get('first_name'), last_name=session.get('last_name'), username=session.get('username'))
     else:
         return redirect(url_for('log_in_page'))
@@ -266,7 +269,7 @@ def log_in_page():
         user = user[0]
         session['first_name'] = user["first_name"]
         session['last_name'] = user["last_name"]
-        session['profilepic'] = user['profilepic']
+        session['profilepic'] = user['profilepic'] # does this work?
         session['username'] = username
         session['logged_in'] = True
         print('logged in')
@@ -282,6 +285,11 @@ def log_out():
   session.pop('first_name')
   session.pop('last_name')
   session.pop('logged_in')
+  try:
+    session.pop('profilepic')
+  except:
+    pass
+
   return 'success'
 
 # register mechanism

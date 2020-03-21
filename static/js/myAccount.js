@@ -80,10 +80,11 @@ $(document).ready(function () {
         contentType: false,   // tell jQuery not to set contentType
         success: function(data) {
           if (data == "success"){
-            document.location.reload();
-            alert("Fountain successfully added!!");
+            alert("edits successful");
+						window.location.reload(true);
           }else {
             alert(data);
+						window.location.reload(true);
           }
         },
         error: function(e) {
