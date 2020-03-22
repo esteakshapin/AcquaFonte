@@ -1,12 +1,92 @@
+#ourName, #icon, .hamburger, .special, .regular{display: none;}
+
+@media screen and (min-width: 1080px) {
+  #ourName, .special, .regular{display: inline;}
+  /* #icon, .hamburger{display: none;} */
+}
+
+@media screen and (min-width: 801px) and (max-width: 1080px) {
+  #ourName, .special, .hamburger{display: inline;}
+  /* #icon, .regular{display: none;} */
+}
+
+@media screen and (max-width: 800px) {
+  #icon, .hamburger, .special{display: inline;}
+  /* #ourName, .regular {display:none;} */
+}
+
+@media screen and (max-width: 350px){
+  body{
+    font-size: 3vw;
+  }
+}
+
+/* make condition for when to remove the login  */
+#logo{
+  height: 3em;
+  width: 3em;
+}
+
 body{
   margin: 0;
   padding: 0;
 }
+
+.hamburger.menuon{
+  display: block;
+  position:relative;
+  z-index: 2;
+}
+#ham{
+  font-size: 2em;
+  margin: 0.25em 0 0 0.5em;
+
+}
+@keyframes slide{
+
+}
+
+.menuitems.menuon{ /* turns the nav bar on// when the ham is pressed*/
+  position: absolute;
+  z-index: 5;
+  display: inline;
+  background-color:white;
+}
+
+.menuitems{
+  display: none;
+}
+
+.under{
+  padding-bottom: 0.5em;
+  border-bottom: solid 1px black;
+}
+.above{
+  padding-top: 0.5em;
+}
+.menuparts{
+  list-style-type:none;
+  padding-right: 0.5em;
+}
+
+ul.menuparts{
+  margin-top: 0;
+  padding-top: 1em;
+  margin-bottom: 0;
+  padding-bottom: 1em;
+  background-color: #a1b8e6;
+}
+
+a {
+  color: inherit;
+  text-decoration-line:none;
+}
+
 .menubar {
     width: 100%;
     height: auto;
-    min-width: 665px;
-    max-width: 1980px;
+    /* min-width: 665px;
+    max-width: 1980px; */
     padding: 0;
     background-color: #113788;
     overflow: hidden;
@@ -66,4 +146,9 @@ li a:hover{
 #active{
     background-color:antiquewhite;
     color: #113788;
+}
+a #active{
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.25em
 }

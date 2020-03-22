@@ -1,20 +1,22 @@
 
-<head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/nav_bar.css')}}">
-</head>
+
 <div class="menubar">
     <div class="left_options">
         <ul class="menubar_options">
-            <li><a id='{{home_id}}' href="/" >HOME</a></li>
-            <li><a id='{{find_water_id}}' href="find_water">FIND WATER</a></li>
-            <li><a id='{{add_location_id}}' href="add_location">ADD LOCATION</a></li>
+          <li class="hamburger"><p id="ham" onclick="togglehamburger()">
+            &#9776;
+          </p>
+        </li>
+            <li class="regular"><a id='{{home_id}}' href="/" >HOME</a></li>
+            <li class="regular"><a id='{{find_water_id}}' href="find_water">FIND WATER</a></li>
+            <li class="regular"><a id='{{add_location_id}}' href="add_location">ADD LOCATION</a></li>
         </ul>
 
     </div>
     <div class="right_options">
         <ul class="menubar_options">
-            <li><a id='{{contact_id}}' href="contact">CONTACT US</a></li>
-            <li><a id='{{about_us_id}}' href="about_us">ABOUT US</a></li>
+            <li class="regular"><a id='{{contact_id}}' href="contact">CONTACT US</a></li>
+            <li class="regular"><a id='{{about_us_id}}' href="about_us">ABOUT US</a></li>
             {% if username is defined %}
             <li><a id='{{log_in_id}}' href="myAccount">MY ACCOUNT</a></li>
             {% else %}
@@ -25,7 +27,24 @@
 
     </div>
     <div class="middle_icon">
-        <p>🅐🅒🅠🅤🅐 🅕🅞🅝🅣🅔</p>
+        <p id="ourName">🅐🅒🅠🅤🅐 🅕🅞🅝🅣🅔</p>
+
+        <a id="icon" href="/">
+        <img id = "logo" src="{{ url_for('static', filename='img/waterdrop.png') }}"
+        </a>
     </div>
 
 </div>
+
+<div class="menuitems">
+  <ul class="menuparts">
+
+    <a id='{{home_id}}' href="/" ><li class="menuparts, under">HOME</li></a>
+    <a id='{{find_water_id}}' href="find_water"><li class="menuparts under above">FIND WATER</li></a>
+    <a id='{{add_location_id}}' href="add_location"><li class="menuparts under above">ADD LOCATION</li></a>
+    <a id='{{contact_id}}' href="contact"><li class="menuparts under above">CONTACT US</li></a>
+    <a id='{{about_us_id}}' href="about_us"><li class="menuparts above">ABOUT US</li></a>
+
+    </ul>
+</div>
+<script src="{{ url_for('static', filename='js/hamburgerNav.js') }}"></script>

@@ -78,6 +78,7 @@ h1{
   font-size: 4em;
   text-align: center;
   transition-duration: 0.8s;
+  margin-bottom: 0.3em;
 }
 .second_page{
   height: 100vh;
