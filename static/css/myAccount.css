@@ -60,6 +60,9 @@ table{
 	height: var(--sidelength, 12vw);/*The user pic will be a circle*/
 	background-color: blue;
 	border-radius: 50%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 #findwater{
 	width: 80%;
