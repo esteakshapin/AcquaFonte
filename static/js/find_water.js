@@ -119,6 +119,7 @@ function addClickEvent(){
   if (markersArray.length > 0){
     markersArray.forEach(function(item, index){
       item.addListener('click', function(){
+        console.log(item);
         var infoBox = document.getElementById('fountain_detail');
         var infoBox_name = document.getElementById('name');
         var infoBox_rating = document.getElementById('rating');

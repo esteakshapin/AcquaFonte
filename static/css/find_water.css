@@ -93,6 +93,10 @@ html,body{
   border-color: #00adb5;
 
 }
+#comment-section{
+  max-height: 150px;
+  overflow: auto;
+}
 
 #name{
   text-align:center;
@@ -100,6 +104,27 @@ html,body{
   font-style: italic;
   line-height: 1em;
   font-size: 1.5em;
+}
+
+.edit {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  display: block;
+  padding: .5em 1em;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1em;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color:cornsilk;
+  color: black;
+  border: 2px solid #008CBA;
+}
+
+.edit:hover {
+  background-color:#00adb5;
+  color: white;
 }
 
 .rating > span:hover:before {
