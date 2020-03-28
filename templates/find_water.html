@@ -19,13 +19,13 @@
         <div class="underDiv">
           <div class='map_and_infoBox'>
             <div id="map"></div>
-            <div id='fountain_detail'>
+            <div id='fountain_detail' data-fountainId="">
               <div id='infoBox_imgHolder'>
                 <span id='x' onclick="document.getElementById('fountain_detail').style.visibility = 'hidden';" style="cursor:default">X</span>
                 <img src='https://www.drinkingwaterfountains.co.uk/wp/wp-content/uploads/2014/08/drinking-fountain-water.jpg'>
               </div>
               <b><p id='name' class="bold">name</p></b>
-              <div class="rating">
+              <div id="rating" class="rating">
       <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
       </div>
               <p id='status' class='non-bold'>status</p>
@@ -34,7 +34,7 @@
               <div id="comment-section">
                 <p>test comment</p>
               </div>
-              <button name="edit" class="edit">Add/Edit info</button>
+              <button id="edit" name="edit" class="edit">Add/Edit info</button>
             </div>
           </div>
         </div>

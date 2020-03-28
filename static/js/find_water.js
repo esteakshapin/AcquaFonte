@@ -89,7 +89,7 @@ function addMarker(location, map, icon) {
     });
 }
 
-function addWaterMarker(location, map, icon, name, status, type, dist, comments, ratings){
+function addWaterMarker(location, map, icon, name, status, type, dist, comments, ratings,_id){
   marker = new google.maps.Marker({
         position: location,
         map: map,
@@ -99,7 +99,8 @@ function addWaterMarker(location, map, icon, name, status, type, dist, comments,
         type:type,
         dist:dist,
         comments:comments,
-        ratings:ratings
+        ratings:ratings,
+        _id:_id
     });
 
   markersArray.push(marker);
@@ -128,6 +129,7 @@ function addClickEvent(){
         var infoBox_commentSection = document.getElementById('comment-section');
 
         infoBox.style.visibility = "visible";
+        infoBox.dataset.fountainId = item['_id'];
         infoBox_name.innerHTML = item['name'];
         infoBox_status.innerHTML = "status &nbsp;&nbsp;&nbsp;&nbsp; <b style='color:green'>" + item['status'] + '</b>';
         infoBox_type.innerHTML = "type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>" + item['type'] + "</b>";
@@ -185,11 +187,12 @@ function get_Markers(lat, lon, dist_range, map){
         var status = item['status'];
         var type = item['type'];
         var dist  = item['dist'];
+        var _id = item['_id'];
         var comments = item['comments'];
         var ratings = item['ratings']
 
 
-        addWaterMarker(marker_LatLng, map, water_marker_icon, name, status, type, dist, comments, ratings);
+        addWaterMarker(marker_LatLng, map, water_marker_icon, name, status, type, dist, comments, ratings,_id);
 
       });
 
@@ -255,6 +258,26 @@ function addListener(map) {
     get_Markers(map_center.lat(), map_center.lng(), radius, map);
     // addCircle(map_center.lat(), map_center.lng(), map, zoom_to_radius(zoomL));
 
+
+  });
+
+  document.getElementById('edit').addEventListener('click', function(){
+    var infoBox = document.getElementById('fountain_detail');
+    var fountainId = infoBox.dataset.fountainId;
+    $.ajax({
+      type : 'POST',
+      url : '/edit_location',
+      data: JSON.stringify({ "_id" : fountainId } ),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function(data) {
+        // document.write(data);
+        alert('success');
+      },
+      error: function(e) {
+        console.log(e);
+      }
+    });
 
   });
 

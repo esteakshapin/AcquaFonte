@@ -39,12 +39,15 @@ html,body{
   z-index:2;
   top: 50%;
   transform: translateY(-50%);
-  left:5em;
+  left:1%;
   padding:1em;
   visibility: hidden;
   overflow: auto;
   max-height: 90%;
   max-width:300px;
+  -webkit-box-shadow: 0 8px 6px -6px black;
+   -moz-box-shadow: 0 8px 6px -6px black;
+        box-shadow: 0 8px 6px -6px black;
 }
 #infoBox_imgHolder{
   max-width:300px;

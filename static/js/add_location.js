@@ -3,7 +3,7 @@ var fountain_marker;
 var rating_num = 0;
 //Default location if location of user is not found --Defualt location set to stuyvesant
 var fountian_lat;
-var fountain_lng;
+var fountian_lng;
 
 var map_styles_array = (function () {
     var map_styles_array = null;
@@ -40,8 +40,9 @@ function initMap(){
 
   }, function(positionError) {
     // User denied geolocation prompt - default to Stuyvesant
-    var fountian_lat = 40.717892;
-    var fountian_lng = -74.013908;
+    fountian_lat = 40.717892;
+    fountian_lng = -74.013908;
+
     var initialLocation = new google.maps.LatLng(fountian_lat, fountian_lng);
     gMap.setCenter(initialLocation);
     gMap.setZoom(zoomL);
@@ -109,7 +110,7 @@ $(document).ready(function () {
       };
     })();
 
-    var form = $('.fountain-form')[0];
+    var form = $("#fountain-form")[0];
     var fd = new FormData(form);
 
     if (fountain_name == ""){
@@ -120,6 +121,9 @@ $(document).ready(function () {
       feildsEmpty = true;
     }else if (type == null) {
       alert('please select a type for this fountian');
+      feildsEmpty = true;
+    }else if (comment == "") {
+      alert('please provide some comments for the fountain');
       feildsEmpty = true;
     }else if (rating == 0) {
       alert('please give this fountian a rating');
@@ -134,11 +138,12 @@ $(document).ready(function () {
       fd.append('status',status);
       fd.append('lat',lat);
       fd.append('lng',lng);
+      console.log('hello',fountian_lat,fountian_lng);
 
       $.ajax({
         type : 'POST',
         url : '/add_location',
-        data: JSON.stringify(fd),
+        data: fd,
         processData: false,  // tell jQuery not to process the data
         contentType: false,   // tell jQuery not to set contentType
         success: function(data) {
@@ -150,7 +155,7 @@ $(document).ready(function () {
           }
         },
         error: function(e) {
-         console.log(e);
+         alert(e);
         }
       });
     }

@@ -11,6 +11,10 @@ from pictureclass import myFileList
 
 import random
 import string
+import os
+
+#setting google GOOGLE_APPLICATION_CREDENTIALS
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="Acqua Fonte-2a34c22c7ffe.json"
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 # from threading import Thread
@@ -56,22 +60,23 @@ def get_fountains_in_range(lat, lon, distance_range):
 
     if (dist < distance_range):
       docs['dist'] = dist
+      docs['_id'] = str(docs['_id'])
       list_return.append(docs)
 
   return list_return
 
 #adding header to disable caching -- REMOVE WHEN DEPLOYING SITE
-@app.after_request
-def add_header(r):
-    """
-    Add headers to both force latest IE rendering engine or Chrome Frame,
-    and also to cache the rendered page for 10 minutes.
-    """
-    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    r.headers["Pragma"] = "no-cache"
-    r.headers["Expires"] = "0"
-    r.headers['Cache-Control'] = 'public, max-age=0'
-    return r
+# @app.after_request
+# def add_header(r):
+#     """
+#     Add headers to both force latest IE rendering engine or Chrome Frame,
+#     and also to cache the rendered page for 10 minutes.
+#     """
+#     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+#     r.headers["Pragma"] = "no-cache"
+#     r.headers["Expires"] = "0"
+#     r.headers['Cache-Control'] = 'public, max-age=0'
+#     return r
 
 # Home Page
 @app.route('/', methods=['GET'])
@@ -97,8 +102,8 @@ def get_markers():
 
   h = get_fountains_in_range(lat,lon,dist_range)
 
-  for i in h:
-    i.pop('_id')
+  # for i in h:
+  #   i.pop('_id')
 
   return jsonify(h)
 
@@ -111,7 +116,6 @@ def allowed_extension(extension):
 @app.route('/add_location', methods=['GET', 'POST'])
 def add_location_page():
     if request.method == 'POST':
-        #start add location code
         fountain_name = request.form['fountain_name']
         fountain_comment = request.form['fountain_comment']
         status = request.form['status']
@@ -119,7 +123,6 @@ def add_location_page():
         rating = request.form['rating']
         lat = float(request.form['lat'])
         lng = float(request.form['lng'])
-
         if 'fountain_img_input' in request.files and request.files['fountain_img_input'].filename != '': #ask if a img was sent // img is not none type
             print('second level made')
             myFile = request.files['fountain_img_input'] #get image
@@ -152,10 +155,20 @@ def add_location_page():
 
                 return "success"
             return "Error. Please check to make sure the file you updated is an image"
-        return("success")
+
+        else:
+            #adding fountain to unconfirmed database
+            unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
+            return "success"
     if (session.get('logged_in')):
         return render_template('add_location.html', username=session.get('username'))
 
+    return render_template('add_location.html')
+
+#editing markers
+@app.route('/edit_location', methods=['post'])
+def edit_location():
+    print(request.get_json())
     return render_template('add_location.html')
 
 # Contact Page
@@ -320,7 +333,7 @@ def register():
 
 # def run():
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=False)
+    app.run(host='0.0.0.0', port=8000, debug=True)
 
 #def keep_alive():
 #    t = Thread(target=run)
