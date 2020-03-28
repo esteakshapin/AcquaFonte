@@ -264,21 +264,7 @@ function addListener(map) {
   document.getElementById('edit').addEventListener('click', function(){
     var infoBox = document.getElementById('fountain_detail');
     var fountainId = infoBox.dataset.fountainId;
-    $.ajax({
-      type : 'POST',
-      url : '/edit_location',
-      data: JSON.stringify({ "_id" : fountainId } ),
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      success: function(data) {
-        // document.write(data);
-        alert('success');
-      },
-      error: function(e) {
-        console.log(e);
-      }
-    });
-
+    window.location.href = '/edit_location?_id='+ infoBox.dataset.fountainId;
   });
 
 }

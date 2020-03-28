@@ -8,6 +8,7 @@ from datetime import datetime
 from google.cloud import storage
 import pickle
 from pictureclass import myFileList
+from bson.objectid import ObjectId
 
 import random
 import string
@@ -163,13 +164,20 @@ def add_location_page():
     if (session.get('logged_in')):
         return render_template('add_location.html', username=session.get('username'))
 
+    if('fountain' in request.args):
+        print(request.args['fountain'])
+
     return render_template('add_location.html')
 
 #editing markers
-@app.route('/edit_location', methods=['post'])
+@app.route('/edit_location', methods=['GET'])
 def edit_location():
-    print(request.get_json())
-    return render_template('add_location.html')
+    id = str(request.args['_id'])
+    fountain = markers.find_one({"_id": ObjectId(id)})
+    if fountain == None:
+        return "failure; fountain could not be found please try again"
+    print(fountain)
+    return redirect(url_for('add_location_page', fountain=fountain))
 
 # Contact Page
 @app.route('/contact', methods=['GET'])
