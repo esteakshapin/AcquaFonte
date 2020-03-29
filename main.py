@@ -161,11 +161,13 @@ def add_location_page():
             #adding fountain to unconfirmed database
             unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
             return "success"
-    if (session.get('logged_in')):
-        return render_template('add_location.html', username=session.get('username'))
+    #reponse to get
 
     if('fountain' in request.args):
         print(request.args['fountain'])
+
+    if (session.get('logged_in')):
+        return render_template('add_location.html', username=session.get('username'))
 
     return render_template('add_location.html')
 
