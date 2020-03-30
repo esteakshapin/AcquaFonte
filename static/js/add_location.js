@@ -4,7 +4,7 @@ var rating_num = 0;
 //Default location if location of user is not found --Defualt location set to stuyvesant
 var fountian_lat;
 var fountian_lng;
-
+var diffrentOrigin = false
 var map_styles_array = (function () {
     var map_styles_array = null;
     $.ajax({
@@ -27,32 +27,45 @@ function initMap(){
 
   navigator.geolocation.getCurrentPosition(function(position) {
     // Center on user's current location if geolocation prompt allowed
+
+    if (!diffrentOrigin){
       fountian_lat = position.coords.latitude;
       fountian_lng = position.coords.longitude;
-
+    }
+    // else{
+    //   changeForm()
+    // }
     var initialLocation = new google.maps.LatLng(fountian_lat, fountian_lng);
     gMap.setCenter(initialLocation);
     gMap.setZoom(zoomL);
     gMap.setOptions({styles: map_styles_array, disableDefaultUI: true});
 
       addMarker(initialLocation, gMap, water_marker_icon);
-      addListener(gMap);
-
+      if (!diffrentOrigin){
+        addListener(gMap);
+      }
   }, function(positionError) {
     // User denied geolocation prompt - default to Stuyvesant
-    fountian_lat = 40.717892;
-    fountian_lng = -74.013908;
 
+    if (!diffrentOrigin){
+      fountian_lat = 40.717892;
+      fountian_lng = -74.013908;
+    }
     var initialLocation = new google.maps.LatLng(fountian_lat, fountian_lng);
     gMap.setCenter(initialLocation);
+    //   changeForm()
+    // }
     gMap.setZoom(zoomL);
     gMap.setOptions({styles: map_styles_array, disableDefaultUI: true});
 
     alert("Couldn't find your location. Please make sure your location services are enabled and try again.");
 
       addMarker(initialLocation, gMap, water_marker_icon);
+    if (!diffrentOrigin){
       addListener(gMap);
-  });
+    }
+  }
+);
 
 }
 
@@ -67,6 +80,7 @@ function addMarker(location, map, icon) {
 }
 
 function addListener(map) {
+  console.log('add listener');
   map.addListener('center_changed', function(){
     fountain_marker.setPosition(map.getCenter());
     fountain_lng = marker.getPosition().lng();
@@ -92,7 +106,91 @@ function stars(num){
   }
 }
 
+function checkValue(value){
+    $('input[name="status"]').each(function(){
+      console.log(this.value);
+      if (this.value == value){
+        this.checked = true;
+      }
+      return 'checked box'
+    })
+}
+function changeForm(){
+  console.log('looking at meta data');
+  // var prelat
+  // var prelon
+  if (! $("#fountaindata").length){
+    initMap()
+    console.log('no data');
+    return('finished')
+  }
+  $("#fountaindata").each(function(){
+    $.each(this.attributes, function(){
+      if (this.specified) {
+        // console.log(value);
+        console.log(this.name, this.value);
+        if (this.name == 'comments'){
+          $('#fountain_comment').val(this.value);
+        }
+
+        if (this.name == 'status'){
+          if (this.value == 'Active'){
+            console.log('working');
+             checkValue('working');
+            }else{
+            console.log('not working');
+            checkValue('not Working');
+        }
+      }
+// ratings WIP
+        if (this.name == 'ratings'){
+          console.log(this.value);
+          // if (this.value == 0){
+          //   stars(1)
+          // }//testing it works!!
+          // else {
+            stars(this.value)
+          // }
+        }
+        if (this.name == 'lat'){
+          console.log('latfound');
+          fountian_lat = this.value
+        }
+        if (this.name == 'lon'){
+          console.log('lonfound');
+          fountian_lng = this.value
+        }
+        if (fountian_lat && fountian_lng && ! diffrentOrigin){
+          console.log('initing map');
+          diffrentOrigin = true
+          initMap()
+        }
+        // else{
+        //   console.log('data has no lat/lon, fake request/exiting');
+        //   initMap()
+        // }
+
+        if (this.name == 'name'){
+          $('#fountain_name').val(this.value);
+        }
+        // if (this.name == 'type'){
+        //   if (this.value==Pedestal){
+        //     $('select[value="A"]')
+        //   }
+        // work in progress
+        // }
+
+
+
+      }
+
+
+    })
+  })
+}
+
 $(document).ready(function () {
+  changeForm()
   $('#fountain_submit').click(function (){
     var radioButton = document.getElementsByName('status');
     var feildsEmpty = true;

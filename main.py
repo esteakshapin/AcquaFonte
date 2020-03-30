@@ -112,6 +112,14 @@ def get_markers():
 def allowed_extension(extension):
     return extension.lower() in ALLOWED_EXTENSIONS
 
+# def getDetail(string, seperator):
+#     throw, k, keep = string.partition(seperator)
+#     if ',' in keep:
+#         value, throw, leftover = keep.partition(',')
+#     else:
+#         value, throw, leftover = keep.partition('}')
+#     value = value.strip(')\'\": ')
+#     return value, leftover
 
 # Add_Location Page
 @app.route('/add_location', methods=['GET', 'POST'])
@@ -120,7 +128,7 @@ def add_location_page():
         fountain_name = request.form['fountain_name']
         fountain_comment = request.form['fountain_comment']
         status = request.form['status']
-        type = request.form['type']
+        ftype = request.form['type']
         rating = request.form['rating']
         lat = float(request.form['lat'])
         lng = float(request.form['lng'])
@@ -131,45 +139,50 @@ def add_location_page():
             if myFile.filename != '' and allowed_extension(fileextension): #ask if extention in allowed extensions
                 print("#important")
                 # print(type(myFile.read()))
-
                 #bucket per our defined regions
                 gcs  = storage.Client()#gcloud storage, #making sure that bucket exists
-
                 destination_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(20))
-
                 bucket = gcs.get_bucket(bucket_name)
                 blob = bucket.blob(destination_name)
-
                 blob.upload_from_string(
                     myFile.read(),
                     content_type=myFile.content_type
                 )
-
                 blob.make_public()#allowing for the url to return an image
-
                 # The public URL can be used to directly access the uploaded file via HTTP.
                 url = blob.public_url
-
-
                 #adding fountain to unconfirmed database
-                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment], "pics": [url]})
-
+                unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": ftype, "status": status, "ratings": [rating], "comments":[fountain_comment], "pics": [url]})
                 return "success"
             return "Error. Please check to make sure the file you updated is an image"
-
         else:
             #adding fountain to unconfirmed database
-            unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": type, "status": status, "ratings": [rating], "comments":[fountain_comment]})
+            unconfirmed_markers.insert_one({"name": fountain_name, "lat":lat, "lon":lng, "type": ftype, "status": status, "ratings": [rating], "comments":[fountain_comment]})
             return "success"
     #reponse to get
-
-    if('fountain' in request.args):
-        print(request.args['fountain'])
-
     if (session.get('logged_in')):
-        return render_template('add_location.html', username=session.get('username'))
-
-    return render_template('add_location.html')
+        if ('fountain' in request.args):
+            # build try except
+            fDetails = request.args['fountain']
+            fDetails = eval(fDetails)
+            fDetails['_id'] = str(fDetails['_id'])
+            print(fDetails.items())
+            reDetails = []
+            ratings = fDetails['ratings']
+            if len(ratings) != 0:
+                averageRating = sum(ratings) / len(ratings)
+                averageRating = round(averageRating)
+            else:
+                averageRating = 0
+            fDetails['ratings'] = averageRating
+            for i,values in fDetails.items():
+                reDetails.append([i, values])
+            print(reDetails)
+            return render_template('add_location.html', username=session.get('username'), thisFountain=reDetails)
+        else:
+            return render_template('add_location.html', username=session.get('username'))
+    else:
+        return redirect(url_for('log_in_page'))
 
 #editing markers
 @app.route('/edit_location', methods=['GET'])

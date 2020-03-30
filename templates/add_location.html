@@ -6,7 +6,8 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/add_location.css')}}">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <script src="{{ url_for('static', filename='js/add_location.js') }}"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWYNykoEI-bVYIgavHIqLYkV5jGy87GQ"></script>
+
     </head>
     <body>
       <div class="container">
@@ -16,7 +17,13 @@
           {% include 'nav_bar.html' %}
 
         {% endwith %}
-
+        {% if thisFountain is defined and thisFountain|length %}
+          <meta id="fountaindata"
+            {% for key, value in thisFountain %}
+             {{key}}="{{value}}"
+            {% endfor %}
+          >
+        {% endif %}
         <div class="underDiv">
           <div class="form-container">
             <div class="login-page">
@@ -65,8 +72,7 @@
 
       </div>
 
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWYNykoEI-bVYIgavHIqLYkV5jGy87GQ&callback=initMap" async defer></script>
-
+      <script src="{{ url_for('static', filename='js/add_location.js') }}" defer></script>
     </body>
 
 
