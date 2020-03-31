@@ -4,6 +4,7 @@ var rating_num = 0;
 //Default location if location of user is not found --Defualt location set to stuyvesant
 var fountian_lat;
 var fountian_lng;
+var submitApproved = false
 var diffrentOrigin = false
 var map_styles_array = (function () {
     var map_styles_array = null;
@@ -129,8 +130,12 @@ function changeForm(){
       if (this.specified) {
         // console.log(value);
         console.log(this.name, this.value);
+        if (this.name == '_id'){
+          submitApproved = this.value
+        }
         if (this.name == 'comments'){
-          $('#fountain_comment').val(this.value);
+          $('#fountain_comment').val(this.value).prop('disabled', true);
+
         }
 
         if (this.name == 'status'){
@@ -171,7 +176,8 @@ function changeForm(){
         // }
 
         if (this.name == 'name'){
-          $('#fountain_name').val(this.value);
+          $('#fountain_name').val(this.value)
+          $('#fountain_name').prop('disabled', true)
         }
         // if (this.name == 'type'){
         //   if (this.value==Pedestal){
@@ -192,14 +198,9 @@ function changeForm(){
 $(document).ready(function () {
   changeForm()
   $('#fountain_submit').click(function (){
-    var radioButton = document.getElementsByName('status');
-    var feildsEmpty = true;
-    const fountain_name = $('#fountain_name').val();
-    const comment = $('#fountain_comment').val();
-    const type = $('#fountain_type').val();
+//need status, rating//, img
     const rating = rating_num;
-    const lat = fountian_lat;
-    const lng = fountian_lng;
+    var radioButton = document.getElementsByName('status');
     const status = (function(){
       for(i = 0; i < radioButton.length; i++) {
         if (radioButton[i].checked){
@@ -208,35 +209,58 @@ $(document).ready(function () {
       };
     })();
 
-    var form = $("#fountain-form")[0];
-    var fd = new FormData(form);
+    var feildsEmpty = true;
+    if (rating == 0) { //a
+      alert('please give this fountian a rating');
+      feildsEmpty = true;
+    }
+    if (status == undefined) {
+      alert('please select the status of this fountian');
+      feildsEmpty = true;
+    }
+    else{
+      feildsEmpty = false;
+    }
+
+    if (!submitApproved){ //need status, img, radio
+    const fountain_name = $('#fountain_name').val();
+    const comment = $('#fountain_comment').val();
+    const type = $('#fountain_type').val();
+    const lat = fountian_lat;
+    const lng = fountian_lng;
 
     if (fountain_name == ""){
       alert('please enter a name for the fountain');
       feildsEmpty = true;
-    }else if (status == undefined) {
-      alert('please select the status of this fountian');
-      feildsEmpty = true;
-    }else if (type == null) {
+    }else if (type == null) {//b
       alert('please select a type for this fountian');
       feildsEmpty = true;
-    }else if (comment == "") {
+    }
+    else if (comment == "") {//b
       alert('please provide some comments for the fountain');
       feildsEmpty = true;
-    }else if (rating == 0) {
-      alert('please give this fountian a rating');
-      feildsEmpty = true;
-    }else {
+    }
+    else {
       feildsEmpty = false;
     }
+}
+
+    var form = $("#fountain-form")[0];
+    var fd = new FormData(form);
 
     if (!feildsEmpty){
-      fd.append('type', type);
       fd.append('rating',rating);
       fd.append('status',status);
-      fd.append('lat',lat);
-      fd.append('lng',lng);
-      console.log('hello',fountian_lat,fountian_lng);
+      if (!submitApproved) {
+        fd.append('type', type);
+        fd.append('lat',lat);
+        fd.append('lng',lng);
+        console.log('hello',fountian_lat,fountian_lng);
+
+      }
+      else {
+        fd.append('_id', submitApproved)
+      }
 
       $.ajax({
         type : 'POST',

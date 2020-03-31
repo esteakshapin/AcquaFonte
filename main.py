@@ -125,11 +125,21 @@ def allowed_extension(extension):
 @app.route('/add_location', methods=['GET', 'POST'])
 def add_location_page():
     if request.method == 'POST':
+        status = request.form['status']
+        rating = request.form['rating']
+        fountainId = request.form['_id']
+        if fountainId:
+            print(fountainId)
+            print(status)
+            print(rating)
+            thisMarker = markers.find_one({"_id": fountainId})#, {'rating': 1}
+            print(thisMarker) #### returning None, no object found
+            return ('work in progress') #-----------------------------------------------------------------------------
+
+
         fountain_name = request.form['fountain_name']
         fountain_comment = request.form['fountain_comment']
-        status = request.form['status']
         ftype = request.form['type']
-        rating = request.form['rating']
         lat = float(request.form['lat'])
         lng = float(request.form['lng'])
         if 'fountain_img_input' in request.files and request.files['fountain_img_input'].filename != '': #ask if a img was sent // img is not none type

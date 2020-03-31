@@ -63,7 +63,11 @@
                   <input class="fountain_img" id="fountain_img_label" placeholder="Choose a picture:" readonly />
                   <input name="fountain_img_input" class='fountain_img' id="fountain_img_input" type="file" accept="image/*" placeholder="Upload Image" />
 
+                  {% if thisFountain is defined and thisFountain|length %}
+                  <button id="fountain_submit" type="button" name="fountain_submit">edit</button>
+                  {% else %}
                   <button id="fountain_submit" type="button" name="fountain_submit">create</button>
+                  {% endif %}
                 </form>
               </div>
             </div>
