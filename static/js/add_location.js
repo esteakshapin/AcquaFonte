@@ -59,10 +59,9 @@ function initMap(){
     gMap.setZoom(zoomL);
     gMap.setOptions({styles: map_styles_array, disableDefaultUI: true});
 
-    alert("Couldn't find your location. Please make sure your location services are enabled and try again.");
-
       addMarker(initialLocation, gMap, water_marker_icon);
     if (!diffrentOrigin){
+      alert("Couldn't find your location. Please make sure your location services are enabled and try again.");
       addListener(gMap);
     }
   }
@@ -133,10 +132,10 @@ function changeForm(){
         if (this.name == '_id'){
           submitApproved = this.value
         }
-        if (this.name == 'comments'){
-          $('#fountain_comment').val(this.value).prop('disabled', true);
-
-        }
+        // if (this.name == 'comments'){
+        //   $('#fountain_comment').val(this.value).prop('disabled', true);
+        //
+        // }
 
         if (this.name == 'status'){
           if (this.value == 'Active'){
@@ -156,6 +155,10 @@ function changeForm(){
           // else {
             stars(this.value)
           // }
+        }
+        if (this.name == "type"){
+          console.log(this.value);
+          
         }
         if (this.name == 'lat'){
           console.log('latfound');
@@ -196,7 +199,7 @@ function changeForm(){
 }
 
 $(document).ready(function () {
-  changeForm()
+  changeForm();
   $('#fountain_submit').click(function (){
 //need status, rating//, img
     const rating = rating_num;
@@ -223,27 +226,25 @@ $(document).ready(function () {
     }
 
     if (!submitApproved){ //need status, img, radio
-    const fountain_name = $('#fountain_name').val();
-    const comment = $('#fountain_comment').val();
-    const type = $('#fountain_type').val();
-    const lat = fountian_lat;
-    const lng = fountian_lng;
+      fountain_name = $('#fountain_name').val();
+      comment = $('#fountain_comment').val();
+      type = $('#fountain_type').val();
+      formlat = fountian_lat;
+      formlng = fountian_lng;
 
-    if (fountain_name == ""){
-      alert('please enter a name for the fountain');
-      feildsEmpty = true;
-    }else if (type == null) {//b
-      alert('please select a type for this fountian');
-      feildsEmpty = true;
+      if (fountain_name == ""){
+        alert('please enter a name for the fountain');
+        feildsEmpty = true;
+      }else if (type == null) {//b
+        alert('please select a type for this fountian');
+        feildsEmpty = true;
+      }else if (comment == "") {//b
+        alert('please provide some comments for the fountain');
+        feildsEmpty = true;
+      }else {
+        feildsEmpty = false;
+      }
     }
-    else if (comment == "") {//b
-      alert('please provide some comments for the fountain');
-      feildsEmpty = true;
-    }
-    else {
-      feildsEmpty = false;
-    }
-}
 
     var form = $("#fountain-form")[0];
     var fd = new FormData(form);
@@ -253,9 +254,8 @@ $(document).ready(function () {
       fd.append('status',status);
       if (!submitApproved) {
         fd.append('type', type);
-        fd.append('lat',lat);
-        fd.append('lng',lng);
-        console.log('hello',fountian_lat,fountian_lng);
+        fd.append('lat', formlat);
+        fd.append('lng', formlng);
 
       }
       else {
@@ -277,7 +277,7 @@ $(document).ready(function () {
           }
         },
         error: function(e) {
-         alert(e);
+         console.log();(e);
         }
       });
     }

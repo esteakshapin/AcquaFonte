@@ -127,8 +127,9 @@ def add_location_page():
     if request.method == 'POST':
         status = request.form['status']
         rating = request.form['rating']
-        fountainId = request.form['_id']
-        if fountainId:
+
+        if "_id" in request.form:
+            fountainId = request.form['_id']
             print(fountainId)
             print(status)
             print(rating)
