@@ -35,8 +35,8 @@ function initMap() {
 
   zoomL = 15;
 
-  var radius = zoom_to_miles(zoomL);
-  var cirRadius = zoom_to_radius(zoomL);
+  var radius = zoom_to_miles(zoomL - .5);
+  var cirRadius = zoom_to_radius(zoomL - .5);
 
   navigator.geolocation.getCurrentPosition(function(position) {
     // Center on user's current location if geolocation prompt allowed
@@ -168,7 +168,7 @@ function deleteCircle(){
 
 // CONVERSION FROM ZOOM LEVEL TO MILES FOR SEARCH RADIUS
 function zoom_to_miles(zoom_level){
-  return Math.pow(2, (-(zoomL) + 14.679));
+  return Math.pow(2, (-(zoom_level) + 14.679));
 }
 
 function zoom_to_radius(zoom_level){
@@ -249,7 +249,7 @@ function addListener(map) {
     console.log(map.getCenter().lat());
     map_center = map.getCenter();
     zoomL = map.getZoom();
-    radius = zoom_to_miles(zoomL);
+    radius = zoom_to_miles(zoomL - .5);
     this.style.visibility = 'hidden';
 
     clearMarkers();
