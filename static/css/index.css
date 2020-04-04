@@ -1,6 +1,7 @@
 html,body{
   width: 100vw;
   overflow-x: hidden;
+  background-color: #292c2f;
 }
 .container {
   width: 100vw;
