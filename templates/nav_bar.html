@@ -36,7 +36,8 @@
 
 </div>
 
-<div class="menuitems">
+<!-- old nav bar system -->
+<!-- <div class="menuitems">
   <ul class="menuparts">
 
     <a id='{{home_id}}' href="/" ><li class="menuparts, under">HOME</li></a>
@@ -46,5 +47,23 @@
     <a id='{{about_us_id}}' href="about_us"><li class="menuparts above">ABOUT US</li></a>
 
     </ul>
+</div> -->
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a id='{{home_id}}' href="/">HOME</a>
+  <a id='{{find_water_id}}' href="find_water">FIND WATER</a>
+  <a id='{{add_location_id}}' href="add_location">ADD LOCATION</a>
+  <a id='{{contact_id}}' href="contact">CONTACT US</a>
+  <a id='{{about_us_id}}' href="about_us">ABOUT US</a>
+  {% if username is defined %}
+  <a id='{{log_in_id}}' href="myAccount">MY ACCOUNT</a>
+  {% else %}
+  <a id='{{log_in_id}}' href="log_in">LOG IN</a>
+  {% endif %}
 </div>
+
+<div id="blackout"></div>
+
+
 <script src="{{ url_for('static', filename='js/hamburgerNav.js') }}"></script>
