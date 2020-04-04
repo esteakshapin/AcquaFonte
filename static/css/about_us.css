@@ -84,6 +84,7 @@ p1 {
 .partners{
   border-style: groove;
   border-width: .2em 0em 0em 0em;
+  margin-bottom: 20px;
 }
 
 .team_box_flex_continer{
