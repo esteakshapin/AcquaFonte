@@ -158,7 +158,7 @@ function changeForm(){
         }
         if (this.name == "type"){
           console.log(this.value);
-          
+
         }
         if (this.name == 'lat'){
           console.log('latfound');
@@ -177,7 +177,16 @@ function changeForm(){
         //   console.log('data has no lat/lon, fake request/exiting');
         //   initMap()
         // }
+        if (this.name == 'type'){ // type not done, waiting for name changes
 
+          // if this.value == XXX => A, b,c,d,e
+          $('#inputDefault').prop('selected', false)
+
+          // temp for testing
+          $('#A').prop('selected', true)
+          $( '#B, #C, #D').prop('disabled', true)
+
+        }
         if (this.name == 'name'){
           $('#fountain_name').val(this.value)
           $('#fountain_name').prop('disabled', true)
@@ -204,6 +213,7 @@ $(document).ready(function () {
 //need status, rating//, img
     const rating = rating_num;
     var radioButton = document.getElementsByName('status');
+    comment = $('#fountain_comment').val();
     const status = (function(){
       for(i = 0; i < radioButton.length; i++) {
         if (radioButton[i].checked){
@@ -213,6 +223,7 @@ $(document).ready(function () {
     })();
 
     var feildsEmpty = true;
+
     if (rating == 0) { //a
       alert('please give this fountian a rating');
       feildsEmpty = true;
@@ -221,13 +232,16 @@ $(document).ready(function () {
       alert('please select the status of this fountian');
       feildsEmpty = true;
     }
+     if (comment == "") {//b
+        alert('please provide some comments for the fountain');
+        feildsEmpty = true;
+    }
     else{
       feildsEmpty = false;
     }
 
     if (!submitApproved){ //need status, img, radio
       fountain_name = $('#fountain_name').val();
-      comment = $('#fountain_comment').val();
       type = $('#fountain_type').val();
       formlat = fountian_lat;
       formlng = fountian_lng;
@@ -237,9 +251,6 @@ $(document).ready(function () {
         feildsEmpty = true;
       }else if (type == null) {//b
         alert('please select a type for this fountian');
-        feildsEmpty = true;
-      }else if (comment == "") {//b
-        alert('please provide some comments for the fountain');
         feildsEmpty = true;
       }else {
         feildsEmpty = false;

@@ -9,7 +9,7 @@ from google.cloud import storage
 import pickle
 from pictureclass import myFileList
 from bson.objectid import ObjectId
-
+from datetime import datetime
 import random
 import string
 import os
@@ -127,19 +127,36 @@ def add_location_page():
     if request.method == 'POST':
         status = request.form['status']
         rating = request.form['rating']
-
+        fountain_comment = request.form['fountain_comment']
         if "_id" in request.form:
             fountainId = request.form['_id']
             print(fountainId)
             print(status)
             print(rating)
-            thisMarker = markers.find_one({"_id": fountainId})#, {'rating': 1}
+            print(fountain_comment)
+            thisMarker = markers.update_one(
+                {"_id": ObjectId(fountainId)},
+                # {'$currentDate': {datetime.now(): True}},
+                {
+                    '$set': {
+                        'status': status
+                        }
+                    ,
+                    '$push': {
+                        'comments': fountain_comment,
+                        'ratings': rating
+                        }
+
+                },
+                upsert=True ).raw_result#, {'rating': 1}
             print(thisMarker) #### returning None, no object found
-            return ('work in progress') #-----------------------------------------------------------------------------
+            if thisMarker['updateExisting'] == True:
+                return ('Fountian info edited')
+            else:
+                return ('Server side error, Changes thrown away') #-----------------------------------------------------------------------------
 
 
         fountain_name = request.form['fountain_name']
-        fountain_comment = request.form['fountain_comment']
         ftype = request.form['type']
         lat = float(request.form['lat'])
         lng = float(request.form['lng'])
