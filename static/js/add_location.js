@@ -89,7 +89,7 @@ function addListener(map) {
 }
 
 function stars(num){
-  rating_num = num;
+  // console.log(num);
 
   var star_class = document.getElementsByClassName('stars');
 
@@ -100,6 +100,7 @@ function stars(num){
 
   for (i = 1; i < num+1; i++){
     var starElement = document.getElementById(i);
+    // console.log(starElement);
     $(starElement).css('color',"#FFCC00");
     starElement.innerHTML = "&#9733;";
 
@@ -146,15 +147,14 @@ function changeForm(){
             checkValue('not Working');
         }
       }
-// ratings WIP
         if (this.name == 'ratings'){
-          console.log(this.value);
-          // if (this.value == 0){
-          //   stars(1)
-          // }//testing it works!!
-          // else {
-            stars(this.value)
-          // }
+          // console.log(this.value);
+          if (this.value == 0){
+            stars(0);
+          }
+          else {
+            stars(Number(this.value));
+          }
         }
         if (this.name == "type"){
           console.log(this.value);

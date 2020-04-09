@@ -192,17 +192,12 @@ def add_location_page():
         if ('fountain' in request.args):
             # build try except
             fDetails = request.args['fountain']
+            submitrating = request.args['rating']
             fDetails = eval(fDetails)
             fDetails['_id'] = str(fDetails['_id'])
             print(fDetails.items())
             reDetails = []
-            ratings = fDetails['ratings']
-            if len(ratings) != 0:
-                averageRating = sum(ratings) / len(ratings)
-                averageRating = round(averageRating)
-            else:
-                averageRating = 0
-            fDetails['ratings'] = averageRating
+            fDetails['ratings'] = submitrating
             for i,values in fDetails.items():
                 reDetails.append([i, values])
             print(reDetails)
@@ -216,11 +211,16 @@ def add_location_page():
 @app.route('/edit_location', methods=['GET'])
 def edit_location():
     id = str(request.args['_id'])
+    try:
+        rating = str(request.args['rating'])
+    except:
+        rating = str(0)
+    print(rating)
     fountain = markers.find_one({"_id": ObjectId(id)})
     if fountain == None:
         return "failure; fountain could not be found please try again"
     print(fountain)
-    return redirect(url_for('add_location_page', fountain=fountain))
+    return redirect(url_for('add_location_page', fountain=fountain, rating=rating))
 
 # Contact Page
 @app.route('/contact', methods=['GET'])

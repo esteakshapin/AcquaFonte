@@ -115,6 +115,26 @@ function clearMarkers(){
     markersArray.length = 0;
 }
 
+//function to change the rating
+function stars(num){
+  rating_num = num;
+
+  var star_class = document.getElementsByClassName('stars');
+
+  for(i = 0; i < star_class.length; i++){
+    star_class[i].innerHTML = "☆";
+    star_class[i].style.color = "black"
+  }
+
+  for (i = 1; i < num+1; i++){
+    var starElement = document.getElementById(i);
+    console.log(i);
+    $(starElement).css('color',"#113788");
+    starElement.innerHTML = "&#9733;";
+
+  }
+}
+
 //allowing all the markers to be clicked and subsequently display something
 function addClickEvent(){
   if (markersArray.length > 0){
@@ -134,6 +154,12 @@ function addClickEvent(){
         infoBox_status.innerHTML = "status &nbsp;&nbsp;&nbsp;&nbsp; <b style='color:green'>" + item['status'] + '</b>';
         infoBox_type.innerHTML = "type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>" + item['type'] + "</b>";
 
+        // get avg
+        allRatings = item['ratings']
+        var avg = allRatings.reduce((a, b) => Number(a) + Number(b), 0)
+        var avg = Math.round(avg / allRatings.length)
+        console.log('avg rating:', avg);
+        stars(avg)
         var a = ''
         for (i in item['comments']){
           a += "<p>"+item['comments'][i]+"</p>";
@@ -260,6 +286,24 @@ function addListener(map) {
 
 
   });
+console.log('test');
+  var ratingStars = document.getElementsByClassName('stars')
+  $(".stars").each(function(){
+    // $.each(this.attributes, function(){
+      // console.log('working');
+        console.log(this);
+        $(this).click(function(){
+              var infoBox = document.getElementById('fountain_detail');
+              var fountainId = infoBox.dataset.fountainId;
+              var rating = this.id
+              console.log(rating);
+              console.log('/edit_location?_id='+ infoBox.dataset.fountainId + '&rating=' + rating);
+              window.location.href = '/edit_location?_id='+ infoBox.dataset.fountainId + '&rating=' + rating;
+                  });
+      // });
+                            });
+
+
 
   document.getElementById('edit').addEventListener('click', function(){
     var infoBox = document.getElementById('fountain_detail');

@@ -128,12 +128,7 @@
   font-size:2em;
   margin: 0 0 15px;
 }
-.rating > span:hover:before,
-.rating > span:hover ~ span:before {
-   content: "\2605";
-   position: absolute;
-   color:#113788;
-}
+
 .rating > span {
   display: inline-block;
   position: relative;
