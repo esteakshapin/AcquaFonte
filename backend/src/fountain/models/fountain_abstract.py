@@ -1,5 +1,5 @@
-from django.db import models
-
+from django.contrib.gis.db import models
+from django.contrib.gis.geos import Point
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
 
@@ -42,11 +42,7 @@ class FountainAbstract(models.Model):
         (OUTDOOR, _(OUTDOOR))
     ]
 
-    lat = models.DecimalField(
-        max_digits=12, decimal_places=10, blank=False, null=False, default=0.0)
-
-    lng = models.DecimalField(
-        max_digits=13, decimal_places=10, blank=False, null=False, default=0.0)
+    coords = models.PointField(default=Point(0.0, 0.0))
 
     title = models.CharField(max_length=120, blank=False)
 

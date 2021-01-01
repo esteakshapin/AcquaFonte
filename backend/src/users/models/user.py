@@ -17,5 +17,14 @@ class User(AbstractUser):
                                                  "Liked Fountains"),
                                              related_name="users_liked")
 
+    created_fountains = models.ManyToManyField(Fountain,
+                                               verbose_name=_(
+                                                   "Created Fountains"),
+                                               related_name="user_created")
+    updated_fountains = models.ManyToManyField(Fountain,
+                                               verbose_name=_(
+                                                   "Updated Fountains"),
+                                               related_name="users_updated")
+
     def __str__(self):
         return self.username
