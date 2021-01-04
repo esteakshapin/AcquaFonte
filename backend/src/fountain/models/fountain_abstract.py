@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
@@ -48,13 +49,25 @@ class FountainAbstract(models.Model):
 
     status = models.CharField(max_length=10, choices=STATUS, default=UNKOWN)
 
-    feature = MultiSelectField(choices=FEATURES, blank=True, null=True)
+    feature = MultiSelectField(
+        choices=FEATURES,
+        blank=True,
+        null=True,
+        verbose_name=_('Fountian Features')
+    )
 
     access = models.CharField(
         max_length=10, choices=ACCESS, blank=False, default=PUBLIC)
 
     location = models.CharField(
         max_length=10, choices=LOCATION, blank=False, default=OUTDOOR)
+
+    rating = models.IntegerField(
+        blank=True,
+        null=True,
+        default=None,
+        validators=[MaxValueValidator(5), MinValueValidator(1)]
+    )
 
     # # implement type
     # # type

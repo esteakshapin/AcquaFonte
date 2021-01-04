@@ -3,8 +3,18 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from fountain.models import Fountain
 
+from users.managers import CustomUserManager
+
 
 class User(AbstractUser):
+    # custom user fields
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
     avatar = models.ImageField(verbose_name=_('Avatar'),
                                help_text=_('Avatar of user'),
                                upload_to="Avatar",
@@ -27,4 +37,4 @@ class User(AbstractUser):
                                                related_name="users_updated")
 
     def __str__(self):
-        return self.username
+        return self.email

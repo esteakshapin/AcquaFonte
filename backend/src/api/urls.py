@@ -1,7 +1,6 @@
-from django.urls import path
-from api.views.update_views import UpdateDetailView, UpdateListView
+from django.urls import path, include
 
 urlpatterns = [
-    path('update', UpdateListView.as_view()),
-    path('update/<pk>', UpdateDetailView.as_view())
+    path('fountain', include('fountain.urls')),
+    path('users/', include('users.urls')),
 ]

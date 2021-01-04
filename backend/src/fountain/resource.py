@@ -11,6 +11,8 @@ import re
 
 from fountain.utils.coords_to_address import coords_to_address
 
+import json
+
 
 class FountainResource(resources.ModelResource):
     coords = Field(attribute='coords', column_name='fountain_coordinates')
@@ -22,6 +24,7 @@ class FountainResource(resources.ModelResource):
     def dehydrate_coords(self, fountain):
         return '(%s, %s)' % (fountain.coords.x, fountain.coords.y)
 
+    # import setup for seatle founatins
     def before_import(self, dataset, using_transactions, dry_run, **kwargs):
         super().before_import(dataset, using_transactions, dry_run, **kwargs)
         headers = dataset.headers
@@ -43,7 +46,10 @@ class FountainResource(resources.ModelResource):
         coords = Point(float(coords[0]), float(coords[1]))
         row[coords] = coords
 
-        coords_to_address(coords.y, coords.x)
+        response = json.loads(coords_to_address(coords.y, coords.x).content)
+
+        street_name = response.get('results')[0].get(
+            'address_components')[1].get("short_name")
 
         date = row['last_updated']
         date_time_obj = datetime.datetime.strptime(
@@ -51,3 +57,4 @@ class FountainResource(resources.ModelResource):
         if not is_aware(date_time_obj):
             date_time_obj = make_aware(date_time_obj)
         row['last_updated'] = date_time_obj
+        row['title'] = street_name

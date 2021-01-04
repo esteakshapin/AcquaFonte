@@ -12,7 +12,7 @@ class Fountain(FountainAbstract):
         verbose_name='Last Update', blank=True, null=True)
 
     def __str__(self):
-        return (self.title + "," + str(self.id))
+        return (self.title + ", " + str(self.status))
 
     def save(self, *args, **kwargs):
         if not self.last_updated:

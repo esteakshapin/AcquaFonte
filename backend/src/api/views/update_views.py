@@ -1,6 +1,6 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from fountain.models.update import Update
-from fountain.serializers import UpdateSerializer
+from fountain.api.serializers import UpdateSerializer
 # Create your views here.
 
 

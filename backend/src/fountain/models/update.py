@@ -5,6 +5,15 @@ from users.models.user import User
 
 
 class Update(models.Model):
+    APPROVED = 'approved'
+    DENIED = 'denied'
+    PENDING = 'pending'
+    STATUS_CHOICE = [
+        (APPROVED, _('Approved')),
+        (DENIED, _('Denied')),
+        (PENDING, _('Pending')),
+    ]
+
     fountain_original = models.ForeignKey(Fountain,
                                           on_delete=models.CASCADE,
                                           verbose_name="Originial Fountain",
@@ -16,3 +25,6 @@ class Update(models.Model):
 
     user = models.ForeignKey(User, verbose_name=_(
         "User"), on_delete=models.CASCADE, related_name="update_fountians")
+
+    status = models.CharField(
+        max_length=10, choices=STATUS_CHOICE, default=PENDING)
