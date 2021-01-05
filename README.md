@@ -48,10 +48,25 @@ sudo apt install binutils libproj-dev
 set up PostgreSQL and PostGIS database
 
 ```
-docker run --name=postgis -d -e POSTGRES_USER=esteakshapin -e POSTGRES_PASS=230247611 -e POSTGRES_DBNAME=gis -p 5432:5432 kartoza/postgis:9.6-2.4
+docker volume create gis_data # creating colume to save date; Persist Data
+docker run --name=postgis -d -e POSTGRES_USER=GIS_DATABASE_USERNAME -e POSTGRES_PASS=GIS_DATABASE_PASSWORD -e POSTGRES_DBNAME=gis -e ALLOW_IP_RANGE=0.0.0.0/0 -p 5432:5432 -v gis_data:/var/lib/postgresql --restart=always kartoza/postgis:9.6-2.4
 ```
+GIS_DATABASE_USERNAME and GIS_DATABASE_PASSWORD can be anything you want. The valiables should be set in the env file.
 
 Check https://realpython.com/location-based-app-with-geodjango-tutorial/ for more info on how to set up geodjango
+
+### Set up enviroment variables
+```
+touch .env
+nano .env
+
+# set up variable values
+GEOCODE_API_KEY = 
+GIS_DATABASE_USERNAME = 
+GIS_DATABASE_PASSWORD = 
+SECRET_KEY = 
+```
+
 
 ## Running the tests
 
