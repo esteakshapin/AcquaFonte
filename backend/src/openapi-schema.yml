@@ -1,0 +1,893 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /rest-auth/logout/:
+    get:
+      operationId: listLogouts
+      description: 'Calls Django logout method and delete the Token object
+
+        assigned to the current User object.
+
+
+        Accepts/Returns nothing.'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - rest-auth
+    post:
+      operationId: createLogout
+      description: 'Calls Django logout method and delete the Token object
+
+        assigned to the current User object.
+
+
+        Accepts/Returns nothing.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - rest-auth
+  /rest-auth/user/:
+    get:
+      operationId: retrieveUser
+      description: 'Reads and updates UserModel fields
+
+        Accepts GET, PUT, PATCH methods.
+
+
+        Default accepted fields: username, first_name, last_name
+
+        Default display fields: pk, username, email, first_name, last_name
+
+        Read-only fields: pk, email
+
+
+        Returns UserModel fields.'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - rest-auth
+    put:
+      operationId: updateUser
+      description: 'Reads and updates UserModel fields
+
+        Accepts GET, PUT, PATCH methods.
+
+
+        Default accepted fields: username, first_name, last_name
+
+        Default display fields: pk, username, email, first_name, last_name
+
+        Read-only fields: pk, email
+
+
+        Returns UserModel fields.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - rest-auth
+    patch:
+      operationId: partialUpdateUser
+      description: 'Reads and updates UserModel fields
+
+        Accepts GET, PUT, PATCH methods.
+
+
+        Default accepted fields: username, first_name, last_name
+
+        Default display fields: pk, username, email, first_name, last_name
+
+        Read-only fields: pk, email
+
+
+        Returns UserModel fields.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - rest-auth
+  /api/fountainupdate:
+    get:
+      operationId: listUpdates
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Update'
+          description: ''
+      tags:
+      - api
+  /api/fountainupdate/{id}:
+    get:
+      operationId: retrieveUpdate
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this update.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update'
+          description: ''
+      tags:
+      - api
+  /api/fountain{id}:
+    get:
+      operationId: retrieveFountain
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this fountain.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fountain'
+          description: ''
+      tags:
+      - api
+  /api/fountain:
+    get:
+      operationId: listFountains
+      description: ''
+      parameters:
+      - name: status
+        required: false
+        in: query
+        description: status
+        schema:
+          type: string
+      - name: feature
+        required: false
+        in: query
+        description: feature
+        schema:
+          type: string
+      - name: access
+        required: false
+        in: query
+        description: access
+        schema:
+          type: string
+      - name: location
+        required: false
+        in: query
+        description: location
+        schema:
+          type: string
+      - name: min_rating
+        required: false
+        in: query
+        description: min_rating
+        schema:
+          type: string
+      - name: max_rating
+        required: false
+        in: query
+        description: max_rating
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fountain'
+          description: ''
+      tags:
+      - api
+  /api/users/user/:
+    get:
+      operationId: listUsers
+      description: A simple ViewSet for listing or retrieving users.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createUser
+      description: A simple ViewSet for listing or retrieving users.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+  /api/users/user/{id}/:
+    get:
+      operationId: retrieveUser
+      description: A simple ViewSet for listing or retrieving users.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateUser
+      description: A simple ViewSet for listing or retrieving users.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateUser
+      description: A simple ViewSet for listing or retrieving users.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyUser
+      description: A simple ViewSet for listing or retrieving users.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /rest-auth/password/reset/:
+    post:
+      operationId: createPasswordReset
+      description: 'Calls Django Auth PasswordResetForm save method.
+
+
+        Accepts the following POST parameters: email
+
+        Returns the success/fail message.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordReset'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordReset'
+          description: ''
+      tags:
+      - rest-auth
+  /rest-auth/password/reset/confirm/:
+    post:
+      operationId: createPasswordResetConfirm
+      description: "Password reset e-mail link is confirmed, therefore\nthis resets\
+        \ the user's password.\n\nAccepts the following POST parameters: token, uid,\n\
+        \    new_password1, new_password2\nReturns the success/fail message."
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResetConfirm'
+          description: ''
+      tags:
+      - rest-auth
+  /rest-auth/login/:
+    post:
+      operationId: createLogin
+      description: 'Check the credentials and return the REST Token
+
+        if the credentials are valid and authenticated.
+
+        Calls Django Auth login method to register User ID
+
+        in Django session framework
+
+
+        Accept the following POST parameters: username, password
+
+        Return the REST Framework Token Object''s key.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+          description: ''
+      tags:
+      - rest-auth
+  /rest-auth/password/change/:
+    post:
+      operationId: createPasswordChange
+      description: 'Calls Django Auth SetPasswordForm save method.
+
+
+        Accepts the following POST parameters: new_password1, new_password2
+
+        Returns the success/fail message.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordChange'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordChange'
+          description: ''
+      tags:
+      - rest-auth
+  /rest-auth/registration/:
+    post:
+      operationId: createUserRegistrationForm
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationForm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationForm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationForm'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegistrationForm'
+          description: ''
+      tags:
+      - rest-auth
+  /rest-auth/registration/verify-email/:
+    post:
+      operationId: createVerifyEmail
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyEmail'
+          description: ''
+      tags:
+      - rest-auth
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        avatar:
+          type: string
+          format: binary
+          description: Avatar of user
+        saved_fountains:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                readOnly: true
+              distance:
+                type: string
+                readOnly: true
+              coords:
+                type: string
+              title:
+                type: string
+                maxLength: 120
+              status:
+                enum:
+                - active
+                - inactive
+                - unknown
+                type: string
+              feature:
+                enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                type: integer
+                nullable: true
+              access:
+                enum:
+                - Public
+                - Private
+                type: string
+              location:
+                enum:
+                - Indoor
+                - Outdoor
+                type: string
+              rating:
+                type: integer
+                maximum: 5
+                minimum: 1
+                nullable: true
+              last_updated:
+                type: string
+                format: date-time
+                nullable: true
+            required:
+            - title
+        liked_fountains:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                readOnly: true
+              distance:
+                type: string
+                readOnly: true
+              coords:
+                type: string
+              title:
+                type: string
+                maxLength: 120
+              status:
+                enum:
+                - active
+                - inactive
+                - unknown
+                type: string
+              feature:
+                enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                type: integer
+                nullable: true
+              access:
+                enum:
+                - Public
+                - Private
+                type: string
+              location:
+                enum:
+                - Indoor
+                - Outdoor
+                type: string
+              rating:
+                type: integer
+                maximum: 5
+                minimum: 1
+                nullable: true
+              last_updated:
+                type: string
+                format: date-time
+                nullable: true
+            required:
+            - title
+        created_fountains:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                readOnly: true
+              status:
+                enum:
+                - approved
+                - denied
+                - pending
+                type: string
+              fountain_original:
+                type: integer
+              fountain_update:
+                type: integer
+              user:
+                type: integer
+            required:
+            - fountain_original
+            - fountain_update
+            - user
+        updated_fountains:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                readOnly: true
+              status:
+                enum:
+                - approved
+                - denied
+                - pending
+                type: string
+              fountain_original:
+                type: integer
+              fountain_update:
+                type: integer
+              user:
+                type: integer
+            required:
+            - fountain_original
+            - fountain_update
+            - user
+      required:
+      - email
+      - saved_fountains
+      - liked_fountains
+      - created_fountains
+      - updated_fountains
+    Update:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        status:
+          enum:
+          - approved
+          - denied
+          - pending
+          type: string
+        fountain_original:
+          type: integer
+        fountain_update:
+          type: integer
+        user:
+          type: integer
+      required:
+      - fountain_original
+      - fountain_update
+      - user
+    Fountain:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        distance:
+          type: string
+          readOnly: true
+        coords:
+          type: string
+        title:
+          type: string
+          maxLength: 120
+        status:
+          enum:
+          - active
+          - inactive
+          - unknown
+          type: string
+        feature:
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          type: integer
+          nullable: true
+        access:
+          enum:
+          - Public
+          - Private
+          type: string
+        location:
+          enum:
+          - Indoor
+          - Outdoor
+          type: string
+        rating:
+          type: integer
+          maximum: 5
+          minimum: 1
+          nullable: true
+        last_updated:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - title
+    PasswordReset:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    PasswordResetConfirm:
+      type: object
+      properties:
+        new_password1:
+          type: string
+          maxLength: 128
+        new_password2:
+          type: string
+          maxLength: 128
+        uid:
+          type: string
+        token:
+          type: string
+      required:
+      - new_password1
+      - new_password2
+      - uid
+      - token
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+      - password
+    PasswordChange:
+      type: object
+      properties:
+        new_password1:
+          type: string
+          maxLength: 128
+        new_password2:
+          type: string
+          maxLength: 128
+      required:
+      - new_password1
+      - new_password2
+    UserRegistrationForm:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password1:
+          type: string
+        password2:
+          type: string
+          description: Enter the same password as above, for verification.
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 150
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 150
+      required:
+      - email
+      - password1
+      - password2
+    VerifyEmail:
+      type: object
+      properties:
+        key:
+          type: string
+      required:
+      - key
