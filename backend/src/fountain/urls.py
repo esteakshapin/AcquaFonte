@@ -1,11 +1,7 @@
-from django.urls import path, include
+from fountain.api.fountain_views import FountainViewSet
 
-from api.views.update_views import UpdateDetailView, UpdateListView
-from api.views.fountain_views import FountainDetailView, FountainListView
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    path('update', UpdateListView.as_view()),
-    path('update/<pk>', UpdateDetailView.as_view()),
-    path('<pk>', FountainDetailView.as_view()),
-    path('', FountainListView.as_view())
-]
+router = DefaultRouter()
+router.register(r'fountain', FountainViewSet)
+urlpatterns = router.urls

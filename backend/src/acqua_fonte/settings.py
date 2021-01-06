@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
 
+    # permissions
+    'dry_rest_permissions',
+
     'import_export',
     'django_filters',
 
@@ -178,7 +181,7 @@ REST_AUTH_SERIALIZERS = {
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'users.api.serializers.UserRegistrationFormSerializer',
+    'REGISTER_SERIALIZER': 'users.api.serializers.UserRegistrationFormSerializer',  # noqa
 }
 
 REST_FRAMEWORK = {

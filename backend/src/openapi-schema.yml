@@ -146,10 +146,10 @@ paths:
           description: ''
       tags:
       - rest-auth
-  /api/fountainupdate:
+  /api/fountain/:
     get:
-      operationId: listUpdates
-      description: ''
+      operationId: listFountains
+      description: A simple ViewSet for listing or retrieving users.
       parameters: []
       responses:
         '200':
@@ -158,34 +158,38 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Update'
+                  $ref: '#/components/schemas/Fountain'
           description: ''
       tags:
       - api
-  /api/fountainupdate/{id}:
-    get:
-      operationId: retrieveUpdate
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this update.
-        schema:
-          type: string
+    post:
+      operationId: createFountain
+      description: A simple ViewSet for listing or retrieving users.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Fountain'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Fountain'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Fountain'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Update'
+                $ref: '#/components/schemas/Fountain'
           description: ''
       tags:
       - api
-  /api/fountain{id}:
+  /api/fountain/{id}/:
     get:
       operationId: retrieveFountain
-      description: ''
+      description: A simple ViewSet for listing or retrieving users.
       parameters:
       - name: id
         in: path
@@ -202,59 +206,82 @@ paths:
           description: ''
       tags:
       - api
-  /api/fountain:
-    get:
-      operationId: listFountains
-      description: ''
+    put:
+      operationId: updateFountain
+      description: A simple ViewSet for listing or retrieving users.
       parameters:
-      - name: status
-        required: false
-        in: query
-        description: status
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this fountain.
         schema:
           type: string
-      - name: feature
-        required: false
-        in: query
-        description: feature
-        schema:
-          type: string
-      - name: access
-        required: false
-        in: query
-        description: access
-        schema:
-          type: string
-      - name: location
-        required: false
-        in: query
-        description: location
-        schema:
-          type: string
-      - name: min_rating
-        required: false
-        in: query
-        description: min_rating
-        schema:
-          type: string
-      - name: max_rating
-        required: false
-        in: query
-        description: max_rating
-        schema:
-          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Fountain'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Fountain'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Fountain'
       responses:
         '200':
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Fountain'
+                $ref: '#/components/schemas/Fountain'
           description: ''
       tags:
       - api
-  /api/users/user/:
+    patch:
+      operationId: partialUpdateFountain
+      description: A simple ViewSet for listing or retrieving users.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this fountain.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Fountain'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Fountain'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Fountain'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fountain'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyFountain
+      description: A simple ViewSet for listing or retrieving users.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this fountain.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/user/:
     get:
       operationId: listUsers
       description: A simple ViewSet for listing or retrieving users.
@@ -294,7 +321,7 @@ paths:
           description: ''
       tags:
       - api
-  /api/users/user/{id}/:
+  /api/user/{id}/:
     get:
       operationId: retrieveUser
       description: A simple ViewSet for listing or retrieving users.
@@ -448,7 +475,7 @@ paths:
       - rest-auth
   /rest-auth/login/:
     post:
-      operationId: createLogin
+      operationId: createUserLogIn
       description: 'Check the credentials and return the REST Token
 
         if the credentials are valid and authenticated.
@@ -466,19 +493,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Login'
+              $ref: '#/components/schemas/UserLogIn'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Login'
+              $ref: '#/components/schemas/UserLogIn'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Login'
+              $ref: '#/components/schemas/UserLogIn'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Login'
+                $ref: '#/components/schemas/UserLogIn'
           description: ''
       tags:
       - rest-auth
@@ -740,28 +767,6 @@ components:
       - liked_fountains
       - created_fountains
       - updated_fountains
-    Update:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        status:
-          enum:
-          - approved
-          - denied
-          - pending
-          type: string
-        fountain_original:
-          type: integer
-        fountain_update:
-          type: integer
-        user:
-          type: integer
-      required:
-      - fountain_original
-      - fountain_update
-      - user
     Fountain:
       type: object
       properties:
@@ -837,17 +842,16 @@ components:
       - new_password2
       - uid
       - token
-    Login:
+    UserLogIn:
       type: object
       properties:
-        username:
-          type: string
         email:
           type: string
           format: email
         password:
           type: string
       required:
+      - email
       - password
     PasswordChange:
       type: object
@@ -869,21 +873,20 @@ components:
           format: email
         password1:
           type: string
+          writeOnly: true
         password2:
           type: string
-          description: Enter the same password as above, for verification.
+          writeOnly: true
         first_name:
           type: string
-          nullable: true
-          maxLength: 150
         last_name:
           type: string
-          nullable: true
-          maxLength: 150
       required:
       - email
       - password1
       - password2
+      - first_name
+      - last_name
     VerifyEmail:
       type: object
       properties:
