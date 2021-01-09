@@ -8,7 +8,7 @@ env:
 install:
   - pip install -r backend/src/requirements.txt
 before_script:
-  - psql -c 'create database gis;' -U testUser
+  - psql -c 'create database gis;' -U postgres
 script:
   -cd backend/src
   - python manage.py tests
