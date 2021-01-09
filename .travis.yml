@@ -6,9 +6,10 @@ services:
 env:
   -DJANGO=1.8
 before_install:
-  - sudo apt install gdal-bin libgdal-dev
-  - sudo apt install python3-gdal
-  - sudo apt install binutils libproj-dev
+  - sudo apt-get update
+  - sudo apt-get install gdal-bin libgdal-dev
+  - sudo apt-get install python3-gdal
+  - sudo apt-get install binutils libproj-dev
 install:
   - pip install -r backend/src/requirements.txt
 before_script:
