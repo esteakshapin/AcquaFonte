@@ -9,7 +9,7 @@
     ],
     "python.linting.pylintEnabled": true,
     "python.venvPath": "${workspaceFolder}/backend/venv/bin/python3",
-    "python.pythonPath": "${workspaceFolder}/backend/venv/bin/python3",
+    "python.pythonPath": "backend/venv/bin/python3",
     "git.ignoreLimitWarning": true,
     "python.autoComplete.extraPaths": [
         "./backend/src"
