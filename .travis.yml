@@ -6,8 +6,9 @@ services:
 env:
   -DJANGO=1.8
 install:
-  - pip install -r requirements.txt
+  - pip install -r backend/src/requirements.txt
 before_script:
   - psql -c 'create database gis;' -U testUser
 script:
+  -cd backend/src
   - python manage.py tests
