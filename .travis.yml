@@ -10,5 +10,5 @@ install:
 before_script:
   - psql -c 'create database gis;' -U postgres
 script:
-  -cd backend/src
+  - cd backend/src
   - python manage.py tests
