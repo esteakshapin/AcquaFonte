@@ -111,7 +111,7 @@ DATABASES = {
         'USER': config('GIS_DATABASE_USERNAME'),
         'PASSWORD': config('GIS_DATABASE_PASSWORD'),
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': config('GIS_DATABASE_PORT')
     }
 }
 
@@ -174,6 +174,12 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'
 
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTHENTICATION_BACKENDS = (
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.api.serializers.UserSerializer',

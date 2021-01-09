@@ -36,32 +36,3 @@ class FountainViewSet(viewsets.ModelViewSet):
 
         serializer = FountainSerializer(queryset, many=True)
         return Response(serializer.data)
-
-
-# class FountainDetailView(RetrieveAPIView):
-#     queryset = Fountain.objects.all()
-#     serializer_class = FountainSerializer
-
-
-# class FountainListView(ListAPIView):
-
-#     queryset = Fountain.objects.all()
-#     serializer_class = FountainSerializer
-#     filterset_class = FountainFilter
-
-#     def get_queryset(self):
-#         queryset = super().get_queryset()
-#         longitude = self.request.query_params.get(
-#             'longitude', default='122.3321')
-#         latitude = self.request.query_params.get('latitude', default='47.6062')
-#         radius = self.request.query_params.get('radius', default=1)
-#         location = Point(float(longitude), float(latitude))
-
-#         queryset = queryset.filter(
-#             coords__distance_lte=(
-#                 location,
-#                 D(mi=radius)
-#             )
-#         ).annotate(distance=Distance('coords', location)).order_by('distance')
-
-#         return queryset
