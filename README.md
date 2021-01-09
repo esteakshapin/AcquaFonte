@@ -67,6 +67,13 @@ GIS_DATABASE_PASSWORD =
 SECRET_KEY = 
 ```
 
+## Useful commands
+
+Genrate schema
+
+```
+./manage.py generateschema --file openapi-schema.yml
+```
 
 ## Running the tests
 
