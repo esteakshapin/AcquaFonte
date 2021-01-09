@@ -1,13 +1,13 @@
 language: python
-    python:
-      - "3.8"
-    services:
-      - postgresql
-    env:
-      -DJANGO=1.8
-    install:
-      - pip install -r requirements.txt
-    before_script:
-      - psql -c 'create database gis;' -U testUser
-    script:
-      - python manage.py tests
+python:
+  - "3.8"
+services:
+  - postgresql
+env:
+  -DJANGO=1.8
+install:
+  - pip install -r requirements.txt
+before_script:
+  - psql -c 'create database gis;' -U testUser
+script:
+  - python manage.py tests
