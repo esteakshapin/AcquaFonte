@@ -1,56 +1,65 @@
 <html>
-    <head>
-      {% include 'standard.html' %}
-        <title>FIND WATER | Acqua Fonte</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/find_water.css')}}">
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <script src="{{ url_for('static', filename='js/find_water.js') }}"></script>
-    </head>
-    <body>
-      <div class="container">
 
-        {% with home_id='not_active', find_water_id='active', add_location_id='not_active', contact_id='not_active',about_us_id='not_active',log_in_id='not_active' %}
+<head>
+  {% include 'standard.html' %}
+  <title>FIND WATER | Acqua Fonte</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/find_water.css')}}">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/find_water.js') }}"></script>
+</head>
 
-          {% include 'nav_bar.html' %}
+<body>
+  <div class="container">
 
-        {% endwith %}
+    {% with home_id='not_active', find_water_id='active', add_location_id='not_active',
+    contact_id='not_active',about_us_id='not_active',log_in_id='not_active' %}
 
-        <div class="underDiv">
-          <div class='map_and_infoBox'>
-            <div id="map"></div>
-            <div id='fountain_detail' data-fountainId="">
-              <div id='infoBox_imgHolder'>
-                <span id='x' onclick="document.getElementById('fountain_detail').style.visibility = 'hidden';" style="cursor:default">X</span>
-                <img src='https://www.drinkingwaterfountains.co.uk/wp/wp-content/uploads/2014/08/drinking-fountain-water.jpg'>
-              </div>
-              <b><p id='name' class="bold">name</p></b>
-              <div id="rating" class="rating">
-                <span id="5" class="stars">☆</span><span id="4" class="stars">☆</span><span id="3" class="stars">☆</span><span id="2" class="stars">☆</span><span id="1" class="stars">☆</span>
-      <div class="rating">
-      </div>
-      </div>
-              <p id='status' class='non-bold'>status</p>
-              <p id='type' class='non-bold'>type</p>
-              <p id='comments' class="bold">comments</p>
-              <div id="comment-section">
-                <p>test comment</p>
-              </div>
-              <button id="edit" name="edit" class="edit">Add/Edit info</button>
+    {% include 'nav_bar.html' %}
+
+    {% endwith %}
+
+    <div class="underDiv">
+      <div class='map_and_infoBox'>
+        <div id="map"></div>
+        <div id='fountain_detail' data-fountainId="">
+          <div id='infoBox_imgHolder'>
+            <span id='x' onclick="document.getElementById('fountain_detail').style.visibility = 'hidden';"
+              style="cursor:default">X</span>
+            <img
+              src='https://www.drinkingwaterfountains.co.uk/wp/wp-content/uploads/2014/08/drinking-fountain-water.jpg'>
+          </div>
+          <b>
+            <p id='name' class="bold">name</p>
+          </b>
+          <div id="rating" class="rating">
+            <span id="5" class="stars">☆</span><span id="4" class="stars">☆</span><span id="3"
+              class="stars">☆</span><span id="2" class="stars">☆</span><span id="1" class="stars">☆</span>
+            <div class="rating">
             </div>
           </div>
+          <p id='status' class='non-bold'>status</p>
+          <p id='type' class='non-bold'>type</p>
+          <p id='comments' class="bold">comments</p>
+          <div id="comment-section">
+            <p>test comment</p>
+          </div>
+          <button id="edit" name="edit" class="edit">Add/Edit info</button>
         </div>
-
       </div>
+    </div>
+
+  </div>
 
 
 
-      <button id='redo-search' name='redo-search'>Search This Area!</button>
+  <button id='redo-search' name='redo-search'>Search This Area!</button>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtysywW5LRhpRGjbe5lP9IE8WL-L4pEww&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTVnSJER2TIgtlxmWvFlcEmX9PcT6m504&callback=initMap"
+    async defer></script>
 
 
-    </body>
+</body>
 
 
 </html>

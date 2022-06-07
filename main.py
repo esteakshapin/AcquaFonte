@@ -23,7 +23,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
 app.secret_key = '6yTWFOE7j05WpVr8ic'
 
-client = MongoClient('mongodb://Shapin:Shapin@cluster0-shard-00-00-lnqyp.mongodb.net:27017,cluster0-shard-00-01-lnqyp.mongodb.net:27017,cluster0-shard-00-02-lnqyp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', ssl_cert_reqs=ssl.CERT_NONE)
+client = MongoClient('mongodb+srv://Shapin:2010@cluster0.lnqyp.mongodb.net/?retryWrites=true&w=majority', ssl_cert_reqs=ssl.CERT_NONE)
 
 db = client['AqcuaFonte']
 users = db['users']
